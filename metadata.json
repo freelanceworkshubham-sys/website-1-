@@ -1,0 +1,6 @@
+{
+  "name": "Sonar - Next-Generation Solar Energy Solutions",
+  "description": "Delivering reliable, eco-friendly solar solutions designed to reduce energy costs while minimizing environmental impact with advanced photovoltaic technology and smart storage.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
