@@ -77,9 +77,8 @@ export const ELECTRICAL_WORKFLOW_STAGES = [
   { range: [0.3, 0.45], name: '03 · DC CABLE PATH', desc: 'Direct-current solar transmission' },
   { range: [0.45, 0.6], name: '04 · DCDB & ISOLATOR', desc: 'Surge protection & isolation' },
   { range: [0.6, 0.72], name: '05 · SOLAR INVERTER', desc: 'Wall-mounted DC to AC conversion' },
-  { range: [0.72, 0.82], name: '06 · AC CABLE & ACDB', desc: 'Alternating current distribution' },
-  { range: [0.82, 0.92], name: '07 · BIDIRECTIONAL NET METER', desc: 'Two-way MSEDCL grid measurement' },
-  { range: [0.92, 1.0], name: '08 · POWERED-HOME STATE', desc: 'Clean self-generation & grid export' },
+  { range: [0.82, 0.90], name: '07 · BIDIRECTIONAL NET METER', desc: 'Two-way MSEDCL grid measurement' },
+  { range: [0.90, 1.0], name: '08 · POWERED-HOME STATE', desc: 'Clean self-generation & grid export' },
 ];
 
 export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
@@ -342,7 +341,10 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
       setScrollProgress(progress);
       onScrollProgressChange?.(progress);
 
-      const targetFrame = Math.round(progress * (TOTAL_FRAMES - 1));
+      // Map progress smoothly through 302 frames with subtle final-state stabilization hold at [0.94, 1.00]
+      const ANIMATION_END = 0.94;
+      const animProgress = Math.min(1, progress / ANIMATION_END);
+      const targetFrame = Math.round(animProgress * (TOTAL_FRAMES - 1));
       currentFrameRef.current = targetFrame;
 
       if (scrollRafId === null) {
@@ -436,10 +438,12 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
     };
   };
 
-  // Final Frame: ORIGINAL HERO SECTION reveal (fades in smoothly at 80% - 100%)
-  const HERO_REVEAL_START = 0.80;
-  const heroOpacity = Math.max(0, Math.min(1, (scrollProgress - HERO_REVEAL_START) / (1 - HERO_REVEAL_START)));
-  const heroTranslateY = (1 - heroOpacity) * 35; // 35px -> 0px slide up
+  // Final Frame: ORIGINAL HERO SECTION reveal (fades in smoothly between 78% and 92%)
+  const HERO_REVEAL_START = 0.78;
+  const HERO_REVEAL_END = 0.92;
+  const heroRevealRaw = clamp01((scrollProgress - HERO_REVEAL_START) / (HERO_REVEAL_END - HERO_REVEAL_START));
+  const heroOpacity = power2Out(heroRevealRaw);
+  const heroTranslateY = prefersReducedMotion ? 0 : (1 - heroOpacity) * 20; // 20px -> 0px gentle slide up
 
   const currentStage = useMemo(() => {
     for (let i = 0; i < ELECTRICAL_WORKFLOW_STAGES.length; i++) {
@@ -613,7 +617,13 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
           </div>
 
           {/* Thin Vertical Progress Dots Indicator (4 video slides + 1 Hero dot) */}
-          <div className="fixed right-4 md:right-7 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-3.5 pointer-events-auto">
+          <div
+            className="fixed right-4 md:right-7 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-3.5 pointer-events-auto"
+            style={{
+              opacity: scrollProgress >= 0.98 ? Math.max(0, (1 - scrollProgress) / 0.02) : 1,
+              transition: 'opacity 0.2s ease-out',
+            }}
+          >
             {[0.05, 0.25, 0.45, 0.65, 0.90].map((progTarget, index) => {
               const isActive = index === activeDotIndex;
               return (
@@ -637,100 +647,100 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
           </div>
         </div>
 
-        {/* 5. ORIGINAL HERO SECTION (from folder 3, unedited structure, horizontal line removed) */}
+        {/* 5. ORIGINAL HERO SECTION: Text Safe Area below navbar, centered composition, card spacing, bottom stats breathing room */}
         <div
           id="hero"
-          className="relative z-20 w-full max-w-7xl mx-auto flex-1 flex flex-col justify-end pt-28 md:pt-36 pb-8 md:pb-12 px-6 md:px-12 lg:px-16 transition-all duration-300"
+          className="relative z-20 w-full max-w-7xl mx-auto flex-1 h-full flex flex-col justify-between pt-20 sm:pt-24 lg:pt-28 pb-6 sm:pb-8 md:pb-10 px-4 sm:px-6 md:px-12 lg:px-16 transition-all duration-300"
           style={{
             opacity: heroOpacity,
             transform: `translateY(${heroTranslateY}px)`,
             pointerEvents: heroOpacity > 0.4 ? 'auto' : 'none',
           }}
         >
-          {/* Main Content Area: Left Typography & Right Glass Stat Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end mb-10 md:mb-14">
+          {/* Main Content Area: Left Typography & Right Glass Stat Cards (Vertically Centered in Safe Area) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 xl:gap-12 items-center lg:items-end my-auto w-full">
             
-            {/* LEFT COLUMN: Social Proof Capsule, Headline, Subtitle, CTA */}
-            <div className="lg:col-span-7 xl:col-span-8 space-y-6">
+            {/* LEFT COLUMN: Social Proof Capsule, Eyebrow, Headline, Subtitle, CTA */}
+            <div className="lg:col-span-7 xl:col-span-8 space-y-3.5 sm:space-y-4 md:space-y-5">
               
               {/* Social Proof Pill / Verified Trust Badge */}
-              <div className="inline-flex items-center gap-2.5 sm:gap-3 bg-black/45 backdrop-blur-md border border-white/20 rounded-full py-1 px-2 sm:px-3 shadow-xl">
+              <div className="inline-flex items-center gap-2 sm:gap-2.5 bg-black/45 backdrop-blur-md border border-white/20 rounded-full py-1 px-2.5 sm:px-3 shadow-xl">
                 <div className="flex items-center text-amber-400">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                    <Star key={i} className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400 text-amber-400" />
                   ))}
                 </div>
                 <div className="h-3 w-px bg-white/30" />
-                <span className="text-white font-semibold text-xs tracking-wide uppercase">
+                <span className="text-white font-semibold text-[10px] sm:text-xs tracking-wide uppercase">
                   25+ YEARS OF SOLAR EXPERIENCE
                 </span>
               </div>
 
               {/* Eyebrow */}
-              <div className="flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-[#C6F500]">
+              <div className="flex items-center gap-2 text-[11px] sm:text-xs font-bold tracking-widest uppercase text-[#C6F500]">
                 <span>Solar Technologies</span>
                 <span>•</span>
-                <span>Ichalkaranji's Established Solar EPC Partner</span>
+                <span className="truncate">Ichalkaranji's Established Solar EPC Partner</span>
               </div>
 
-              {/* Main Headline */}
-              <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight text-white leading-[1.08] text-balance">
-                Powering Businesses, <br />
+              {/* Main Headline (Safe clearance below floating navbar, crisp line-height, no cut-off) */}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[4rem] font-bold tracking-tight text-white leading-[1.10] text-balance">
+                Powering Businesses, <br className="hidden sm:inline" />
                 Homes & Industries <span className="font-editorial-italic font-normal text-white">with Solar.</span>
               </h1>
 
               {/* Subtitle Body Text */}
-              <p className="text-white/85 text-base sm:text-lg max-w-xl font-normal leading-relaxed text-balance">
+              <p className="text-white/85 text-xs sm:text-sm md:text-base lg:text-lg max-w-xl font-normal leading-relaxed text-balance">
                 Solar Technologies delivers complete solar solutions across residential, commercial, industrial and institutional applications — from engineering and installation to long-term support.
               </p>
 
-              {/* Primary Action Button (Neon Lime Pill with Lightning Bolt) */}
-              <div className="pt-2 flex flex-wrap items-center gap-3">
+              {/* Primary Action Button (Neon Lime Pill with Lightning Bolt & Calculator) */}
+              <div className="pt-1 sm:pt-2 flex flex-wrap items-center gap-2.5 sm:gap-3">
                 <button
                   onClick={onExploreInnovation}
-                  className="group inline-flex items-center gap-2.5 bg-[#C6F500] hover:bg-[#b8e500] active:scale-95 text-black font-bold text-sm md:text-base px-7 py-3.5 rounded-full shadow-[0_8px_30px_rgba(198,245,0,0.35)] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(198,245,0,0.5)] hover:-translate-y-0.5 cursor-pointer"
+                  className="group inline-flex items-center gap-2 sm:gap-2.5 bg-[#C6F500] hover:bg-[#b8e500] active:scale-95 text-black font-bold text-xs sm:text-sm md:text-base px-5 sm:px-7 py-3 sm:py-3.5 rounded-full shadow-[0_8px_30px_rgba(198,245,0,0.35)] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(198,245,0,0.5)] hover:-translate-y-0.5 cursor-pointer"
                 >
                   <span>Explore Solutions</span>
                   <Zap className="w-4 h-4 fill-black text-black group-hover:rotate-12 transition-transform" />
                 </button>
                 <button
                   onClick={onOpenCalculator}
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 active:scale-95 text-white font-semibold text-sm md:text-base px-6 py-3.5 rounded-full border border-white/20 transition-all duration-200 cursor-pointer"
+                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 active:scale-95 text-white font-semibold text-xs sm:text-sm md:text-base px-5 sm:px-6 py-3 sm:py-3.5 rounded-full border border-white/20 transition-all duration-200 cursor-pointer"
                 >
                   <span>Solar Calculator</span>
                 </button>
               </div>
             </div>
 
-            {/* RIGHT COLUMN: Two Glassmorphism Stat Cards */}
-            <div className="lg:col-span-5 xl:col-span-4 flex flex-col items-start lg:items-end justify-end">
-              <div className="grid grid-cols-2 gap-3 sm:gap-4 w-full max-w-md">
+            {/* RIGHT COLUMN: Two Glassmorphism Stat Cards (Comfortable Spacing, No Clipping) */}
+            <div className="lg:col-span-5 xl:col-span-4 flex flex-col items-start lg:items-end justify-center">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 w-full max-w-sm sm:max-w-md lg:max-w-xs xl:max-w-sm">
                 
                 {/* Stat Card 1: 25+ Years of Commitment */}
-                <div className="glass-panel rounded-2xl p-5 md:p-6 text-white shadow-2xl flex flex-col justify-between transition-all duration-300 hover:border-white/40 hover:-translate-y-1">
-                  <span className="font-telemetry text-4xl sm:text-5xl font-bold tracking-tight text-white leading-none">
+                <div className="glass-panel rounded-2xl p-3.5 sm:p-4 md:p-5 text-white shadow-2xl flex flex-col justify-between transition-all duration-300 hover:border-white/40 hover:-translate-y-1">
+                  <span className="font-telemetry text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold tracking-tight text-white leading-none">
                     25+
                   </span>
-                  <div className="mt-4">
-                    <p className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                  <div className="mt-2.5 sm:mt-3">
+                    <p className="text-[11px] sm:text-xs md:text-sm font-bold text-white uppercase tracking-wider leading-snug">
                       Years of Commitment
                     </p>
-                    <p className="text-[11px] text-white/70 mt-1">
+                    <p className="text-[10px] sm:text-[11px] text-white/70 mt-0.5 sm:mt-1 leading-tight">
                       Solar EPC Excellence
                     </p>
                   </div>
                 </div>
 
                 {/* Stat Card 2: Turnkey Solutions */}
-                <div className="glass-panel rounded-2xl p-5 md:p-6 text-white shadow-2xl flex flex-col justify-between transition-all duration-300 hover:border-white/40 hover:-translate-y-1">
-                  <span className="font-telemetry text-4xl sm:text-5xl font-bold tracking-tight text-[#C6F500] leading-none">
+                <div className="glass-panel rounded-2xl p-3.5 sm:p-4 md:p-5 text-white shadow-2xl flex flex-col justify-between transition-all duration-300 hover:border-white/40 hover:-translate-y-1">
+                  <span className="font-telemetry text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold tracking-tight text-[#C6F500] leading-none">
                     EPC
                   </span>
-                  <div className="mt-4">
-                    <p className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                  <div className="mt-2.5 sm:mt-3">
+                    <p className="text-[11px] sm:text-xs md:text-sm font-bold text-white uppercase tracking-wider leading-snug">
                       Turnkey Solutions
                     </p>
-                    <p className="text-[11px] text-white/70 mt-1">
+                    <p className="text-[10px] sm:text-[11px] text-white/70 mt-0.5 sm:mt-1 leading-tight">
                       Residential • Commercial • Industrial
                     </p>
                   </div>
@@ -740,45 +750,45 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
             </div>
           </div>
 
-          {/* BOTTOM ROW: Verified Company Credentials */}
-          <div className="pt-6 mt-4 border-t border-white/10">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 max-w-3xl ml-auto">
+          {/* BOTTOM ROW: Verified Company Credentials (Generous Bottom Breathing Space) */}
+          <div className="pt-3 sm:pt-4 border-t border-white/10 w-full mt-auto">
+            <div className="grid grid-cols-3 gap-2 sm:gap-6 md:gap-8 max-w-3xl ml-auto">
               
               {/* Credential 1 */}
-              <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-                <span className="font-telemetry text-2xl sm:text-3xl font-bold text-white tracking-tight leading-none mb-1">
+              <div className="flex flex-col items-start text-left">
+                <span className="font-telemetry text-base sm:text-xl md:text-2xl lg:text-3xl font-bold text-white tracking-tight leading-none mb-0.5 sm:mb-1">
                   25+ Yrs
                 </span>
-                <span className="text-xs text-[#C6F500] font-semibold uppercase tracking-wider">
+                <span className="text-[9px] sm:text-xs text-[#C6F500] font-semibold uppercase tracking-wider truncate w-full">
                   Solar Experience
                 </span>
-                <span className="text-[11px] text-white/70 font-normal leading-tight mt-0.5">
+                <span className="text-[8px] sm:text-[11px] text-white/70 font-normal leading-tight mt-0.5 hidden xs:block">
                   Decades of proven engineering & reliability
                 </span>
               </div>
 
               {/* Credential 2 */}
-              <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-                <span className="font-telemetry text-2xl sm:text-3xl font-bold text-white tracking-tight leading-none mb-1">
+              <div className="flex flex-col items-start text-left">
+                <span className="font-telemetry text-base sm:text-xl md:text-2xl lg:text-3xl font-bold text-white tracking-tight leading-none mb-0.5 sm:mb-1">
                   MSEDCL
                 </span>
-                <span className="text-xs text-[#C6F500] font-semibold uppercase tracking-wider">
+                <span className="text-[9px] sm:text-xs text-[#C6F500] font-semibold uppercase tracking-wider truncate w-full">
                   Supervision & Contracting
                 </span>
-                <span className="text-[11px] text-white/70 font-normal leading-tight mt-0.5">
+                <span className="text-[8px] sm:text-[11px] text-white/70 font-normal leading-tight mt-0.5 hidden xs:block">
                   In-house Govt. Licensed Contractor
                 </span>
               </div>
 
               {/* Credential 3 */}
-              <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-                <span className="font-telemetry text-2xl sm:text-3xl font-bold text-white tracking-tight leading-none mb-1">
+              <div className="flex flex-col items-start text-left">
+                <span className="font-telemetry text-base sm:text-xl md:text-2xl lg:text-3xl font-bold text-white tracking-tight leading-none mb-0.5 sm:mb-1">
                   Turnkey
                 </span>
-                <span className="text-xs text-[#C6F500] font-semibold uppercase tracking-wider">
+                <span className="text-[9px] sm:text-xs text-[#C6F500] font-semibold uppercase tracking-wider truncate w-full">
                   End-to-End Execution
                 </span>
-                <span className="text-[11px] text-white/70 font-normal leading-tight mt-0.5">
+                <span className="text-[8px] sm:text-[11px] text-white/70 font-normal leading-tight mt-0.5 hidden xs:block">
                   Concept, design, commissioning & O&M
                 </span>
               </div>
