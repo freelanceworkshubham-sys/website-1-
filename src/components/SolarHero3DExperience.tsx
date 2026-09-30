@@ -70,6 +70,18 @@ const power2Out = (t: number) => 1 - (1 - t) * (1 - t);
 const power2In = (t: number) => t * t;
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
 
+// 8-Stage Physical Electrical Workflow sequence (0.00 to 1.00)
+export const ELECTRICAL_WORKFLOW_STAGES = [
+  { range: [0.0, 0.15], name: '01 · BUILDING & ROOFTOP', desc: 'Pre-solar state & site harvest' },
+  { range: [0.15, 0.3], name: '02 · SOLAR PANELS', desc: 'High-efficiency PV array formation' },
+  { range: [0.3, 0.45], name: '03 · DC CABLE PATH', desc: 'Direct-current solar transmission' },
+  { range: [0.45, 0.6], name: '04 · DCDB & ISOLATOR', desc: 'Surge protection & isolation' },
+  { range: [0.6, 0.72], name: '05 · SOLAR INVERTER', desc: 'Wall-mounted DC to AC conversion' },
+  { range: [0.72, 0.82], name: '06 · AC CABLE & ACDB', desc: 'Alternating current distribution' },
+  { range: [0.82, 0.92], name: '07 · BIDIRECTIONAL NET METER', desc: 'Two-way MSEDCL grid measurement' },
+  { range: [0.92, 1.0], name: '08 · POWERED-HOME STATE', desc: 'Clean self-generation & grid export' },
+];
+
 export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
   onExploreInnovation,
   onOpenCalculator,
@@ -101,7 +113,38 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
     }
   }, []);
 
-  // Draw a specific frame onto the canvas (optimized to skip redundant redraws)
+  // Helper to load a specific frame with priority
+  const loadFrame = useCallback((index: number) => {
+    const clamped = Math.max(0, Math.min(TOTAL_FRAMES - 1, Math.round(index)));
+    if (imagesRef.current[clamped]) return;
+
+    const img = new Image();
+    img.src = getFramePath(clamped);
+    img.onload = () => {
+      imagesRef.current[clamped] = img;
+      // If user is currently parked on or near this frame, re-render immediately
+      if (Math.abs(currentFrameRef.current - clamped) <= 2) {
+        drawFrame(currentFrameRef.current, true);
+      }
+    };
+    img.onerror = () => {
+      setTimeout(() => {
+        if (!imagesRef.current[clamped]) {
+          const retry = new Image();
+          retry.src = getFramePath(clamped);
+          retry.onload = () => {
+            imagesRef.current[clamped] = retry;
+            if (Math.abs(currentFrameRef.current - clamped) <= 2) {
+              drawFrame(currentFrameRef.current, true);
+            }
+          };
+        }
+      }, 400);
+    };
+    imagesRef.current[clamped] = img;
+  }, []);
+
+  // Draw a specific frame onto the canvas (with fallback redrawing and no stale cache lock)
   const drawFrame = useCallback((frameIndex: number, forceRedraw = false) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -109,12 +152,18 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
     if (!ctx) return;
 
     const clampedIndex = Math.max(0, Math.min(TOTAL_FRAMES - 1, Math.round(frameIndex)));
-    if (!forceRedraw && lastDrawnFrameRef.current === clampedIndex) return;
-
     let img = imagesRef.current[clampedIndex];
+    const isExact = Boolean(img && img.complete && img.naturalWidth > 0);
+
+    if (!forceRedraw && isExact && lastDrawnFrameRef.current === clampedIndex) return;
 
     // Fallback: if requested frame is not yet fully loaded, find nearest loaded frame
-    if (!img || !img.complete || img.naturalWidth === 0) {
+    if (!isExact) {
+      // Prioritize loading requested frame and surrounding frames immediately
+      loadFrame(clampedIndex);
+      loadFrame(clampedIndex - 1);
+      loadFrame(clampedIndex + 1);
+
       for (let i = clampedIndex - 1; i >= 0; i--) {
         const candidate = imagesRef.current[i];
         if (candidate && candidate.complete && candidate.naturalWidth > 0) {
@@ -164,8 +213,12 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
     ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
 
-    lastDrawnFrameRef.current = clampedIndex;
-  }, []);
+    if (isExact) {
+      lastDrawnFrameRef.current = clampedIndex;
+    } else {
+      lastDrawnFrameRef.current = -1; // Keep open to redraw as soon as real frame arrives
+    }
+  }, [loadFrame]);
 
   // Resize canvas according to viewport and DPR
   const handleResize = useCallback(() => {
@@ -185,11 +238,11 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
     }
   }, [drawFrame]);
 
-  // Load all 302 frames in parallel on mount
+  // Wave-based smart preloading on mount
   useEffect(() => {
     let isCancelled = false;
 
-    // First load frame 0 to immediately display the night scene
+    // 1. Immediately load frame 0
     const firstImg = new Image();
     firstImg.src = getFramePath(0);
     firstImg.onload = () => {
@@ -197,34 +250,61 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
       imagesRef.current[0] = firstImg;
       setIsFirstFrameLoaded(true);
       handleResize();
-      drawFrame(0);
+      drawFrame(0, true);
     };
 
-    // Concurrently preload all remaining frames
-    for (let i = 1; i < TOTAL_FRAMES; i++) {
+    // 2. Load keyframes across entire timeline (every 4th frame: 0, 4, 8, ... 300)
+    // Provides instant visual feedback across all 8 electrical stages
+    const keyframes: number[] = [];
+    for (let k = 4; k < TOTAL_FRAMES; k += 4) {
+      keyframes.push(k);
+    }
+    keyframes.push(TOTAL_FRAMES - 1);
+
+    keyframes.forEach((frameIdx) => {
+      if (isCancelled || imagesRef.current[frameIdx]) return;
       const img = new Image();
-      img.src = getFramePath(i);
+      img.src = getFramePath(frameIdx);
       img.onload = () => {
         if (isCancelled) return;
-        imagesRef.current[i] = img;
+        imagesRef.current[frameIdx] = img;
+        if (Math.abs(currentFrameRef.current - frameIdx) <= 4) {
+          drawFrame(currentFrameRef.current, true);
+        }
       };
-      img.onerror = () => {
-        setTimeout(() => {
-          if (!isCancelled && !imagesRef.current[i]) {
-            const retryImg = new Image();
-            retryImg.src = getFramePath(i);
-            retryImg.onload = () => {
-              if (!isCancelled) {
-                imagesRef.current[i] = retryImg;
-              }
-            };
-          }
-        }, 400);
-      };
-    }
+    });
+
+    // 3. Incrementally preload all remaining intermediate frames in small batches
+    let batchIndex = 1;
+    let batchTimer: NodeJS.Timeout;
+
+    const loadNextBatch = () => {
+      if (isCancelled || batchIndex >= TOTAL_FRAMES) return;
+      const endBatch = Math.min(batchIndex + 12, TOTAL_FRAMES);
+      for (let i = batchIndex; i < endBatch; i++) {
+        if (!imagesRef.current[i]) {
+          const img = new Image();
+          img.src = getFramePath(i);
+          img.onload = () => {
+            if (isCancelled) return;
+            imagesRef.current[i] = img;
+            if (Math.abs(currentFrameRef.current - i) <= 2) {
+              drawFrame(currentFrameRef.current, true);
+            }
+          };
+        }
+      }
+      batchIndex = endBatch;
+      if (batchIndex < TOTAL_FRAMES) {
+        batchTimer = setTimeout(loadNextBatch, 80);
+      }
+    };
+
+    batchTimer = setTimeout(loadNextBatch, 150);
 
     return () => {
       isCancelled = true;
+      clearTimeout(batchTimer);
     };
   }, [drawFrame, handleResize]);
 
@@ -235,8 +315,10 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
     return () => window.removeEventListener('resize', handleResize);
   }, [handleResize]);
 
-  // Track scroll position across the 380vh track
+  // Continuous Master Scroll Scrubbing (Connects scroll position directly to animation frame)
   useEffect(() => {
+    let scrollRafId: number | null = null;
+
     const handleScroll = () => {
       const container = containerRef.current;
       if (!container) return;
@@ -255,12 +337,21 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
 
       const targetFrame = Math.round(progress * (TOTAL_FRAMES - 1));
       currentFrameRef.current = targetFrame;
-      drawFrame(targetFrame);
+
+      if (scrollRafId === null) {
+        scrollRafId = requestAnimationFrame(() => {
+          scrollRafId = null;
+          drawFrame(currentFrameRef.current);
+        });
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollRafId !== null) cancelAnimationFrame(scrollRafId);
+    };
   }, [drawFrame, onScrollProgressChange]);
 
   // Jump to specific slide or hero when clicking progress dots
@@ -343,6 +434,18 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
   const heroOpacity = Math.max(0, Math.min(1, (scrollProgress - HERO_REVEAL_START) / (1 - HERO_REVEAL_START)));
   const heroTranslateY = (1 - heroOpacity) * 35; // 35px -> 0px slide up
 
+  const currentStage = useMemo(() => {
+    for (let i = 0; i < ELECTRICAL_WORKFLOW_STAGES.length; i++) {
+      if (
+        scrollProgress >= ELECTRICAL_WORKFLOW_STAGES[i].range[0] &&
+        scrollProgress < ELECTRICAL_WORKFLOW_STAGES[i].range[1]
+      ) {
+        return ELECTRICAL_WORKFLOW_STAGES[i];
+      }
+    }
+    return ELECTRICAL_WORKFLOW_STAGES[ELECTRICAL_WORKFLOW_STAGES.length - 1];
+  }, [scrollProgress]);
+
   return (
     <div
       ref={containerRef}
@@ -379,7 +482,7 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
           </div>
         )}
 
-        {/* 3. Subtle Localized Navy Gradient (Only on left behind text for legibility; center & right 3D scene stays bright & crisp) */}
+        {/* 3. Subtle Localized Navy Gradient */}
         <div
           className="absolute inset-0 pointer-events-none transition-opacity duration-500 z-10"
           style={{
@@ -388,6 +491,21 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
               'linear-gradient(90deg, rgba(10, 18, 36, 0.65) 0%, rgba(10, 18, 36, 0.30) 35%, rgba(10, 18, 36, 0.05) 55%, transparent 75%)',
           }}
         />
+
+        {/* Physical Electrical Workflow HUD Badge (Visible during 0.00 to 0.80) */}
+        {scrollProgress < 0.80 && (
+          <div className="absolute top-20 sm:top-24 left-4 sm:left-12 z-20 pointer-events-none transition-opacity duration-300">
+            <div className="inline-flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/20 rounded-full py-1 px-3 shadow-xl">
+              <span className="w-2 h-2 rounded-full bg-[#C6F500] animate-pulse" />
+              <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider uppercase text-[#C6F500]">
+                {currentStage.name}
+              </span>
+              <span className="text-[10px] text-white/70 hidden md:inline border-l border-white/20 pl-2">
+                {currentStage.desc}
+              </span>
+            </div>
+          </div>
+        )}
 
         {/* 4. VIDEO TEXT SLIDES OVERLAY (Slides 1 to 4: 0% to 80% scroll) */}
         <div className="absolute inset-0 z-20 pointer-events-none">
