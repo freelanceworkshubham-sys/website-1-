@@ -95,7 +95,7 @@ export interface CountUpNumberProps {
   duration?: number; // In seconds, defaults to 2.5s
   className?: string;
   style?: React.CSSProperties;
-  as?: keyof React.JSX.IntrinsicElements;
+  as?: React.ElementType;
   onComplete?: () => void;
 }
 
