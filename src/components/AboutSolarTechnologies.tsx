@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, ShieldCheck, Sun, Zap, CheckCircle2 } from 'lucide-react';
+import { CountUpNumber } from './CountUpNumber';
 
 interface AboutSolarTechnologiesProps {
   onOpenQuote?: () => void;
@@ -54,9 +55,10 @@ export const AboutSolarTechnologies: React.FC<AboutSolarTechnologiesProps> = ({ 
             
             {/* Stat 1: 25+ YEARS */}
             <div className="bg-slate-50 border border-slate-200/80 hover:border-emerald-300 rounded-xl sm:rounded-2xl p-2.5 sm:p-5 text-center flex flex-col justify-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group cursor-default">
-              <span className="text-lg sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight block group-hover:text-emerald-900 transition-colors truncate">
-                25+
-              </span>
+              <CountUpNumber
+                value="25+"
+                className="text-lg sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight block group-hover:text-emerald-900 transition-colors truncate"
+              />
               <span className="text-[10px] sm:text-xs font-semibold uppercase text-emerald-800 tracking-wider mt-0.5 sm:mt-1 block">
                 Years
               </span>

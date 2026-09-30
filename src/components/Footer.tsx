@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle2, ShieldCheck, Sun, MapPin, Phone, Mail, Building, Clock } from 'lucide-react';
+import { CountUpNumber } from './CountUpNumber';
 
 export const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -34,9 +35,10 @@ export const Footer: React.FC = () => {
 
             <div className="grid grid-cols-3 gap-2 sm:gap-8 border-t border-slate-800/80 pt-3 lg:border-t-0 lg:pt-0">
               <div>
-                <span className="font-telemetry text-xl sm:text-3xl font-bold text-[#C6F500] tracking-tight block">
-                  25+
-                </span>
+                <CountUpNumber
+                  value="25+"
+                  className="font-telemetry text-xl sm:text-3xl font-bold text-[#C6F500] tracking-tight block"
+                />
                 <span className="text-[10px] sm:text-[11px] text-slate-400 block mt-0.5 leading-tight">
                   Years of Commitment
                 </span>

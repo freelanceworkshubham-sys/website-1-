@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { SolarHero3DExperience } from './components/SolarHero3DExperience';
 import { LiveTelemetryBar } from './components/LiveTelemetryBar';
@@ -11,6 +11,7 @@ import { FinalCTA } from './components/FinalCTA';
 import { Footer } from './components/Footer';
 import { QuoteModal } from './components/QuoteModal';
 import { SystemTier } from './types/solar';
+import { initGlobalCountUpObserver } from './utils/initCountUpObserver';
 
 export default function App() {
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
@@ -19,6 +20,12 @@ export default function App() {
   
   // Showcase Frame Mode: allows toggling between framed presentation and full-screen view
   const [isFramedShowcase, setIsFramedShowcase] = useState(false);
+
+  // Initialize Global Premium 4.5s Numerical Count-up Observer
+  useEffect(() => {
+    const cleanup = initGlobalCountUpObserver();
+    return cleanup;
+  }, []);
 
   const handleOpenCalculator = () => {
     const el = document.getElementById('calculator');
