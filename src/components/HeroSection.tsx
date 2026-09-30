@@ -50,37 +50,33 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreInnovation, o
                 </div>
               </div>
 
-              {/* Five Star Rating & 90k+ Users Worldwide */}
-              <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2 text-xs">
-                <div className="flex items-center text-amber-400">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
+              {/* Trust Badge */}
+              <div className="flex items-center gap-2 text-xs">
+                <span className="w-2 h-2 rounded-full bg-[#C6F500] animate-pulse" />
                 <span className="text-white/90 font-medium tracking-tight whitespace-nowrap">
-                  90k+ Users Worldwide
+                  25+ Years of Solar Experience
                 </span>
               </div>
             </div>
 
-            {/* Main Headline (Exact Typography & Line Breaks from Reference) */}
+            {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight text-white leading-[1.08] text-balance">
-              Next-Generation <br />
-              Solar Energy <span className="font-editorial-italic font-normal text-white">Solutions</span>
+              Powering Businesses, <br />
+              Homes &amp; <span className="font-editorial-italic font-normal text-white">Industries</span>
             </h1>
 
             {/* Subtitle Body Text */}
             <p className="text-white/85 text-base sm:text-lg max-w-xl font-normal leading-relaxed text-balance">
-              Delivering reliable, eco-friendly solar solutions designed to reduce energy costs while minimizing environmental impact.
+              Solar Technologies delivers complete solar EPC solutions across residential, commercial, industrial and institutional applications — from engineering and installation to long-term support.
             </p>
 
-            {/* Primary Action Button (Neon Lime Pill with Lightning Bolt) */}
+            {/* Primary Action Button */}
             <div className="pt-2">
               <button
-                onClick={onExploreInnovation}
+                onClick={onOpenCalculator}
                 className="group inline-flex items-center gap-2.5 bg-[#C6F500] hover:bg-[#b8e500] active:scale-95 text-black font-bold text-sm md:text-base px-7 py-3.5 rounded-full shadow-[0_8px_30px_rgba(198,245,0,0.35)] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(198,245,0,0.5)] hover:-translate-y-0.5 cursor-pointer"
               >
-                <span>Explore Innovation</span>
+                <span>Calculate Your Solar Savings</span>
                 <Zap className="w-4 h-4 fill-black text-black group-hover:rotate-12 transition-transform" />
               </button>
             </div>
@@ -90,23 +86,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreInnovation, o
           <div className="lg:col-span-5 xl:col-span-4 flex flex-col items-start lg:items-end justify-end">
             <div className="grid grid-cols-2 gap-3 sm:gap-4 w-full max-w-md">
               
-              {/* Stat Card 1: 35% Reduced Carbon Footprint */}
+              {/* Stat Card 1: 25+ Years */}
               <div className="glass-panel rounded-2xl p-5 md:p-6 text-white shadow-2xl flex flex-col justify-between transition-all duration-300 hover:border-white/40 hover:-translate-y-1">
-                <span className="font-telemetry text-4xl sm:text-5xl font-bold tracking-tight text-white leading-none">
-                  35%
+                <span className="font-telemetry text-4xl sm:text-5xl font-bold tracking-tight text-[#C6F500] leading-none">
+                  25+
                 </span>
                 <p className="text-xs sm:text-sm text-white/80 font-medium leading-snug mt-4">
-                  Reduced Carbon Footprint
+                  Years of Solar Commitment
                 </p>
               </div>
 
-              {/* Stat Card 2: 25% Reduced Electricity Footprint */}
+              {/* Stat Card 2: Turnkey EPC */}
               <div className="glass-panel rounded-2xl p-5 md:p-6 text-white shadow-2xl flex flex-col justify-between transition-all duration-300 hover:border-white/40 hover:-translate-y-1">
-                <span className="font-telemetry text-4xl sm:text-5xl font-bold tracking-tight text-white leading-none">
-                  25%
+                <span className="font-telemetry text-2xl sm:text-3xl font-bold tracking-tight text-white leading-tight">
+                  EPC
                 </span>
                 <p className="text-xs sm:text-sm text-white/80 font-medium leading-snug mt-4">
-                  Reduced Electricity Footprint
+                  End-to-End Solar Solutions
                 </p>
               </div>
 
@@ -114,124 +110,34 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreInnovation, o
           </div>
         </div>
 
-        {/* BOTTOM ROW: Award Laurels & Multipliers (100% matched to image) */}
+        {/* BOTTOM ROW: Verified Credentials */}
         <div className="border-t border-white/15 pt-6 mt-4">
-          <div className="grid grid-cols-3 gap-4 md:gap-8 max-w-2xl ml-auto">
+          <div className="grid grid-cols-3 gap-4 md:gap-8 max-w-2xl ml-auto text-center">
             
-            {/* Laurel 1: 7.9X GreenTech Award 2023 */}
-            <div className="flex flex-col items-center text-center">
-              <span className="font-telemetry text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-none mb-2">
-                7.9X
+            <div className="flex flex-col items-center">
+              <span className="font-telemetry text-xl sm:text-2xl font-bold text-white tracking-tight leading-none mb-1">
+                25+ YRS
               </span>
-              
-              {/* Laurel Wreath Graphic with Leader Badge */}
-              <div className="relative w-16 h-12 flex items-center justify-center my-1 text-white/90">
-                <svg viewBox="0 0 100 60" className="w-full h-full stroke-current fill-none stroke-[2]">
-                  {/* Left Wreath Branch */}
-                  <path d="M48,52 C32,50 20,40 18,22 C18,12 24,4 32,2" strokeLinecap="round" />
-                  <path d="M22,24 C16,20 12,24 16,30" />
-                  <path d="M26,36 C20,34 18,40 22,44" />
-                  <path d="M35,46 C30,46 30,52 35,53" />
-                  <path d="M20,14 C16,10 22,8 26,12" />
-
-                  {/* Right Wreath Branch */}
-                  <path d="M52,52 C68,50 80,40 82,22 C82,12 76,4 68,2" strokeLinecap="round" />
-                  <path d="M78,24 C84,20 88,24 84,30" />
-                  <path d="M74,36 C80,34 82,40 78,44" />
-                  <path d="M65,46 C70,46 70,52 65,53" />
-                  <path d="M80,14 C84,10 78,8 74,12" />
-                </svg>
-                {/* Center Leader Badge */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <span className="text-[8px] font-bold uppercase tracking-wider text-[#C6F500] leading-none">
-                    Leader
-                  </span>
-                  <span className="text-[7px] text-white/60 leading-none mt-0.5">
-                    Verified
-                  </span>
-                </div>
-              </div>
-
               <span className="text-[10px] sm:text-xs text-white/70 font-medium leading-tight mt-1">
-                GreenTech Innovation Award 2023
+                Solar Experience
               </span>
             </div>
 
-            {/* Laurel 2: 5X GreenTech Award 2024 */}
-            <div className="flex flex-col items-center text-center">
-              <span className="font-telemetry text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-none mb-2">
-                5X
+            <div className="flex flex-col items-center">
+              <span className="font-telemetry text-xl sm:text-2xl font-bold text-[#C6F500] tracking-tight leading-none mb-1">
+                MSEDCL
               </span>
-              
-              {/* Laurel Wreath Graphic with Leader Badge */}
-              <div className="relative w-16 h-12 flex items-center justify-center my-1 text-white/90">
-                <svg viewBox="0 0 100 60" className="w-full h-full stroke-current fill-none stroke-[2]">
-                  {/* Left Wreath Branch */}
-                  <path d="M48,52 C32,50 20,40 18,22 C18,12 24,4 32,2" strokeLinecap="round" />
-                  <path d="M22,24 C16,20 12,24 16,30" />
-                  <path d="M26,36 C20,34 18,40 22,44" />
-                  <path d="M35,46 C30,46 30,52 35,53" />
-                  <path d="M20,14 C16,10 22,8 26,12" />
-
-                  {/* Right Wreath Branch */}
-                  <path d="M52,52 C68,50 80,40 82,22 C82,12 76,4 68,2" strokeLinecap="round" />
-                  <path d="M78,24 C84,20 88,24 84,30" />
-                  <path d="M74,36 C80,34 82,40 78,44" />
-                  <path d="M65,46 C70,46 70,52 65,53" />
-                  <path d="M80,14 C84,10 78,8 74,12" />
-                </svg>
-                {/* Center Leader Badge */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <span className="text-[8px] font-bold uppercase tracking-wider text-[#C6F500] leading-none">
-                    Leader
-                  </span>
-                  <span className="text-[7px] text-white/60 leading-none mt-0.5">
-                    Verified
-                  </span>
-                </div>
-              </div>
-
               <span className="text-[10px] sm:text-xs text-white/70 font-medium leading-tight mt-1">
-                GreenTech Innovation Award 2024
+                Supervision &amp; Contracting
               </span>
             </div>
 
-            {/* Laurel 3: 1.2X GreenTech Award 2025 */}
-            <div className="flex flex-col items-center text-center">
-              <span className="font-telemetry text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-none mb-2">
-                1.2X
+            <div className="flex flex-col items-center">
+              <span className="font-telemetry text-xl sm:text-2xl font-bold text-white tracking-tight leading-none mb-1">
+                TURNKEY
               </span>
-              
-              {/* Laurel Wreath Graphic with Leader Badge */}
-              <div className="relative w-16 h-12 flex items-center justify-center my-1 text-white/90">
-                <svg viewBox="0 0 100 60" className="w-full h-full stroke-current fill-none stroke-[2]">
-                  {/* Left Wreath Branch */}
-                  <path d="M48,52 C32,50 20,40 18,22 C18,12 24,4 32,2" strokeLinecap="round" />
-                  <path d="M22,24 C16,20 12,24 16,30" />
-                  <path d="M26,36 C20,34 18,40 22,44" />
-                  <path d="M35,46 C30,46 30,52 35,53" />
-                  <path d="M20,14 C16,10 22,8 26,12" />
-
-                  {/* Right Wreath Branch */}
-                  <path d="M52,52 C68,50 80,40 82,22 C82,12 76,4 68,2" strokeLinecap="round" />
-                  <path d="M78,24 C84,20 88,24 84,30" />
-                  <path d="M74,36 C80,34 82,40 78,44" />
-                  <path d="M65,46 C70,46 70,52 65,53" />
-                  <path d="M80,14 C84,10 78,8 74,12" />
-                </svg>
-                {/* Center Leader Badge */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <span className="text-[8px] font-bold uppercase tracking-wider text-[#C6F500] leading-none">
-                    Leader
-                  </span>
-                  <span className="text-[7px] text-white/60 leading-none mt-0.5">
-                    Verified
-                  </span>
-                </div>
-              </div>
-
               <span className="text-[10px] sm:text-xs text-white/70 font-medium leading-tight mt-1">
-                GreenTech Innovation Award 2025
+                End-to-End Solutions
               </span>
             </div>
 

@@ -259,7 +259,7 @@ export const SolarCalculator: React.FC<SolarCalculatorProps> = ({ onScheduleAudi
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3.5">
               
-              {/* HOME */}
+              {/* RESIDENTIAL */}
               <button
                 type="button"
                 onClick={() => handleTypeChange('HOME')}
@@ -273,12 +273,12 @@ export const SolarCalculator: React.FC<SolarCalculatorProps> = ({ onScheduleAudi
                   <Home className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <div className="min-w-0">
-                  <div className={`text-xs sm:text-sm font-bold truncate ${customerType === 'HOME' ? 'text-white' : 'text-[#0A1224]'}`}>HOME</div>
-                  <div className={`text-[10px] sm:text-[11px] truncate ${customerType === 'HOME' ? 'text-slate-200' : 'text-slate-500'}`}>Rooftop 1–10 kW</div>
+                  <div className={`text-xs sm:text-sm font-bold truncate ${customerType === 'HOME' ? 'text-white' : 'text-[#0A1224]'}`}>RESIDENTIAL</div>
+                  <div className={`text-[10px] sm:text-[11px] truncate ${customerType === 'HOME' ? 'text-slate-200' : 'text-slate-500'}`}>Bungalow / Apartments</div>
                 </div>
               </button>
 
-              {/* BUSINESS */}
+              {/* COMMERCIAL */}
               <button
                 type="button"
                 onClick={() => handleTypeChange('BUSINESS')}
@@ -292,8 +292,8 @@ export const SolarCalculator: React.FC<SolarCalculatorProps> = ({ onScheduleAudi
                   <Building2 className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <div className="min-w-0">
-                  <div className={`text-xs sm:text-sm font-bold truncate ${customerType === 'BUSINESS' ? 'text-white' : 'text-[#0A1224]'}`}>BUSINESS</div>
-                  <div className={`text-[10px] sm:text-[11px] truncate ${customerType === 'BUSINESS' ? 'text-slate-200' : 'text-slate-500'}`}>Commercial 5–100 kW</div>
+                  <div className={`text-xs sm:text-sm font-bold truncate ${customerType === 'BUSINESS' ? 'text-white' : 'text-[#0A1224]'}`}>COMMERCIAL</div>
+                  <div className={`text-[10px] sm:text-[11px] truncate ${customerType === 'BUSINESS' ? 'text-slate-200' : 'text-slate-500'}`}>Offices, Hospitals, Retail</div>
                 </div>
               </button>
 
@@ -312,7 +312,7 @@ export const SolarCalculator: React.FC<SolarCalculatorProps> = ({ onScheduleAudi
                 </div>
                 <div className="min-w-0">
                   <div className={`text-xs sm:text-sm font-bold truncate ${customerType === 'INDUSTRIAL' ? 'text-white' : 'text-[#0A1224]'}`}>INDUSTRIAL</div>
-                  <div className={`text-[10px] sm:text-[11px] truncate ${customerType === 'INDUSTRIAL' ? 'text-slate-200' : 'text-slate-500'}`}>HT / Factory 50 kW–1 MW+</div>
+                  <div className={`text-[10px] sm:text-[11px] truncate ${customerType === 'INDUSTRIAL' ? 'text-slate-200' : 'text-slate-500'}`}>Textile, Engineering &amp; Plants</div>
                 </div>
               </button>
 
@@ -470,10 +470,10 @@ export const SolarCalculator: React.FC<SolarCalculatorProps> = ({ onScheduleAudi
               )}
             </div>
 
-            {/* The 4 Compact Metrics: VALUE -> LABEL -> DESCRIPTION vertically stacked */}
+            {/* The 4 Compact Metrics: Exactly matching requirements */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
               
-              {/* Metric 1: Capacity */}
+              {/* Metric 1: Estimated Solar Capacity */}
               <div className="bg-white p-2.5 sm:p-4 rounded-xl border border-slate-200/90 shadow-2xs flex flex-col justify-start min-w-0 overflow-hidden">
                 <div className="text-base sm:text-2xl md:text-3xl font-extrabold text-[#0A1224] tracking-tight leading-tight truncate">
                   {calculation.capacityKw >= 1000 
@@ -481,40 +481,40 @@ export const SolarCalculator: React.FC<SolarCalculatorProps> = ({ onScheduleAudi
                     : `${calculation.capacityKw} kW`}
                 </div>
                 <div className="text-[11px] sm:text-xs font-semibold text-slate-800 mt-1 leading-tight break-words">
-                  Estimated System Size
+                  Estimated Solar Capacity
                 </div>
                 <div className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 leading-tight break-words">
-                  {customerType === 'HOME' ? 'Tier-1 Mono PERC' : 'Bifacial Glass-Glass'}
+                  Recommended System Size
                 </div>
               </div>
 
-              {/* Metric 2: Generation */}
+              {/* Metric 2: Estimated Generation */}
               <div className="bg-white p-2.5 sm:p-4 rounded-xl border border-slate-200/90 shadow-2xs flex flex-col justify-start min-w-0 overflow-hidden">
                 <div className="text-base sm:text-2xl md:text-3xl font-extrabold text-[#0F3D4C] tracking-tight leading-tight truncate">
                   {formatIndianNumber(calculation.annualGenerationKwh)}
                 </div>
                 <div className="text-[11px] sm:text-xs font-semibold text-slate-800 mt-1 leading-tight break-words">
-                  Annual Generation
+                  Estimated Generation
                 </div>
                 <div className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 leading-tight break-words">
-                  kWh / year clean harvest
+                  Units (kWh) generated / year
                 </div>
               </div>
 
-              {/* Metric 3: Saving */}
+              {/* Metric 3: Estimated Monthly Saving */}
               <div className="bg-white p-2.5 sm:p-4 rounded-xl border border-slate-200/90 shadow-2xs flex flex-col justify-start min-w-0 overflow-hidden">
                 <div className="text-base sm:text-2xl md:text-3xl font-extrabold text-emerald-700 tracking-tight leading-tight truncate">
-                  {formatINR(calculation.annualSaving)}
+                  {formatINR(Math.round(calculation.annualSaving / 12))}
                 </div>
                 <div className="text-[11px] sm:text-xs font-semibold text-slate-800 mt-1 leading-tight break-words">
-                  Annual Saving
+                  Estimated Monthly Saving
                 </div>
                 <div className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 leading-tight break-words">
-                  Direct bill reduction
+                  ~{formatINR(calculation.annualSaving)} / year
                 </div>
               </div>
 
-              {/* Metric 4: Payback */}
+              {/* Metric 4: Estimated Payback */}
               <div className="bg-white p-2.5 sm:p-4 rounded-xl border border-slate-200/90 shadow-2xs flex flex-col justify-start min-w-0 overflow-hidden">
                 <div className="text-base sm:text-2xl md:text-3xl font-extrabold text-[#0A1224] tracking-tight leading-tight truncate">
                   {calculation.paybackYears} Years
@@ -523,7 +523,7 @@ export const SolarCalculator: React.FC<SolarCalculatorProps> = ({ onScheduleAudi
                   Estimated Payback
                 </div>
                 <div className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 leading-tight break-words">
-                  100% capital breakeven
+                  Capital recovery timeline
                 </div>
               </div>
 
@@ -536,11 +536,11 @@ export const SolarCalculator: React.FC<SolarCalculatorProps> = ({ onScheduleAudi
                 onClick={handleOpenLeadModal}
                 className="group w-full bg-[#FFC94D] hover:bg-[#eab33a] active:scale-[0.99] text-[#0A1224] font-bold py-3 sm:py-4 px-4 sm:px-6 rounded-xl flex items-center justify-center gap-2 sm:gap-3 text-xs sm:text-base shadow-md hover:shadow-lg transition-all cursor-pointer min-h-[44px]"
               >
-                <span className="truncate">GET MY DETAILED SOLAR ESTIMATE</span>
+                <span className="truncate">GET YOUR SOLAR ESTIMATE</span>
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-[#0A1224] group-hover:translate-x-1.5 transition-transform shrink-0" />
               </button>
               <p className="text-[10px] sm:text-[11px] text-slate-500 text-center mt-2 leading-tight">
-                Free engineering consultation · Includes rooftop shadow simulation &amp; DISCOM net-metering check.
+                *All figures are estimates only. Calculated for Maharashtra tariff benchmarks. Solar Technologies delivers turnkey EPC &amp; MSEDCL supervision.
               </p>
             </div>
 

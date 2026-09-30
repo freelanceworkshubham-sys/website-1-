@@ -74,29 +74,29 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
             </div>
 
             <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
-              LIDAR Solar Assessment Scheduled
+              Solar Assessment &amp; Feasibility Scheduled
             </h3>
 
             <p className="text-slate-600 text-sm sm:text-base max-w-md mx-auto leading-relaxed">
-              Thank you, <strong className="text-slate-900">{formData.fullName}</strong>. Our geospatial engineering team has queued high-resolution satellite irradiance modeling for:
+              Thank you, <strong className="text-slate-900">{formData.fullName}</strong>. Our solar engineering team has queued your customized system proposal for:
             </p>
 
             <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 max-w-md mx-auto text-left text-xs space-y-1.5 font-mono">
               <p className="text-slate-500">LOCATION: <span className="text-slate-900 font-semibold">{formData.address}</span></p>
               <p className="text-slate-500">CONTACT: <span className="text-slate-900 font-semibold">{formData.email} · {formData.phone}</span></p>
               <p className="text-slate-500">EST. CURRENT BILL: <span className="text-emerald-700 font-bold">₹{new Intl.NumberFormat('en-IN').format(formData.electricBill)}/mo</span></p>
-              <p className="text-slate-500">REPORT TIME: <span className="text-emerald-700 font-bold">Within 24 Hours</span></p>
+              <p className="text-slate-500">RESPONSE TIME: <span className="text-emerald-700 font-bold">Within 24 Hours</span></p>
             </div>
 
             <p className="text-xs text-slate-500">
-              A certified Sonar solar engineer will email your complete 3D ray-tracing blueprint and incentive calculation report.
+              A certified Solar Technologies engineer will contact you with your complete solar engineering blueprint and MSEDCL net metering feasibility report.
             </p>
 
             <button
               onClick={onClose}
               className="mt-4 bg-[#C6F500] hover:bg-[#b8e500] text-black font-bold px-8 py-3 rounded-full text-sm shadow-md transition-all cursor-pointer"
             >
-              Return to Platform
+              Return to Website
             </button>
           </div>
         ) : (
@@ -107,10 +107,10 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
                 Zero-Obligation Proposal
               </span>
               <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
-                Request Your Precision LIDAR Roof Audit
+                Request Your Site Assessment &amp; Solar Quote
               </h3>
               <p className="text-slate-600 text-xs sm:text-sm">
-                Get a customized 3D solar blueprint, verified shading breakdown, and exact federal tax incentive calculation.
+                Get a customized solar design proposal, roof area assessment, and verified MSEDCL net-metering estimate from Solar Technologies.
               </p>
             </div>
 
@@ -124,7 +124,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
                     type="text"
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    placeholder="e.g. Eleanor Vance"
+                    placeholder="e.g. Ramesh Patil"
                     className="w-full bg-slate-50 border border-slate-200 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none transition-all"
                   />
                   {errors.fullName && <p className="text-[11px] text-rose-500">{errors.fullName}</p>}
@@ -137,7 +137,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="e.g. eleanor@example.com"
+                    placeholder="e.g. ramesh@example.com"
                     className="w-full bg-slate-50 border border-slate-200 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none transition-all"
                   />
                   {errors.email && <p className="text-[11px] text-rose-500">{errors.email}</p>}
@@ -150,7 +150,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="e.g. (555) 234-5678"
+                    placeholder="e.g. +91 98230 12345"
                     className="w-full bg-slate-50 border border-slate-200 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none transition-all"
                   />
                   {errors.phone && <p className="text-[11px] text-rose-500">{errors.phone}</p>}
@@ -164,10 +164,10 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
                     onChange={(e) => setFormData({ ...formData, propertyType: e.target.value })}
                     className="w-full bg-slate-50 border border-slate-200 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 outline-none"
                   >
-                    <option value="residential">Single Family Home</option>
-                    <option value="luxury_estate">Luxury Villa / Estate</option>
-                    <option value="commercial">Commercial / Industrial Facility</option>
-                    <option value="agricultural">Agricultural / Agrivoltaics</option>
+                    <option value="residential">Bungalow / Villa</option>
+                    <option value="apartment">Housing Society / Apartment</option>
+                    <option value="commercial">Commercial / Hospital / Complex</option>
+                    <option value="industrial">Industrial / Textile / Factory</option>
                   </select>
                 </div>
               </div>
@@ -175,13 +175,13 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
               {/* Property Address */}
               <div className="space-y-1">
                 <label className="text-xs font-semibold text-slate-700">
-                  Property Street Address, City &amp; Zip *
+                  Property Address, City / District *
                 </label>
                 <input
                   type="text"
                   value={formData.address}
                   onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                  placeholder="e.g. 742 Evergreen Terrace, Springfield, OR 97477"
+                  placeholder="e.g. Station Road, Ichalkaranji / Tarabai Park, Kolhapur"
                   className="w-full bg-slate-50 border border-slate-200 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none transition-all"
                 />
                 {errors.address && <p className="text-[11px] text-rose-500">{errors.address}</p>}
@@ -196,7 +196,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
                 <input
                   type="range"
                   min="500"
-                  max="25000"
+                  max="100000"
                   step="500"
                   value={formData.electricBill}
                   onChange={(e) => setFormData({ ...formData, electricBill: Number(e.target.value) })}
@@ -207,7 +207,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
               {/* Privacy and Verification notice */}
               <div className="flex items-center gap-2 text-[11px] text-slate-500 pt-2">
                 <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Strict privacy guarantee. We never sell your data or deploy automated spam calls.</span>
+                <span>Strict privacy guarantee. Your contact details are used solely for your engineering feasibility report.</span>
               </div>
 
               {/* Submit CTA */}
@@ -217,10 +217,10 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
                 className="w-full bg-[#C6F500] hover:bg-[#b8e500] active:scale-98 disabled:opacity-50 text-black font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 text-sm shadow-md transition-all cursor-pointer"
               >
                 {isSubmitting ? (
-                  <span>Generating Satellite CAD Model...</span>
+                  <span>Preparing Solar Feasibility Report...</span>
                 ) : (
                   <>
-                    <span>Generate Free Engineering Report</span>
+                    <span>Submit Quote Request</span>
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}

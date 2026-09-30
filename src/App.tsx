@@ -3,7 +3,7 @@ import { Navbar } from './components/Navbar';
 import { SolarHero3DExperience } from './components/SolarHero3DExperience';
 import { LiveTelemetryBar } from './components/LiveTelemetryBar';
 import { SolarBenefitsRibbon } from './components/SolarBenefitsRibbon';
-import { AboutGVP } from './components/AboutGVP';
+import { AboutSolarTechnologies } from './components/AboutSolarTechnologies';
 import { SolarCalculator } from './components/SolarCalculator';
 import { ImpactAndProof } from './components/ImpactAndProof';
 import { SystemShowcase } from './components/SystemShowcase';
@@ -72,19 +72,19 @@ export default function App() {
           }}
         />
 
-        {/* 02 — ABOUT GVP SOLAR ENERGY (Shifted Up: Who we are, 13+ Years, 500+ Projects, 10+ MW) */}
-        <AboutGVP onOpenQuote={() => handleOpenQuote()} />
+        {/* 02 — ABOUT SOLAR TECHNOLOGIES (25+ Years Experience, EPC, MSEDCL Supervision) */}
+        <AboutSolarTechnologies onOpenQuote={() => handleOpenQuote()} />
 
-        {/* 03 — HOW IT WORKS / SOLAR JOURNEY (Circular Interactive Process: Plan → Survey → Design → Install) */}
+        {/* 03 — HOW IT WORKS / SOLAR JOURNEY (Circular Interactive Process: Consult → Survey → Design → Install → Support) */}
         <LiveTelemetryBar />
 
         {/* 04 — SMALL SOLAR BENEFITS RIBBON (PM Surya Ghar, Savings, ROI, Projects) */}
         <SolarBenefitsRibbon />
 
-        {/* 05 — PROJECTS (Field-Verified Installations Across Maharashtra) */}
+        {/* 05 — PROJECTS (Turnkey Installations Across Maharashtra) */}
         <ImpactAndProof />
 
-        {/* 06 — SERVICES (Key GVP Solar EPC Services) */}
+        {/* 06 — SERVICES & INDUSTRIES (Solar Technologies Core EPC, Rooftop, O&M & Sectors) */}
         <SystemShowcase onSelectSystem={handleSelectSystem} />
 
         {/* 07 — SOLAR CALCULATOR (Shifted Down: Interactive Solar Yield & Financial Estimate) */}

@@ -6,12 +6,12 @@ export const FAQSection: React.FC = () => {
 
   const faqs = [
     {
-      q: 'How does Sonar’s bifacial technology perform on cloudy, rainy, or winter days?',
-      a: 'Even in heavy cloud cover, daylight contains high amounts of diffuse irradiance. Sonar N-type TOPCon cells are specifically engineered with wide-spectrum absorption that captures ambient blue light and infrared radiation. In winter, snow surrounding the panels acts as a natural mirror (albedo effect), allowing the rear glass of our bifacial modules to boost energy yield by up to 28% compared to standard panels.',
+      q: 'How does Solar Technologies solar installation perform on cloudy or monsoon days?',
+      a: 'Even in heavy cloud cover, daylight contains high amounts of diffuse irradiance. Solar Technologies deploys high-efficiency N-type TOPCon & Mono PERC modules specifically engineered with wide-spectrum absorption that captures ambient diffuse light. System generation balances over annual solar cycles, delivering dependable year-round savings.',
     },
     {
       q: 'What happens to my power supply during a municipal grid blackout?',
-      a: 'Standard solar grid-tied systems shut off automatically during a blackout to protect utility line workers. However, when paired with the Sonar Solid-State Battery Wall, our intelligent microgrid switch automatically isolates your home from the downed utility in under 8 milliseconds (UPS speed). Your refrigerator, HVAC, Wi-Fi, and medical equipment continue running seamlessly without any power drop.',
+      a: 'Standard grid-tied solar systems automatically disconnect during utility outages in compliance with MSEDCL safety regulations to protect line workers. For uninterrupted continuous power, Solar Technologies designs hybrid energy storage systems that switch seamlessly to backup power for essential lighting, medical equipment and home appliances.',
     },
     {
       q: 'How does the PM Surya Ghar Muft Bijli Yojana subsidy work?',
@@ -19,7 +19,7 @@ export const FAQSection: React.FC = () => {
     },
     {
       q: 'Will solar panel installation cause roof leaks or void my existing roof warranty?',
-      a: 'No. Sonar uses patented zero-penetration and compression-sealed mounting hardware with triple-tier redundant silicone elastomer flashing. Every roof mount is certified by licensed structural engineers. Furthermore, our installations include a 10-year workmanship and watertight roof guarantee that exceeds standard roofing requirements.',
+      a: 'No. Solar Technologies engineers custom non-penetrating and anchor-sealed mounting hardware with certified structural load designs. Every installation conforms to high wind-load ratings and Maharashtra building standards, ensuring 100% structural integrity and watertight roof sealing.',
     },
     {
       q: 'How does net energy metering (NEM) compensate me for excess power?',

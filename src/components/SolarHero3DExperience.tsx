@@ -528,66 +528,51 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
             {/* LEFT COLUMN: Social Proof Capsule, Headline, Subtitle, CTA */}
             <div className="lg:col-span-7 xl:col-span-8 space-y-6">
               
-              {/* Social Proof Pill (100% matched to image) */}
-              <div className="inline-flex items-center gap-3 bg-black/45 backdrop-blur-md border border-white/20 rounded-full py-1 px-1.5 pr-4 shadow-xl">
-                {/* Stacked User Avatars + Lime Plus Badge */}
-                <div className="flex items-center -space-x-2">
-                  <img
-                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&h=80&q=80"
-                    alt="Customer avatar"
-                    referrerPolicy="no-referrer"
-                    className="w-7 h-7 rounded-full object-cover border-2 border-black/40"
-                  />
-                  <img
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&h=80&q=80"
-                    alt="Customer avatar"
-                    referrerPolicy="no-referrer"
-                    className="w-7 h-7 rounded-full object-cover border-2 border-black/40"
-                  />
-                  <img
-                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=80&h=80&q=80"
-                    alt="Customer avatar"
-                    referrerPolicy="no-referrer"
-                    className="w-7 h-7 rounded-full object-cover border-2 border-black/40"
-                  />
-                  {/* Neon Lime Plus Button */}
-                  <div className="w-7 h-7 rounded-full bg-[#C6F500] text-black font-bold text-xs flex items-center justify-center border-2 border-black/40 shadow-sm z-10">
-                    +
-                  </div>
+              {/* Social Proof Pill / Verified Trust Badge */}
+              <div className="inline-flex items-center gap-2.5 sm:gap-3 bg-black/45 backdrop-blur-md border border-white/20 rounded-full py-1 px-2 sm:px-3 shadow-xl">
+                <div className="flex items-center text-amber-400">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                  ))}
                 </div>
-
-                {/* Five Star Rating & 90k+ Users Worldwide */}
-                <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2 text-xs">
-                  <div className="flex items-center text-amber-400">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
-                    ))}
-                  </div>
-                  <span className="text-white/90 font-medium tracking-tight whitespace-nowrap">
-                    90k+ Users Worldwide
-                  </span>
-                </div>
+                <div className="h-3 w-px bg-white/30" />
+                <span className="text-white font-semibold text-xs tracking-wide uppercase">
+                  25+ YEARS OF SOLAR EXPERIENCE
+                </span>
               </div>
 
-              {/* Main Headline (Exact Typography & Line Breaks from Reference) */}
+              {/* Eyebrow */}
+              <div className="flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-[#C6F500]">
+                <span>Solar Technologies</span>
+                <span>•</span>
+                <span>Ichalkaranji's Established Solar EPC Partner</span>
+              </div>
+
+              {/* Main Headline */}
               <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight text-white leading-[1.08] text-balance">
-                Next-Generation <br />
-                Solar Energy <span className="font-editorial-italic font-normal text-white">Solutions</span>
+                Powering Businesses, <br />
+                Homes & Industries <span className="font-editorial-italic font-normal text-white">with Solar.</span>
               </h1>
 
               {/* Subtitle Body Text */}
               <p className="text-white/85 text-base sm:text-lg max-w-xl font-normal leading-relaxed text-balance">
-                Delivering reliable, eco-friendly solar solutions designed to reduce energy costs while minimizing environmental impact.
+                Solar Technologies delivers complete solar solutions across residential, commercial, industrial and institutional applications — from engineering and installation to long-term support.
               </p>
 
               {/* Primary Action Button (Neon Lime Pill with Lightning Bolt) */}
-              <div className="pt-2">
+              <div className="pt-2 flex flex-wrap items-center gap-3">
                 <button
                   onClick={onExploreInnovation}
                   className="group inline-flex items-center gap-2.5 bg-[#C6F500] hover:bg-[#b8e500] active:scale-95 text-black font-bold text-sm md:text-base px-7 py-3.5 rounded-full shadow-[0_8px_30px_rgba(198,245,0,0.35)] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(198,245,0,0.5)] hover:-translate-y-0.5 cursor-pointer"
                 >
-                  <span>Explore Innovation</span>
+                  <span>Explore Solutions</span>
                   <Zap className="w-4 h-4 fill-black text-black group-hover:rotate-12 transition-transform" />
+                </button>
+                <button
+                  onClick={onOpenCalculator}
+                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 active:scale-95 text-white font-semibold text-sm md:text-base px-6 py-3.5 rounded-full border border-white/20 transition-all duration-200 cursor-pointer"
+                >
+                  <span>Solar Calculator</span>
                 </button>
               </div>
             </div>
@@ -596,139 +581,80 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
             <div className="lg:col-span-5 xl:col-span-4 flex flex-col items-start lg:items-end justify-end">
               <div className="grid grid-cols-2 gap-3 sm:gap-4 w-full max-w-md">
                 
-                {/* Stat Card 1: 35% Reduced Carbon Footprint */}
+                {/* Stat Card 1: 25+ Years of Commitment */}
                 <div className="glass-panel rounded-2xl p-5 md:p-6 text-white shadow-2xl flex flex-col justify-between transition-all duration-300 hover:border-white/40 hover:-translate-y-1">
                   <span className="font-telemetry text-4xl sm:text-5xl font-bold tracking-tight text-white leading-none">
-                    35%
+                    25+
                   </span>
-                  <p className="text-xs sm:text-sm text-white/80 font-medium leading-snug mt-4">
-                    Reduced Carbon Footprint
-                  </p>
+                  <div className="mt-4">
+                    <p className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                      Years of Commitment
+                    </p>
+                    <p className="text-[11px] text-white/70 mt-1">
+                      Solar EPC Excellence
+                    </p>
+                  </div>
                 </div>
 
-                {/* Stat Card 2: 25% Reduced Electricity Footprint */}
+                {/* Stat Card 2: Turnkey Solutions */}
                 <div className="glass-panel rounded-2xl p-5 md:p-6 text-white shadow-2xl flex flex-col justify-between transition-all duration-300 hover:border-white/40 hover:-translate-y-1">
-                  <span className="font-telemetry text-4xl sm:text-5xl font-bold tracking-tight text-white leading-none">
-                    25%
+                  <span className="font-telemetry text-4xl sm:text-5xl font-bold tracking-tight text-[#C6F500] leading-none">
+                    EPC
                   </span>
-                  <p className="text-xs sm:text-sm text-white/80 font-medium leading-snug mt-4">
-                    Reduced Electricity Footprint
-                  </p>
+                  <div className="mt-4">
+                    <p className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                      Turnkey Solutions
+                    </p>
+                    <p className="text-[11px] text-white/70 mt-1">
+                      Residential • Commercial • Industrial
+                    </p>
+                  </div>
                 </div>
 
               </div>
             </div>
           </div>
 
-          {/* BOTTOM ROW: Award Laurels & Multipliers (Horizontal line removed) */}
-          <div className="pt-6 mt-4">
-            <div className="grid grid-cols-3 gap-4 md:gap-8 max-w-2xl ml-auto">
+          {/* BOTTOM ROW: Verified Company Credentials */}
+          <div className="pt-6 mt-4 border-t border-white/10">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 max-w-3xl ml-auto">
               
-              {/* Laurel 1: 7.9X GreenTech Award 2023 */}
-              <div className="flex flex-col items-center text-center">
-                <span className="font-telemetry text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-none mb-2">
-                  7.9X
+              {/* Credential 1 */}
+              <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+                <span className="font-telemetry text-2xl sm:text-3xl font-bold text-white tracking-tight leading-none mb-1">
+                  25+ Yrs
                 </span>
-                
-                {/* Laurel Wreath Graphic with Leader Badge */}
-                <div className="relative w-16 h-12 flex items-center justify-center my-1 text-white/90">
-                  <svg viewBox="0 0 100 60" className="w-full h-full stroke-current fill-none stroke-[2]">
-                    <path d="M48,52 C32,50 20,40 18,22 C18,12 24,4 32,2" strokeLinecap="round" />
-                    <path d="M22,24 C16,20 12,24 16,30" />
-                    <path d="M26,36 C20,34 18,40 22,44" />
-                    <path d="M35,46 C30,46 30,52 35,53" />
-                    <path d="M20,14 C16,10 22,8 26,12" />
-
-                    <path d="M52,52 C68,50 80,40 82,22 C82,12 76,4 68,2" strokeLinecap="round" />
-                    <path d="M78,24 C84,20 88,24 84,30" />
-                    <path d="M74,36 C80,34 82,40 78,44" />
-                    <path d="M65,46 C70,46 70,52 65,53" />
-                    <path d="M80,14 C84,10 78,8 74,12" />
-                  </svg>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                    <span className="text-[8px] font-bold uppercase tracking-wider text-[#C6F500] leading-none">
-                      Leader
-                    </span>
-                    <span className="text-[7px] text-white/60 leading-none mt-0.5">
-                      Verified
-                    </span>
-                  </div>
-                </div>
-
-                <span className="text-[10px] sm:text-xs text-white/70 font-medium leading-tight mt-1">
-                  GreenTech Innovation Award 2023
+                <span className="text-xs text-[#C6F500] font-semibold uppercase tracking-wider">
+                  Solar Experience
+                </span>
+                <span className="text-[11px] text-white/70 font-normal leading-tight mt-0.5">
+                  Decades of proven engineering & reliability
                 </span>
               </div>
 
-              {/* Laurel 2: 5X GreenTech Award 2024 */}
-              <div className="flex flex-col items-center text-center">
-                <span className="font-telemetry text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-none mb-2">
-                  5X
+              {/* Credential 2 */}
+              <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+                <span className="font-telemetry text-2xl sm:text-3xl font-bold text-white tracking-tight leading-none mb-1">
+                  MSEDCL
                 </span>
-                
-                {/* Laurel Wreath Graphic with Leader Badge */}
-                <div className="relative w-16 h-12 flex items-center justify-center my-1 text-white/90">
-                  <svg viewBox="0 0 100 60" className="w-full h-full stroke-current fill-none stroke-[2]">
-                    <path d="M48,52 C32,50 20,40 18,22 C18,12 24,4 32,2" strokeLinecap="round" />
-                    <path d="M22,24 C16,20 12,24 16,30" />
-                    <path d="M26,36 C20,34 18,40 22,44" />
-                    <path d="M35,46 C30,46 30,52 35,53" />
-                    <path d="M20,14 C16,10 22,8 26,12" />
-
-                    <path d="M52,52 C68,50 80,40 82,22 C82,12 76,4 68,2" strokeLinecap="round" />
-                    <path d="M78,24 C84,20 88,24 84,30" />
-                    <path d="M74,36 C80,34 82,40 78,44" />
-                    <path d="M65,46 C70,46 70,52 65,53" />
-                    <path d="M80,14 C84,10 78,8 74,12" />
-                  </svg>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                    <span className="text-[8px] font-bold uppercase tracking-wider text-[#C6F500] leading-none">
-                      Leader
-                    </span>
-                    <span className="text-[7px] text-white/60 leading-none mt-0.5">
-                      Verified
-                    </span>
-                  </div>
-                </div>
-
-                <span className="text-[10px] sm:text-xs text-white/70 font-medium leading-tight mt-1">
-                  GreenTech Innovation Award 2024
+                <span className="text-xs text-[#C6F500] font-semibold uppercase tracking-wider">
+                  Supervision & Contracting
+                </span>
+                <span className="text-[11px] text-white/70 font-normal leading-tight mt-0.5">
+                  In-house Govt. Licensed Contractor
                 </span>
               </div>
 
-              {/* Laurel 3: 1.2X GreenTech Award 2025 */}
-              <div className="flex flex-col items-center text-center">
-                <span className="font-telemetry text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-none mb-2">
-                  1.2X
+              {/* Credential 3 */}
+              <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+                <span className="font-telemetry text-2xl sm:text-3xl font-bold text-white tracking-tight leading-none mb-1">
+                  Turnkey
                 </span>
-                
-                {/* Laurel Wreath Graphic with Leader Badge */}
-                <div className="relative w-16 h-12 flex items-center justify-center my-1 text-white/90">
-                  <svg viewBox="0 0 100 60" className="w-full h-full stroke-current fill-none stroke-[2]">
-                    <path d="M48,52 C32,50 20,40 18,22 C18,12 24,4 32,2" strokeLinecap="round" />
-                    <path d="M22,24 C16,20 12,24 16,30" />
-                    <path d="M26,36 C20,34 18,40 22,44" />
-                    <path d="M35,46 C30,46 30,52 35,53" />
-                    <path d="M20,14 C16,10 22,8 26,12" />
-
-                    <path d="M52,52 C68,50 80,40 82,22 C82,12 76,4 68,2" strokeLinecap="round" />
-                    <path d="M78,24 C84,20 88,24 84,30" />
-                    <path d="M74,36 C80,34 82,40 78,44" />
-                    <path d="M65,46 C70,46 70,52 65,53" />
-                    <path d="M80,14 C84,10 78,8 74,12" />
-                  </svg>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                    <span className="text-[8px] font-bold uppercase tracking-wider text-[#C6F500] leading-none">
-                      Leader
-                    </span>
-                    <span className="text-[7px] text-white/60 leading-none mt-0.5">
-                      Verified
-                    </span>
-                  </div>
-                </div>
-
-                <span className="text-[10px] sm:text-xs text-white/70 font-medium leading-tight mt-1">
-                  GreenTech Innovation Award 2025
+                <span className="text-xs text-[#C6F500] font-semibold uppercase tracking-wider">
+                  End-to-End Execution
+                </span>
+                <span className="text-[11px] text-white/70 font-normal leading-tight mt-0.5">
+                  Concept, design, commissioning & O&M
                 </span>
               </div>
 

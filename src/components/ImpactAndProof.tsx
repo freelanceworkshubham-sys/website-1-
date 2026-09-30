@@ -3,67 +3,81 @@ import { MapPin, ArrowRight, Sun, Zap, CheckCircle2 } from 'lucide-react';
 
 interface ProjectCardData {
   id: string;
+  projectName: string;
   location: string;
   system: string;
   projectType: string;
   performance: string;
   description: string;
+  statusNote?: string;
 }
 
 const PROJECTS: ProjectCardData[] = [
   {
     id: 'proj-1',
+    projectName: 'Textile & Sizing Unit Solar Plant',
     location: 'Ichalkaranji, Maharashtra',
-    system: '50 kW Rooftop Solar',
-    projectType: 'Commercial Rooftop',
-    performance: '~70,000 kWh/year',
+    system: 'Turnkey Industrial Solar EPC',
+    projectType: 'Textile / Sizing Industry',
+    performance: 'High-Yield Online Monitored',
     description:
-      "A professionally designed rooftop solar system built around the site's electricity usage and available roof area.",
+      'Engineered solar power plant customized for continuous factory shifts, heavy motor loads, and peak daytime tariff offset.',
+    statusNote: 'Verified Regional Installation',
   },
   {
     id: 'proj-2',
-    location: 'Kolhapur, Maharashtra',
-    system: '10 kW On-Grid Solar',
-    projectType: 'Residential Rooftop',
-    performance: '~14,500 kWh/year',
+    projectName: 'Shraddha Surgical Hospital',
+    location: 'Ichalkaranji, Maharashtra',
+    system: 'Healthcare Rooftop Solar',
+    projectType: 'Hospitals & Healthcare',
+    performance: 'Continuous Reliable Output',
     description:
-      'High-efficiency residential rooftop installation designed for household power autonomy and grid net-metering.',
+      'Critical infrastructure solar installation designed for uninterrupted operation, sensitive medical equipment, and daytime cooling.',
+    statusNote: 'Official Client Reference',
   },
   {
     id: 'proj-3',
-    location: 'Pune (Chakan MIDC), Maharashtra',
-    system: '250 kW Industrial Array',
-    projectType: 'Industrial HT Solar',
-    performance: '~3,60,000 kWh/year',
+    projectName: 'Balaji CBSE School Campus',
+    location: 'Ichalkaranji / Kolhapur, Maharashtra',
+    system: 'Institutional Rooftop Solar',
+    projectType: 'Educational Institutes',
+    performance: 'Clean Campus Energy',
     description:
-      'High-tension industrial rooftop installation engineered for manufacturing facility energy cost reduction.',
+      'Turnkey institutional solar installation providing substantial operating cost reductions and hands-on green education for students.',
+    statusNote: 'Official Client Reference',
   },
   {
     id: 'proj-4',
-    location: 'Sangli, Maharashtra',
-    system: '75 kW Solar System',
-    projectType: 'Commercial & Agro',
-    performance: '~1,05,000 kWh/year',
+    projectName: 'Retail Petroleum Outlets (BPCL / IOCL)',
+    location: 'Kolhapur District, Maharashtra',
+    system: 'Commercial Solar Setup',
+    projectType: 'Petrol Pumps',
+    performance: 'Reliable Daytime Power',
     description:
-      'Turnkey commercial solar solution optimized for peak daytime load compensation and long-term operating reliability.',
+      'Robust solar system for fueling stations with automated daytime load synchronization, minimizing grid dependence.',
+    statusNote: 'Official Client Reference',
   },
   {
     id: 'proj-5',
-    location: 'Solapur, Maharashtra',
-    system: '12 kW On-Grid Solar',
-    projectType: 'Residential Villa',
-    performance: '~17,200 kWh/year',
+    projectName: 'Sky Industries Manufacturing Unit',
+    location: 'Kolhapur Region, Maharashtra',
+    system: 'Industrial Rooftop Array',
+    projectType: 'Engineering & Manufacturing',
+    performance: 'Optimized Energy Yield',
     description:
-      'Architectural rooftop solar array tailored to roof geometry with seamless DISCOM net-metering integration.',
+      'High-capacity factory shed rooftop solar plant engineered for high ambient temperatures and harsh industrial conditions.',
+    statusNote: 'Official Client Reference',
   },
   {
     id: 'proj-6',
-    location: 'Satara, Maharashtra',
-    system: '120 kW Rooftop Solar',
-    projectType: 'Institutional Campus',
-    performance: '~1,70,000 kWh/year',
+    projectName: 'Residential Bungalow Solar System',
+    location: 'Kolhapur, Maharashtra',
+    system: 'Customized Rooftop Solar',
+    projectType: 'Residential Villa',
+    performance: 'Net-Metered Clean Power',
     description:
-      'Comprehensive campus rooftop installation serving educational facilities with clean, dependable solar generation.',
+      'Architectural rooftop solar solution with in-house engineered non-penetrating mounting structure and seamless MSEDCL net metering.',
+    statusNote: 'Verified Regional Installation',
   },
 ];
 
@@ -84,6 +98,17 @@ export const ImpactAndProof: React.FC = () => {
 
   // Duplicated list for seamless infinite loop (A + B)
   const loopCards = [...PROJECTS, ...PROJECTS];
+
+  // Official verified clients
+  const verifiedClients = [
+    'BPCL (Bharat Petroleum)',
+    'IOCL (Indian Oil)',
+    'Balaji CBSE School',
+    'SPMSPM',
+    'San Electricals',
+    'Shraddha Surgical Hospital',
+    'Sky Industries',
+  ];
 
   useEffect(() => {
     // Check if user prefers reduced motion
@@ -174,7 +199,6 @@ export const ImpactAndProof: React.FC = () => {
 
   const handleTouchEnd = () => {
     isTouchingRef.current = false;
-    // Smoothly resume automatic movement
     targetSpeedRef.current = 0.75;
   };
 
@@ -189,13 +213,13 @@ export const ImpactAndProof: React.FC = () => {
         {/* Section Header */}
         <div className="max-w-3xl space-y-2 sm:space-y-3">
           <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 inline-block">
-            OUR PROJECTS IN THE FIELD
+            SOLAR TECHNOLOGIES PROJECTS
           </span>
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 leading-tight">
             Real Systems. Real Sites. Real Solar.
           </h2>
           <p className="text-slate-600 text-sm sm:text-base lg:text-lg leading-relaxed">
-            Explore solar installations delivered by GVP Solar Energy across homes, businesses and industrial sites.
+            Explore turnkey solar EPC and rooftop installations delivered by Solar Technologies across Ichalkaranji, Kolhapur and Maharashtra.
           </p>
         </div>
 
@@ -218,7 +242,7 @@ export const ImpactAndProof: React.FC = () => {
           {loopCards.map((proj, idx) => (
             <div
               key={`${proj.id}-${idx}`}
-              className="w-[270px] sm:w-[350px] md:w-[390px] shrink-0 bg-slate-50/90 hover:bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-slate-200/80 hover:border-emerald-300/90 shadow-2xs flex flex-col justify-between transition-all duration-250 hover:-translate-y-1.5 hover:shadow-lg group cursor-pointer"
+              className="w-[280px] sm:w-[350px] md:w-[390px] shrink-0 bg-slate-50/90 hover:bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-slate-200/80 hover:border-emerald-300/90 shadow-2xs flex flex-col justify-between transition-all duration-250 hover:-translate-y-1.5 hover:shadow-lg group cursor-pointer"
             >
               <div className="space-y-3 sm:space-y-4">
                 
@@ -236,17 +260,20 @@ export const ImpactAndProof: React.FC = () => {
                 {/* System Title */}
                 <div>
                   <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-wider text-slate-400 block font-semibold">
-                    SYSTEM CAPACITY
+                    PROJECT
                   </span>
-                  <h3 className="text-base sm:text-xl font-bold text-slate-900 tracking-tight mt-0.5 group-hover:text-emerald-950 transition-colors">
-                    {proj.system}
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight mt-0.5 group-hover:text-emerald-950 transition-colors">
+                    {proj.projectName}
                   </h3>
+                  <span className="text-xs text-emerald-700 font-medium block mt-0.5">
+                    {proj.system}
+                  </span>
                 </div>
 
                 {/* Performance Pill Box */}
                 <div className="bg-white p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border border-slate-200/80 group-hover:border-slate-300/80 flex items-center justify-between transition-colors">
-                  <span className="text-[11px] sm:text-xs text-slate-500 font-medium">Estimated Generation</span>
-                  <span className="font-telemetry text-xs sm:text-base font-bold text-emerald-700">
+                  <span className="text-[11px] sm:text-xs text-slate-500 font-medium">System Performance</span>
+                  <span className="font-telemetry text-xs sm:text-sm font-bold text-emerald-700">
                     {proj.performance}
                   </span>
                 </div>
@@ -264,14 +291,39 @@ export const ImpactAndProof: React.FC = () => {
                   href="#calculator"
                   className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-emerald-800 hover:text-emerald-950 transition-colors"
                 >
-                  <span>VIEW PROJECT</span>
+                  <span>GET AN ESTIMATE</span>
                   <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-700 transition-transform duration-200 group-hover:translate-x-1.5" />
                 </a>
                 <span className="text-[10px] sm:text-[11px] text-slate-400 font-mono">
-                  GVP Solar
+                  Solar Technologies
                 </span>
               </div>
 
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* SECTION 14: TRUSTED SOLAR SOLUTIONS CLIENT RIBBON (No fake testimonials) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-16 mt-12 pt-10 border-t border-slate-200">
+        <div className="text-center space-y-2 mb-6">
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+            TRUSTED PARTNER IN SOLAR POWER
+          </span>
+          <h3 className="text-lg sm:text-xl font-bold text-slate-900">
+            Trusted Solar Solutions for Homes, Businesses &amp; Industries
+          </h3>
+        </div>
+
+        {/* Clean client badge marquee / row */}
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 max-w-4xl mx-auto">
+          {verifiedClients.map((client, i) => (
+            <div
+              key={i}
+              className="bg-slate-50 border border-slate-200/90 rounded-full px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-2xs hover:border-emerald-300 transition-colors flex items-center gap-2"
+            >
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+              <span>{client}</span>
             </div>
           ))}
         </div>

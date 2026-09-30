@@ -20,11 +20,11 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onOpenQuote }) => {
             </span>
 
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white leading-tight">
-              Get a site assessment and solar estimate from GVP Solar Energy.
+              Get a site assessment and solar estimate from Solar Technologies.
             </h2>
 
             <p className="text-slate-300 text-xs sm:text-sm max-w-lg mx-auto leading-relaxed">
-              Transparent feasibility analysis, customized system capacity planning, and complete subsidy guidance for your home or enterprise.
+              Transparent feasibility analysis, customized system capacity planning, and complete MSEDCL supervision backed by 25+ years of solar commitment.
             </p>
 
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">

@@ -18,12 +18,12 @@ interface StepData {
 
 const STEPS: StepData[] = [
   {
-    id: 'step-plan',
+    id: 'step-consult',
     stepNum: '01',
-    shortTitle: 'PLAN',
-    title: 'Plan Your Solar System',
-    description: 'Start with your electricity needs, monthly bill and property type.',
-    actionText: 'START PLANNING',
+    shortTitle: 'CONSULT',
+    title: 'Consultation & Consumption Review',
+    description: 'Understand electricity consumption, property requirements and project goals.',
+    actionText: 'SCHEDULE CONSULTATION',
     actionHref: '#calculator',
     accentColor: '#2563EB', // Electric Blue
     accentBorder: 'border-[#2563EB]',
@@ -35,10 +35,10 @@ const STEPS: StepData[] = [
     id: 'step-survey',
     stepNum: '02',
     shortTitle: 'SURVEY',
-    title: 'Site Survey',
-    description: 'We assess your roof, electrical setup and site conditions.',
-    actionText: 'ASSESS YOUR SITE',
-    actionHref: '#calculator',
+    title: 'Site & Structural Survey',
+    description: 'Assess the site, roof, electrical infrastructure and installation requirements.',
+    actionText: 'REQUEST SITE SURVEY',
+    actionHref: '#contact',
     accentColor: '#EA580C', // Warm Orange
     accentBorder: 'border-[#EA580C]',
     accentBg: 'bg-orange-50',
@@ -49,10 +49,10 @@ const STEPS: StepData[] = [
     id: 'step-design',
     stepNum: '03',
     shortTitle: 'DESIGN',
-    title: 'System Design',
-    description: 'We design the right solar capacity, layout and equipment for your site.',
-    actionText: 'DESIGN YOUR SYSTEM',
-    actionHref: '#systems',
+    title: 'Engineering & System Proposal',
+    description: 'Develop the appropriate solar system design, engineering and project proposal.',
+    actionText: 'VIEW SYSTEM DESIGN',
+    actionHref: '#services',
     accentColor: '#059669', // Solar Green
     accentBorder: 'border-[#059669]',
     accentBg: 'bg-emerald-50',
@@ -62,16 +62,30 @@ const STEPS: StepData[] = [
   {
     id: 'step-install',
     stepNum: '04',
-    shortTitle: 'INSTALL & GO LIVE',
-    title: 'Install & Go Live',
-    description: 'We handle installation, approvals, net metering and commissioning.',
-    actionText: 'GO SOLAR',
-    actionHref: '#calculator',
+    shortTitle: 'INSTALL & COMMISSION',
+    title: 'Installation & Commissioning',
+    description: 'Execute installation, electrical work, commissioning and required project coordination.',
+    actionText: 'EXECUTE INSTALLATION',
+    actionHref: '#projects',
     accentColor: '#0284C7', // Sky Blue / Cyan
     accentBorder: 'border-[#0284C7]',
     accentBg: 'bg-cyan-50',
     accentText: 'text-cyan-600',
     accentGlow: 'rgba(2, 132, 199, 0.22)',
+  },
+  {
+    id: 'step-support',
+    stepNum: '05',
+    shortTitle: 'SUPPORT & O&M',
+    title: 'Long-Term Operation & Maintenance',
+    description: 'Provide ongoing operation, maintenance and service support to ensure peak output.',
+    actionText: 'EXPLORE O&M SUPPORT',
+    actionHref: '#services',
+    accentColor: '#7C3AED', // Violet / Purple
+    accentBorder: 'border-[#7C3AED]',
+    accentBg: 'bg-purple-50',
+    accentText: 'text-purple-600',
+    accentGlow: 'rgba(124, 58, 237, 0.22)',
   },
 ];
 
@@ -126,16 +140,16 @@ export const LiveTelemetryBar: React.FC = () => {
       let nextDims;
       if (width < 350) {
         // Ultra-compact mobile (320px)
-        nextDims = { stageSize: 280, radius: 104, centerSize: 104, nodeSize: 58 };
+        nextDims = { stageSize: 280, radius: 104, centerSize: 94, nodeSize: 52 };
       } else if (width < 400) {
         // Compact mobile (360px - 390px)
-        nextDims = { stageSize: 316, radius: 118, centerSize: 118, nodeSize: 66 };
+        nextDims = { stageSize: 316, radius: 118, centerSize: 106, nodeSize: 58 };
       } else if (width < 640) {
         // Standard mobile (400px - 639px)
-        nextDims = { stageSize: 344, radius: 128, centerSize: 128, nodeSize: 72 };
+        nextDims = { stageSize: 344, radius: 128, centerSize: 114, nodeSize: 64 };
       } else {
         // Tablet / Desktop
-        nextDims = { stageSize: 480, radius: 175, centerSize: 170, nodeSize: 100 };
+        nextDims = { stageSize: 480, radius: 175, centerSize: 154, nodeSize: 88 };
       }
 
       dimensionsRef.current = nextDims;
@@ -164,11 +178,12 @@ export const LiveTelemetryBar: React.FC = () => {
       const { stageSize, radius, nodeSize } = dimensionsRef.current;
       const center = stageSize / 2;
       const halfNode = nodeSize / 2;
+      const stepAngle = 360 / STEPS.length;
 
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < STEPS.length; i++) {
         const el = nodeWrapperRefs.current[i];
         if (!el) continue;
-        const rad = ((angleDeg + i * 90) * Math.PI) / 180;
+        const rad = ((angleDeg + i * stepAngle) * Math.PI) / 180;
         const x = Math.round(center + radius * Math.cos(rad) - halfNode);
         const y = Math.round(center + radius * Math.sin(rad) - halfNode);
         el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
@@ -192,8 +207,8 @@ export const LiveTelemetryBar: React.FC = () => {
       };
     }
 
-    // 22 seconds per full 360° orbit = ~16.36 deg/sec
-    const SPEED = 360 / 22;
+    // 25 seconds per full 360° orbit
+    const SPEED = 360 / 25;
     let rafId: number;
 
     const animate = (now: number) => {
@@ -224,10 +239,11 @@ export const LiveTelemetryBar: React.FC = () => {
           updateNodePositions(angleRef.current);
 
           // Find which step is closest to TOP (270 degrees)
+          const stepAngle = 360 / STEPS.length;
           let closestIdx = 0;
           let minDiff = Infinity;
-          for (let i = 0; i < 4; i++) {
-            const nodeAngle = ((angleRef.current + i * 90) % 360 + 360) % 360;
+          for (let i = 0; i < STEPS.length; i++) {
+            const nodeAngle = ((angleRef.current + i * stepAngle) % 360 + 360) % 360;
             let diff = Math.abs(nodeAngle - 270);
             if (diff > 180) diff = 360 - diff;
             if (diff < minDiff) {
@@ -236,7 +252,7 @@ export const LiveTelemetryBar: React.FC = () => {
             }
           }
 
-          // Only update state when step actually changes (once every ~5.5s, not every frame)
+          // Only update state when step actually changes (once every ~5s, not every frame)
           if (closestIdx !== activeStepRef.current) {
             activeStepRef.current = closestIdx;
             setActiveStep(closestIdx);
@@ -283,7 +299,8 @@ export const LiveTelemetryBar: React.FC = () => {
     isPausedRef.current = true;
 
     // 3. Calculate shortest angular distance to top (270°)
-    const currentDeg = ((angleRef.current + idx * 90) % 360 + 360) % 360;
+    const stepAngle = 360 / STEPS.length;
+    const currentDeg = ((angleRef.current + idx * stepAngle) % 360 + 360) % 360;
     let diff = 270 - currentDeg;
     if (diff > 180) diff -= 360;
     if (diff < -180) diff += 360;
@@ -333,13 +350,13 @@ export const LiveTelemetryBar: React.FC = () => {
         {/* Section Header */}
         <div className="text-center max-w-xl mx-auto mb-6 sm:mb-10 space-y-2 sm:space-y-2.5">
           <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-emerald-200/80 inline-block">
-            HOW SOLAR WORKS
+            SOLAR JOURNEY
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-slate-900 leading-tight">
-            From Your First Question to Solar Power
+            How Solar Technologies Works
           </h2>
           <p className="text-slate-600 text-xs sm:text-sm leading-relaxed max-w-md mx-auto">
-            A simple journey from planning your system to switching it on.
+            A seamless 5-stage lifecycle from initial consultation to long-term performance and maintenance.
           </p>
         </div>
 
@@ -367,10 +384,19 @@ export const LiveTelemetryBar: React.FC = () => {
                 strokeWidth="1.25"
               />
 
-              <circle cx={center} cy={center - radius} r="2" fill="#94A3B8" opacity="0.4" />
-              <circle cx={center + radius} cy={center} r="2" fill="#94A3B8" opacity="0.4" />
-              <circle cx={center} cy={center + radius} r="2" fill="#94A3B8" opacity="0.4" />
-              <circle cx={center - radius} cy={center} r="2" fill="#94A3B8" opacity="0.4" />
+              {STEPS.map((_, i) => {
+                const rad = (i * (360 / STEPS.length) * Math.PI) / 180;
+                return (
+                  <circle
+                    key={i}
+                    cx={center + radius * Math.cos(rad)}
+                    cy={center + radius * Math.sin(rad)}
+                    r="2.5"
+                    fill="#94A3B8"
+                    opacity="0.4"
+                  />
+                );
+              })}
 
               <circle
                 ref={dotRef}
