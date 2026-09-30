@@ -47,7 +47,7 @@ export default function App() {
 
       {/* Main Website Container */}
       <div
-        className={`w-full bg-white text-slate-900 overflow-x-clip ${
+        className={`w-full bg-white text-slate-900 ${
           isFramedShowcase
             ? 'max-w-[1440px] rounded-3xl md:rounded-[2.5rem] shadow-[0_25px_80px_rgba(0,0,0,0.6)] border border-white/25 ring-1 ring-black/40'
             : ''

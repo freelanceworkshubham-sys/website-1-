@@ -184,8 +184,15 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
 
     if (!img || !img.complete || img.naturalWidth === 0) return;
 
+    if (canvas.width === 0 || canvas.height === 0) {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round((window.innerWidth || 1920) * dpr);
+      canvas.height = Math.round((window.innerHeight || 1080) * dpr);
+    }
+
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
+    if (canvasWidth === 0 || canvasHeight === 0) return;
 
     // Aspect ratio "cover" sizing for 1920x1080 source
     const imgWidth = img.naturalWidth || 1920;
@@ -456,7 +463,7 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
       {/* Sticky Viewport Container - Pins 100vh canvas while user scrolls 380vh track */}
       <div
         className="sticky top-0 left-0 w-full h-screen overflow-hidden flex flex-col justify-between select-none z-10"
-        style={{ position: 'sticky', top: 0 }}
+        style={{ position: 'sticky', top: 0, height: '100vh', width: '100%' }}
       >
         
         {/* 1. Fullscreen 3D Canvas rendering the 302 frames at maximum crispness */}
