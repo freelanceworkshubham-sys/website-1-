@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, X, Zap } from 'lucide-react';
 import {
   BrandConfig,
@@ -22,18 +22,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const isVisibleRef = useRef(false);
 
   useEffect(() => {
-    let rafId: number | null = null;
-
     const checkVisibility = () => {
       const heroTrack = document.getElementById('experience-track');
       if (!heroTrack) {
-        if (!isVisibleRef.current) {
-          isVisibleRef.current = true;
-          setIsVisible(true);
-        }
+        setIsVisible(true);
         return;
       }
 
@@ -41,42 +35,27 @@ export const Navbar: React.FC<NavbarProps> = ({
       const totalScrollable = heroTrack.scrollHeight - window.innerHeight;
 
       if (totalScrollable <= 0) {
-        if (!isVisibleRef.current) {
-          isVisibleRef.current = true;
-          setIsVisible(true);
-        }
+        setIsVisible(true);
         return;
       }
 
       // Progress within 3D Hero track:
       // 0.0 to 0.80 = 3D solar model animation slides
-      // 0.80 to 1.0 = End frame Hero Section
+      // 0.80 to 1.0 = End frame Hero Section ("Next-Generation Solar Energy Solutions")
+      // > 1.0 = Subsequent sections (About, Solar Journey, Projects, Services, etc.)
       const progress = -rect.top / totalScrollable;
-      const shouldBeVisible = progress >= 0.80;
 
-      if (shouldBeVisible !== isVisibleRef.current) {
-        isVisibleRef.current = shouldBeVisible;
-        setIsVisible(shouldBeVisible);
-      }
-    };
-
-    const onScrollOrResize = () => {
-      if (rafId === null) {
-        rafId = requestAnimationFrame(() => {
-          rafId = null;
-          checkVisibility();
-        });
-      }
+      // Hide during 3D animation; reveal at End Frame Hero section and beyond
+      setIsVisible(progress >= 0.80);
     };
 
     checkVisibility();
-    window.addEventListener('scroll', onScrollOrResize, { passive: true });
-    window.addEventListener('resize', onScrollOrResize, { passive: true });
+    window.addEventListener('scroll', checkVisibility, { passive: true });
+    window.addEventListener('resize', checkVisibility, { passive: true });
 
     return () => {
-      if (rafId !== null) cancelAnimationFrame(rafId);
-      window.removeEventListener('scroll', onScrollOrResize);
-      window.removeEventListener('resize', onScrollOrResize);
+      window.removeEventListener('scroll', checkVisibility);
+      window.removeEventListener('resize', checkVisibility);
     };
   }, []);
 
