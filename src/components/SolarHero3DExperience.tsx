@@ -650,7 +650,7 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
         {/* 5. ORIGINAL HERO SECTION: Mobile-first safe area below navbar, visible headline, compact trust cards, full desktop preservation */}
         <div
           id="hero"
-          className="relative z-20 w-full max-w-7xl mx-auto flex-1 h-full flex flex-col justify-end md:justify-start lg:justify-between pt-14 sm:pt-20 lg:pt-28 pb-[max(12px,env(safe-area-inset-bottom))] sm:pb-6 lg:pb-10 px-4 sm:px-6 md:px-12 lg:px-16 transition-all duration-300 overflow-visible"
+          className="relative z-20 w-full max-w-7xl mx-auto flex-1 h-full flex flex-col justify-start lg:justify-between pt-20 sm:pt-20 lg:pt-28 pb-4 sm:pb-6 lg:pb-10 px-4 sm:px-6 md:px-12 lg:px-16 transition-all duration-300 overflow-y-auto lg:overflow-visible"
           style={{
             opacity: heroOpacity,
             transform: `translateY(${heroTranslateY}px)`,
@@ -658,17 +658,17 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
           }}
         >
           {/* Main Content Area: Left Typography & Desktop Right Glass Stat Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-6 lg:gap-10 xl:gap-12 items-start lg:items-end w-full lg:my-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-10 xl:gap-12 items-start lg:items-end w-full lg:my-auto">
             
             {/* LEFT COLUMN: Eyebrow, Main Headline, Subtitle, CTAs, Mobile Trust Cards */}
-            <div className="relative lg:col-span-7 xl:col-span-8 space-y-1.5 sm:space-y-4 md:space-y-5 w-full">
+            <div className="relative lg:col-span-7 xl:col-span-8 space-y-2.5 sm:space-y-4 md:space-y-5 w-full">
               
-              {/* Subtle Localized Mobile Readability Backdrop (Mobile only: protects text against bright sun flare without darkening image or covering house) */}
+              {/* Subtle Localized Mobile Readability Backdrop (Soft natural blend, no dark rectangular panel or opaque overlay) */}
               <div
-                className="absolute -inset-x-3 -top-3 -bottom-3 pointer-events-none md:hidden rounded-2xl -z-10"
+                className="absolute -inset-6 pointer-events-none md:hidden -z-10 blur-2xl opacity-70"
                 style={{
                   background:
-                    'radial-gradient(ellipse 95% 85% at 20% 35%, rgba(7, 13, 9, 0.52) 0%, rgba(7, 13, 9, 0.28) 55%, transparent 100%)',
+                    'radial-gradient(circle at 25% 30%, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.08) 45%, transparent 75%)',
                 }}
               />
 
@@ -694,62 +694,71 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
               </div>
 
               {/* Main Headline (Always 100% visible on mobile, clear of navbar, crisp contrast against sun flare) */}
-              <h1 className="text-[22px] sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[4rem] font-bold tracking-tight text-white leading-[1.10] sm:leading-[1.10] text-balance max-w-[92vw] sm:max-w-xl lg:max-w-none [text-shadow:_0_2px_12px_rgba(0,0,0,0.7),_0_1px_3px_rgba(0,0,0,0.9)] md:[text-shadow:none]">
+              <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[4rem] font-bold tracking-tight text-white leading-[1.12] sm:leading-[1.10] text-balance max-w-[92vw] sm:max-w-xl lg:max-w-none [text-shadow:_0_2px_12px_rgba(0,0,0,0.7),_0_1px_3px_rgba(0,0,0,0.9)] md:[text-shadow:none]">
                 Powering Businesses, <br className="hidden sm:inline" />
                 Homes & Industries <span className="font-editorial-italic font-normal text-white">with Solar.</span>
               </h1>
 
               {/* Subtitle Body Text (Crisp and readable against sunlight on mobile) */}
-              <p className="text-white/95 text-[11px] sm:text-sm md:text-base lg:text-lg max-w-[92vw] sm:max-w-xl font-normal leading-relaxed text-balance [text-shadow:_0_1px_6px_rgba(0,0,0,0.85),_0_1px_2px_rgba(0,0,0,0.95)] md:[text-shadow:none]">
+              <p className="text-white/95 text-xs sm:text-sm md:text-base lg:text-lg max-w-[92vw] sm:max-w-xl font-normal leading-relaxed text-balance [text-shadow:_0_1px_6px_rgba(0,0,0,0.85),_0_1px_2px_rgba(0,0,0,0.95)] md:[text-shadow:none]">
                 Solar Technologies delivers complete solar solutions across residential, commercial, industrial and institutional applications — from engineering and installation to long-term support.
               </p>
 
               {/* Primary Action Buttons (Fit mobile viewport, no horizontal overflow) */}
-              <div className="pt-0 sm:pt-2 flex flex-row flex-wrap items-center gap-2 sm:gap-3">
+              <div className="pt-0.5 sm:pt-2 flex flex-row flex-wrap items-center gap-2 sm:gap-3">
                 <button
                   onClick={onExploreInnovation}
-                  className="group inline-flex items-center gap-1.5 sm:gap-2 bg-[#C6F700] hover:bg-[#b8e500] active:scale-95 text-black font-bold text-xs sm:text-sm md:text-base px-4 sm:px-7 py-2 sm:py-3.5 rounded-full shadow-[0_8px_30px_rgba(198,245,0,0.35)] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(198,245,0,0.5)] cursor-pointer whitespace-nowrap"
+                  className="group inline-flex items-center gap-1.5 sm:gap-2 bg-[#C6F500] hover:bg-[#b8e500] active:scale-95 text-black font-bold text-xs sm:text-sm md:text-base px-4 sm:px-7 py-2.5 sm:py-3.5 rounded-full shadow-[0_8px_30px_rgba(198,245,0,0.35)] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(198,245,0,0.5)] cursor-pointer whitespace-nowrap"
                 >
                   <span>Explore Solutions</span>
                   <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-black text-black group-hover:rotate-12 transition-transform" />
                 </button>
                 <button
                   onClick={onOpenCalculator}
-                  className="inline-flex items-center gap-1.5 sm:gap-2 bg-white/10 hover:bg-white/20 active:scale-95 text-white font-semibold text-xs sm:text-sm md:text-base px-3.5 sm:px-6 py-2 sm:py-3.5 rounded-full border border-white/20 transition-all duration-200 cursor-pointer whitespace-nowrap"
+                  className="inline-flex items-center gap-1.5 sm:gap-2 bg-white/10 hover:bg-white/20 active:scale-95 text-white font-semibold text-xs sm:text-sm md:text-base px-3.5 sm:px-6 py-2.5 sm:py-3.5 rounded-full border border-white/20 transition-all duration-200 cursor-pointer whitespace-nowrap"
                 >
                   <span>Solar Calculator</span>
                 </button>
               </div>
 
               {/* Mobile Compact 3-Card Trust Row (Section 7: 25+ | EPC | MSEDCL - under CTAs, auto-height, no clipping) */}
-              <div className="grid grid-cols-3 gap-1.5 w-full pt-1.5 sm:pt-2 lg:hidden">
+              <div className="grid grid-cols-3 gap-2 w-full pt-2 lg:hidden">
                 {/* Card 1: 25+ */}
-                <div className="glass-panel rounded-lg p-1.5 sm:p-2 text-center flex flex-col justify-center min-w-0">
-                  <span className="font-telemetry text-sm sm:text-lg font-bold text-white leading-none">
+                <div className="glass-panel rounded-xl p-2 text-center flex flex-col justify-center min-w-0">
+                  <span className="font-telemetry text-base sm:text-lg font-bold text-white leading-none">
                     25+
                   </span>
-                  <span className="text-[8px] sm:text-[10px] text-white/90 font-semibold uppercase tracking-wider leading-tight mt-0.5 sm:mt-1 truncate">
+                  <span className="text-[9px] sm:text-[10px] text-white/90 font-semibold uppercase tracking-wider leading-tight mt-1 truncate">
                     Years Exp
+                  </span>
+                  <span className="text-[8px] text-white/60 leading-tight mt-0.5 truncate hidden xs:block">
+                    Solar EPC
                   </span>
                 </div>
 
                 {/* Card 2: EPC */}
-                <div className="glass-panel rounded-lg p-1.5 sm:p-2 text-center flex flex-col justify-center min-w-0">
-                  <span className="font-telemetry text-sm sm:text-lg font-bold text-[#C6F500] leading-none">
+                <div className="glass-panel rounded-xl p-2 text-center flex flex-col justify-center min-w-0">
+                  <span className="font-telemetry text-base sm:text-lg font-bold text-[#C6F500] leading-none">
                     EPC
                   </span>
-                  <span className="text-[8px] sm:text-[10px] text-[#C6F500] font-semibold uppercase tracking-wider leading-tight mt-0.5 sm:mt-1 truncate">
+                  <span className="text-[9px] sm:text-[10px] text-[#C6F500] font-semibold uppercase tracking-wider leading-tight mt-1 truncate">
                     Turnkey
+                  </span>
+                  <span className="text-[8px] text-white/60 leading-tight mt-0.5 truncate hidden xs:block">
+                    End-to-End
                   </span>
                 </div>
 
                 {/* Card 3: MSEDCL */}
-                <div className="glass-panel rounded-lg p-1.5 sm:p-2 text-center flex flex-col justify-center min-w-0">
-                  <span className="font-telemetry text-sm sm:text-lg font-bold text-white leading-none">
+                <div className="glass-panel rounded-xl p-2 text-center flex flex-col justify-center min-w-0">
+                  <span className="font-telemetry text-base sm:text-lg font-bold text-white leading-none">
                     MSEDCL
                   </span>
-                  <span className="text-[8px] sm:text-[10px] text-white/90 font-semibold uppercase tracking-wider leading-tight mt-0.5 sm:mt-1 truncate">
+                  <span className="text-[9px] sm:text-[10px] text-white/90 font-semibold uppercase tracking-wider leading-tight mt-1 truncate">
                     Supervision
+                  </span>
+                  <span className="text-[8px] text-white/60 leading-tight mt-0.5 truncate hidden xs:block">
+                    Govt. Lic.
                   </span>
                 </div>
               </div>
