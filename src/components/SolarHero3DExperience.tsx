@@ -650,12 +650,12 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
         {/* 5. ORIGINAL HERO SECTION: Mobile-first safe area below navbar, visible headline, compact trust cards, full desktop preservation */}
         <div
           id="hero"
-          className="relative z-20 w-full max-w-7xl mx-auto flex-1 h-full flex flex-col justify-start lg:justify-between pt-20 sm:pt-20 lg:pt-28 pb-4 sm:pb-6 lg:pb-10 px-4 sm:px-6 md:px-12 lg:px-16 transition-all duration-300 overflow-y-auto lg:overflow-visible"
+          className="relative z-20 w-full max-w-7xl mx-auto flex-1 h-full flex flex-col justify-start lg:justify-between pt-20 sm:pt-20 lg:pt-28 pb-4 sm:pb-6 lg:pb-10 px-4 sm:px-6 md:px-12 lg:px-16 transition-all duration-300 overflow-y-auto lg:overflow-visible transform-none lg:[transform:translateY(var(--hero-y))]"
           style={{
             opacity: heroOpacity,
-            transform: `translateY(${heroTranslateY}px)`,
             pointerEvents: heroOpacity > 0.4 ? 'auto' : 'none',
-          }}
+            '--hero-y': `${heroTranslateY}px`,
+          } as React.CSSProperties}
         >
           {/* Main Content Area: Left Typography & Desktop Right Glass Stat Cards */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-10 xl:gap-12 items-start lg:items-end w-full lg:my-auto">
