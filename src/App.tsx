@@ -15,7 +15,6 @@ import { SystemTier } from './types/solar';
 export default function App() {
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [quoteInitialData, setQuoteInitialData] = useState<any>(null);
-  const [heroProgress, setHeroProgress] = useState<number>(0);
   
   // Showcase Frame Mode: allows toggling between framed presentation and full-screen view
   const [isFramedShowcase, setIsFramedShowcase] = useState(false);
@@ -67,9 +66,6 @@ export default function App() {
           }}
           onOpenCalculator={handleOpenCalculator}
           onOpenQuote={() => handleOpenQuote()}
-          onScrollProgressChange={(progress) => {
-            setHeroProgress(progress);
-          }}
         />
 
         {/* 02 — ABOUT SOLAR TECHNOLOGIES (25+ Years Experience, EPC, MSEDCL Supervision) */}

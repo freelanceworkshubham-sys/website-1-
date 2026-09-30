@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Zap, Star, Sparkles, ChevronDown } from 'lucide-react';
 
 // =========================================================================
-// SLIDE TEXT CONFIGURATION (Edit your video slide copy here)
+// SLIDE TEXT CONFIGURATION
 // Max 3 words per line. Each line renders as a block (no auto wrapping).
 // =========================================================================
 export interface TextSlideData {
@@ -18,29 +18,29 @@ const SLIDES_DATA: TextSlideData[] = [
     id: 1,
     start: 0.0,
     end: 0.20,
-    mainLines: ["Every night,", "your roof waits."],
-    subLines: ["Silent. Unused. Ready."],
+    mainLines: ['Every night,', 'your roof waits.'],
+    subLines: ['Silent. Unused. Ready.'],
   },
   {
     id: 2,
     start: 0.20,
     end: 0.40,
-    mainLines: ["Then the sun", "rises."],
-    subLines: ["Free energy,", "every single day."],
+    mainLines: ['Then the sun', 'rises.'],
+    subLines: ['Free energy,', 'every single day.'],
   },
   {
     id: 3,
     start: 0.40,
     end: 0.60,
-    mainLines: ["Your panels", "wake up."],
-    subLines: ["Sunlight becomes power", "for your home."],
+    mainLines: ['Your panels', 'wake up.'],
+    subLines: ['Sunlight becomes power', 'for your home.'],
   },
   {
     id: 4,
     start: 0.60,
     end: 0.80,
-    mainLines: ["Your home runs", "on its own", "light."],
-    subLines: ["Lower bills for", "the next 25 years."],
+    mainLines: ['Your home runs', 'on its own', 'light.'],
+    subLines: ['Lower bills for', 'the next 25 years.'],
   },
 ];
 
@@ -48,7 +48,6 @@ interface SolarHero3DExperienceProps {
   onExploreInnovation?: () => void;
   onOpenCalculator?: () => void;
   onOpenQuote?: () => void;
-  onScrollProgressChange?: (progress: number) => void;
 }
 
 const TOTAL_FRAMES = 302;
@@ -74,30 +73,195 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
   onExploreInnovation,
   onOpenCalculator,
   onOpenQuote,
-  onScrollProgressChange,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
 
   // Cached HTMLImageElement array for 302 frames
   const imagesRef = useRef<(HTMLImageElement | null)[]>(new Array(TOTAL_FRAMES).fill(null));
   const [isFirstFrameLoaded, setIsFirstFrameLoaded] = useState<boolean>(false);
 
-  // Animation and scroll state
-  const [scrollProgress, setScrollProgress] = useState<number>(0);
+  // Performance & Scroll Refs (NO React re-renders during continuous scrolling)
+  const targetProgressRef = useRef<number>(0);
+  const smoothProgressRef = useRef<number>(0);
+  const isAnimatingRef = useRef<boolean>(false);
+  const rafIdRef = useRef<number | null>(null);
+
   const currentFrameRef = useRef<number>(0);
   const lastDrawnFrameRef = useRef<number>(-1);
 
-  // Detect user preference for reduced motion
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState<boolean>(false);
+  // Slide DOM refs for direct transform manipulation
+  const slideContainersRef = useRef<(HTMLDivElement | null)[]>([]);
+  const slideLineRefs = useRef<(HTMLSpanElement | null)[][]>([[], [], [], []]);
+
+  // Hero section and overlay DOM refs
+  const heroSectionRef = useRef<HTMLDivElement>(null);
+  const gradientRef = useRef<HTMLDivElement>(null);
+  const scrollHintRef = useRef<HTMLDivElement>(null);
+
+  // Active Dot index (only updates state when active index transitions 0..4)
+  const [activeDotIndex, setActiveDotIndex] = useState<number>(0);
+  const activeDotIndexRef = useRef<number>(0);
+
+  // User preference for reduced motion
+  const prefersReducedMotionRef = useRef<boolean>(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.matchMedia) {
       const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-      setPrefersReducedMotion(mediaQuery.matches);
-      const listener = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+      prefersReducedMotionRef.current = mediaQuery.matches;
+      const listener = (e: MediaQueryListEvent) => {
+        prefersReducedMotionRef.current = e.matches;
+      };
       mediaQuery.addEventListener('change', listener);
       return () => mediaQuery.removeEventListener('change', listener);
+    }
+  }, []);
+
+  // Calculate line-by-line staggered entry and reversed exit
+  const calculateLineStyle = useCallback(
+    (
+      lineIndex: number,
+      totalLines: number,
+      start: number,
+      end: number,
+      isSlide1: boolean,
+      progress: number
+    ) => {
+      const reduced = prefersReducedMotionRef.current;
+      if (progress < start || progress >= end) {
+        return { opacity: 0, translateY: reduced ? 0 : 20 };
+      }
+
+      const enterSpan = isSlide1 ? 0.025 : 0.05;
+      const exitSpan = 0.05;
+      const staggerStep = 0.12;
+
+      // 1. Enter Window: [start, start + enterSpan]
+      if (progress < start + enterSpan && !isSlide1) {
+        const enterFraction = clamp01((progress - start) / enterSpan);
+        const lineEnterT = clamp01(
+          (enterFraction - lineIndex * staggerStep) / (1 - (totalLines - 1) * staggerStep * 0.7)
+        );
+        const ease = power2Out(lineEnterT);
+
+        return {
+          opacity: ease,
+          translateY: reduced ? 0 : 20 * (1 - ease),
+        };
+      }
+
+      // 2. Exit Window: [end - exitSpan, end]
+      if (progress > end - exitSpan) {
+        const exitFraction = clamp01((progress - (end - exitSpan)) / exitSpan);
+        const reversedIndex = totalLines - 1 - lineIndex;
+        const lineExitT = clamp01(
+          (exitFraction - reversedIndex * staggerStep) / (1 - (totalLines - 1) * staggerStep * 0.7)
+        );
+        const ease = power2In(lineExitT);
+
+        return {
+          opacity: 1 - ease,
+          translateY: reduced ? 0 : -20 * ease,
+        };
+      }
+
+      // 3. Steady State: fully visible
+      return {
+        opacity: 1,
+        translateY: 0,
+      };
+    },
+    []
+  );
+
+  // Direct DOM updates for slide lines (0 React re-renders)
+  const updateSlidesDOM = useCallback(
+    (progress: number) => {
+      for (let s = 0; s < SLIDES_DATA.length; s++) {
+        const slide = SLIDES_DATA[s];
+        const container = slideContainersRef.current[s];
+        if (!container) continue;
+
+        const isSlideActive = progress >= slide.start && progress < slide.end;
+
+        if (!isSlideActive) {
+          if (container.style.display !== 'none') {
+            container.style.display = 'none';
+            container.style.opacity = '0';
+          }
+          continue;
+        }
+
+        if (container.style.display !== 'flex') {
+          container.style.display = 'flex';
+          container.style.opacity = '1';
+        }
+
+        const isSlide1 = slide.id === 1;
+        const totalLines = slide.mainLines.length + slide.subLines.length;
+        const lines = slideLineRefs.current[s];
+
+        for (let l = 0; l < totalLines; l++) {
+          const lineEl = lines[l];
+          if (!lineEl) continue;
+
+          const style = calculateLineStyle(
+            l,
+            totalLines,
+            slide.start,
+            slide.end,
+            isSlide1,
+            progress
+          );
+          lineEl.style.opacity = style.opacity.toFixed(3);
+          lineEl.style.transform = `translate3d(0, ${style.translateY.toFixed(1)}px, 0)`;
+        }
+      }
+    },
+    [calculateLineStyle]
+  );
+
+  // Direct DOM updates for Hero content & overlays
+  const updateHeroDOM = useCallback((progress: number) => {
+    const HERO_REVEAL_START = 0.8;
+    const heroOpacity = Math.max(0, Math.min(1, (progress - HERO_REVEAL_START) / (1 - HERO_REVEAL_START)));
+    const heroTranslateY = (1 - heroOpacity) * 35;
+
+    const heroEl = heroSectionRef.current;
+    if (heroEl) {
+      heroEl.style.opacity = heroOpacity.toFixed(3);
+      heroEl.style.transform = `translate3d(0, ${heroTranslateY.toFixed(1)}px, 0)`;
+      heroEl.style.pointerEvents = heroOpacity > 0.4 ? 'auto' : 'none';
+    }
+
+    if (gradientRef.current) {
+      gradientRef.current.style.opacity = heroOpacity.toFixed(3);
+    }
+
+    if (scrollHintRef.current) {
+      const hintOpacity = Math.max(0, 1 - progress / 0.04);
+      scrollHintRef.current.style.opacity = hintOpacity.toFixed(3);
+    }
+  }, []);
+
+  // Update active dot index only when crossing discrete section thresholds
+  const updateDots = useCallback((progress: number) => {
+    let nextIndex = 0;
+    if (progress >= 0.8) {
+      nextIndex = 4;
+    } else {
+      for (let i = 0; i < SLIDES_DATA.length; i++) {
+        if (progress >= SLIDES_DATA[i].start && progress < SLIDES_DATA[i].end) {
+          nextIndex = i;
+          break;
+        }
+      }
+    }
+    if (nextIndex !== activeDotIndexRef.current) {
+      activeDotIndexRef.current = nextIndex;
+      setActiveDotIndex(nextIndex);
     }
   }, []);
 
@@ -105,7 +269,10 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
   const drawFrame = useCallback((frameIndex: number, forceRedraw = false) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    if (!ctxRef.current) {
+      ctxRef.current = canvas.getContext('2d', { alpha: false });
+    }
+    const ctx = ctxRef.current;
     if (!ctx) return;
 
     const clampedIndex = Math.max(0, Math.min(TOTAL_FRAMES - 1, Math.round(frameIndex)));
@@ -159,11 +326,7 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
       offsetX = (canvasWidth - drawWidth) / 2;
     }
 
-    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
-
     lastDrawnFrameRef.current = clampedIndex;
   }, []);
 
@@ -171,7 +334,11 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
   const handleResize = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    const isMobile = window.innerWidth < 768;
+    const maxDpr = isMobile ? 1.5 : 2;
+    const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
+
     const displayWidth = window.innerWidth;
     const displayHeight = window.innerHeight;
 
@@ -185,7 +352,70 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
     }
   }, [drawFrame]);
 
-  // Load all 302 frames in parallel on mount
+  // Single unified render loop with buttery 60fps lerp damping
+  const renderLoop = useCallback(() => {
+    const target = targetProgressRef.current;
+    let current = smoothProgressRef.current;
+    const diff = target - current;
+
+    if (prefersReducedMotionRef.current) {
+      current = target;
+    } else if (Math.abs(diff) > 0.0001) {
+      // 0.18 lerp factor: silky smooth, responsive, zero jitter or sluggish delay
+      current += diff * 0.18;
+    } else {
+      current = target;
+    }
+
+    smoothProgressRef.current = current;
+
+    // 1. Draw canvas frame
+    const targetFrame = Math.max(
+      0,
+      Math.min(TOTAL_FRAMES - 1, Math.round(current * (TOTAL_FRAMES - 1)))
+    );
+    if (targetFrame !== currentFrameRef.current) {
+      currentFrameRef.current = targetFrame;
+      drawFrame(targetFrame);
+    }
+
+    // 2. Direct DOM update for text slides
+    updateSlidesDOM(current);
+
+    // 3. Direct DOM update for Hero overlay and hint
+    updateHeroDOM(current);
+
+    // 4. Update discrete active dot
+    updateDots(current);
+
+    // Continue loop until settled within tolerance
+    if (Math.abs(target - current) > 0.0001) {
+      rafIdRef.current = requestAnimationFrame(renderLoop);
+    } else {
+      isAnimatingRef.current = false;
+      rafIdRef.current = null;
+    }
+  }, [drawFrame, updateSlidesDOM, updateHeroDOM, updateDots]);
+
+  // Read scroll progress from the 380vh track and wake up RAF loop
+  const updateTargetProgress = useCallback(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const totalScrollable = container.scrollHeight - window.innerHeight;
+    if (totalScrollable <= 0) return;
+
+    const rect = container.getBoundingClientRect();
+    const currentScroll = -rect.top;
+    const progress = Math.max(0, Math.min(1, currentScroll / totalScrollable));
+    targetProgressRef.current = progress;
+
+    if (!isAnimatingRef.current) {
+      isAnimatingRef.current = true;
+      rafIdRef.current = requestAnimationFrame(renderLoop);
+    }
+  }, [renderLoop]);
+
+  // Parallel preloading of 302 frames on mount
   useEffect(() => {
     let isCancelled = false;
 
@@ -197,7 +427,11 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
       imagesRef.current[0] = firstImg;
       setIsFirstFrameLoaded(true);
       handleResize();
-      drawFrame(0);
+      drawFrame(0, true);
+      // Initialize DOM overlays at progress 0
+      updateSlidesDOM(0);
+      updateHeroDOM(0);
+      updateDots(0);
     };
 
     // Concurrently preload all remaining frames
@@ -226,44 +460,31 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
     return () => {
       isCancelled = true;
     };
-  }, [drawFrame, handleResize]);
+  }, [drawFrame, handleResize, updateSlidesDOM, updateHeroDOM, updateDots]);
 
-  // Window resize listener
+  // Scroll and Resize listeners with automatic cleanup
   useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    handleResize();
-    return () => window.removeEventListener('resize', handleResize);
-  }, [handleResize]);
-
-  // Track scroll position across the 380vh track
-  useEffect(() => {
-    const handleScroll = () => {
-      const container = containerRef.current;
-      if (!container) return;
-
-      const rect = container.getBoundingClientRect();
-      const totalScrollable = container.scrollHeight - window.innerHeight;
-
-      if (totalScrollable <= 0) return;
-
-      // When at top: rect.top = 0. As you scroll down: rect.top is negative.
-      const currentScroll = -rect.top;
-      const progress = Math.max(0, Math.min(1, currentScroll / totalScrollable));
-
-      setScrollProgress(progress);
-      onScrollProgressChange?.(progress);
-
-      const targetFrame = Math.round(progress * (TOTAL_FRAMES - 1));
-      currentFrameRef.current = targetFrame;
-      drawFrame(targetFrame);
+    const onScrollOrResize = () => {
+      updateTargetProgress();
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [drawFrame, onScrollProgressChange]);
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
+    handleResize();
+    updateTargetProgress();
 
-  // Jump to specific slide or hero when clicking progress dots
+    return () => {
+      window.removeEventListener('scroll', onScrollOrResize);
+      window.removeEventListener('resize', handleResize);
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
+      }
+      isAnimatingRef.current = false;
+    };
+  }, [updateTargetProgress, handleResize]);
+
+  // Smooth jump to specific slide or hero when clicking progress dots
   const jumpToProgress = (targetProgress: number) => {
     const container = containerRef.current;
     if (!container) return;
@@ -274,74 +495,6 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
       behavior: 'smooth',
     });
   };
-
-  // Determine active slide index for progress dots (0 to 3 for slides, 4 for final Hero)
-  const activeDotIndex = useMemo(() => {
-    if (scrollProgress >= 0.80) return 4; // Final Hero section
-    for (let i = 0; i < SLIDES_DATA.length; i++) {
-      if (scrollProgress >= SLIDES_DATA[i].start && scrollProgress < SLIDES_DATA[i].end) {
-        return i;
-      }
-    }
-    return 0;
-  }, [scrollProgress]);
-
-  // Calculate line-by-line staggered entry (0.1s stagger feel) and reversed exit
-  const calculateLineStyle = (
-    lineIndex: number,
-    totalLines: number,
-    start: number,
-    end: number,
-    isSlide1: boolean
-  ) => {
-    // If completely outside the slide's active window
-    if (scrollProgress < start || scrollProgress >= end) {
-      return {
-        opacity: 0,
-        translateY: prefersReducedMotion ? 0 : 20,
-      };
-    }
-
-    const enterSpan = isSlide1 ? 0.025 : 0.05;
-    const exitSpan = 0.05;
-    const staggerStep = 0.12;
-
-    // 1. Enter Window: [start, start + enterSpan]
-    if (scrollProgress < start + enterSpan && !isSlide1) {
-      const enterFraction = clamp01((scrollProgress - start) / enterSpan);
-      const lineEnterT = clamp01((enterFraction - lineIndex * staggerStep) / (1 - (totalLines - 1) * staggerStep * 0.7));
-      const ease = power2Out(lineEnterT);
-
-      return {
-        opacity: ease,
-        translateY: prefersReducedMotion ? 0 : 20 * (1 - ease),
-      };
-    }
-
-    // 2. Exit Window: [end - exitSpan, end]
-    if (scrollProgress > end - exitSpan) {
-      const exitFraction = clamp01((scrollProgress - (end - exitSpan)) / exitSpan);
-      const reversedIndex = totalLines - 1 - lineIndex;
-      const lineExitT = clamp01((exitFraction - reversedIndex * staggerStep) / (1 - (totalLines - 1) * staggerStep * 0.7));
-      const ease = power2In(lineExitT);
-
-      return {
-        opacity: 1 - ease,
-        translateY: prefersReducedMotion ? 0 : -20 * ease,
-      };
-    }
-
-    // 3. Steady State: fully visible
-    return {
-      opacity: 1,
-      translateY: 0,
-    };
-  };
-
-  // Final Frame: ORIGINAL HERO SECTION reveal (fades in smoothly at 80% - 100%)
-  const HERO_REVEAL_START = 0.80;
-  const heroOpacity = Math.max(0, Math.min(1, (scrollProgress - HERO_REVEAL_START) / (1 - HERO_REVEAL_START)));
-  const heroTranslateY = (1 - heroOpacity) * 35; // 35px -> 0px slide up
 
   return (
     <div
@@ -355,7 +508,6 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
         className="sticky top-0 left-0 w-full h-screen overflow-hidden flex flex-col justify-between select-none z-10"
         style={{ position: 'sticky', top: 0 }}
       >
-        
         {/* 1. Fullscreen 3D Canvas rendering the 302 frames at maximum crispness */}
         <canvas
           ref={canvasRef}
@@ -379,11 +531,12 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
           </div>
         )}
 
-        {/* 3. Subtle Localized Navy Gradient (Only on left behind text for legibility; center & right 3D scene stays bright & crisp) */}
+        {/* 3. Subtle Localized Navy Gradient */}
         <div
-          className="absolute inset-0 pointer-events-none transition-opacity duration-500 z-10"
+          ref={gradientRef}
+          className="absolute inset-0 pointer-events-none z-10 will-change-[opacity]"
           style={{
-            opacity: heroOpacity,
+            opacity: 0,
             background:
               'linear-gradient(90deg, rgba(10, 18, 36, 0.65) 0%, rgba(10, 18, 36, 0.30) 35%, rgba(10, 18, 36, 0.05) 55%, transparent 75%)',
           }}
@@ -391,94 +544,80 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
 
         {/* 4. VIDEO TEXT SLIDES OVERLAY (Slides 1 to 4: 0% to 80% scroll) */}
         <div className="absolute inset-0 z-20 pointer-events-none">
-          {SLIDES_DATA.map((slide) => {
-            const isSlideActive = scrollProgress >= slide.start && scrollProgress < slide.end;
-            if (!isSlideActive) return null;
+          {SLIDES_DATA.map((slide, sIdx) => (
+            <div
+              key={slide.id}
+              ref={(el) => {
+                slideContainersRef.current[sIdx] = el;
+              }}
+              className="absolute inset-x-0 flex flex-col items-center md:items-start text-center md:text-left pointer-events-none"
+              style={{
+                top: '17vh',
+                paddingLeft: 'clamp(1rem, 8vw, 8vw)',
+                paddingRight: 'clamp(1rem, 8vw, 8vw)',
+                maxHeight: '32vh',
+                display: sIdx === 0 ? 'flex' : 'none',
+                opacity: sIdx === 0 ? 1 : 0,
+              }}
+            >
+              {/* Main Lines Container */}
+              <div className="flex flex-col items-center md:items-start w-full max-w-[88vw] md:max-w-2xl overflow-visible">
+                {slide.mainLines.map((lineText, lIdx) => (
+                  <span
+                    key={lIdx}
+                    ref={(el) => {
+                      if (!slideLineRefs.current[sIdx]) slideLineRefs.current[sIdx] = [];
+                      slideLineRefs.current[sIdx][lIdx] = el;
+                    }}
+                    className="block font-kalam text-white tracking-[0.01em] leading-[1.3] whitespace-nowrap overflow-hidden text-ellipsis will-change-[transform,opacity]"
+                    style={{
+                      fontWeight: 400,
+                      fontSize: 'clamp(31px, 6.6vw, 62px)',
+                      opacity: sIdx === 0 ? 1 : 0,
+                      transform: 'translate3d(0, 0, 0)',
+                    }}
+                  >
+                    {lineText}
+                  </span>
+                ))}
+              </div>
 
-            const isSlide1 = slide.id === 1;
-            const totalLines = slide.mainLines.length + slide.subLines.length;
-
-            return (
-              <div
-                key={slide.id}
-                className="absolute inset-x-0 flex flex-col items-center md:items-start text-center md:text-left pointer-events-none"
-                style={{
-                  top: '17vh',
-                  paddingLeft: 'clamp(1rem, 8vw, 8vw)',
-                  paddingRight: 'clamp(1rem, 8vw, 8vw)',
-                  maxHeight: '32vh',
-                }}
-              >
-                {/* Main Lines Container: max 3 words per line, white-space: nowrap, max 88vw on mobile */}
-                <div className="flex flex-col items-center md:items-start w-full max-w-[88vw] md:max-w-2xl overflow-visible">
-                  {slide.mainLines.map((lineText, lIdx) => {
-                    const lineStyle = calculateLineStyle(
-                      lIdx,
-                      totalLines,
-                      slide.start,
-                      slide.end,
-                      isSlide1
-                    );
-
+              {/* Sub Lines Container */}
+              {slide.subLines.length > 0 && (
+                <div className="flex flex-col items-center md:items-start mt-2 md:mt-3 w-full max-w-[88vw] md:max-w-2xl overflow-visible">
+                  {slide.subLines.map((subText, subIdx) => {
+                    const absoluteLineIndex = slide.mainLines.length + subIdx;
                     return (
                       <span
-                        key={lIdx}
-                        className="block font-kalam text-white tracking-[0.01em] leading-[1.3] whitespace-nowrap overflow-hidden text-ellipsis"
+                        key={subIdx}
+                        ref={(el) => {
+                          if (!slideLineRefs.current[sIdx]) slideLineRefs.current[sIdx] = [];
+                          slideLineRefs.current[sIdx][absoluteLineIndex] = el;
+                        }}
+                        className="block font-kalam tracking-[0.01em] leading-[1.3] whitespace-nowrap overflow-hidden text-ellipsis will-change-[transform,opacity]"
                         style={{
-                          fontWeight: 400,
-                          fontSize: 'clamp(31px, 6.6vw, 62px)',
-                          opacity: lineStyle.opacity,
-                          transform: `translateY(${lineStyle.translateY}px)`,
-                          transition: 'opacity 0.08s ease-out, transform 0.08s ease-out',
+                          fontWeight: 300,
+                          color: 'rgba(255, 255, 255, 0.90)',
+                          fontSize: 'clamp(15px, 3.9vw, 22px)',
+                          opacity: sIdx === 0 ? 1 : 0,
+                          transform: 'translate3d(0, 0, 0)',
                         }}
                       >
-                        {lineText}
+                        {subText}
                       </span>
                     );
                   })}
                 </div>
-
-                {/* Sub Lines Container: font-weight 300, 90% opacity, 0.1s stagger */}
-                {slide.subLines.length > 0 && (
-                  <div className="flex flex-col items-center md:items-start mt-2 md:mt-3 w-full max-w-[88vw] md:max-w-2xl overflow-visible">
-                    {slide.subLines.map((subText, sIdx) => {
-                      const absoluteLineIndex = slide.mainLines.length + sIdx;
-                      const lineStyle = calculateLineStyle(
-                        absoluteLineIndex,
-                        totalLines,
-                        slide.start,
-                        slide.end,
-                        isSlide1
-                      );
-
-                      return (
-                        <span
-                          key={sIdx}
-                          className="block font-kalam tracking-[0.01em] leading-[1.3] whitespace-nowrap overflow-hidden text-ellipsis"
-                          style={{
-                            fontWeight: 300,
-                            color: 'rgba(255, 255, 255, 0.90)',
-                            fontSize: 'clamp(15px, 3.9vw, 22px)',
-                            opacity: lineStyle.opacity,
-                            transform: `translateY(${lineStyle.translateY}px)`,
-                            transition: 'opacity 0.08s ease-out, transform 0.08s ease-out',
-                          }}
-                        >
-                          {subText}
-                        </span>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            );
-          })}
+              )}
+            </div>
+          ))}
 
           {/* Initial Scroll Hint (Fades out cleanly after first scroll) */}
           <div
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1 text-white/80 pointer-events-none transition-opacity duration-300"
+            ref={scrollHintRef}
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1 text-white/80 pointer-events-none will-change-[opacity]"
             style={{
-              opacity: Math.max(0, 1 - scrollProgress / 0.04),
+              opacity: 1,
             }}
           >
             <span className="font-kalam text-xs tracking-wider uppercase font-light text-white/85">
@@ -489,7 +628,7 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
 
           {/* Thin Vertical Progress Dots Indicator (4 video slides + 1 Hero dot) */}
           <div className="fixed right-4 md:right-7 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-3.5 pointer-events-auto">
-            {[0.05, 0.25, 0.45, 0.65, 0.90].map((progTarget, index) => {
+            {[0.05, 0.25, 0.45, 0.65, 0.9].map((progTarget, index) => {
               const isActive = index === activeDotIndex;
               return (
                 <button
@@ -512,22 +651,21 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
           </div>
         </div>
 
-        {/* 5. ORIGINAL HERO SECTION (from folder 3, unedited structure, horizontal line removed) */}
+        {/* 5. ORIGINAL HERO SECTION (Reveals at 80% - 100% of 380vh scroll track) */}
         <div
           id="hero"
-          className="relative z-20 w-full max-w-7xl mx-auto flex-1 flex flex-col justify-end pt-28 md:pt-36 pb-8 md:pb-12 px-6 md:px-12 lg:px-16 transition-all duration-300"
+          ref={heroSectionRef}
+          className="relative z-20 w-full max-w-7xl mx-auto flex-1 flex flex-col justify-end pt-28 md:pt-36 pb-8 md:pb-12 px-6 md:px-12 lg:px-16 will-change-[transform,opacity]"
           style={{
-            opacity: heroOpacity,
-            transform: `translateY(${heroTranslateY}px)`,
-            pointerEvents: heroOpacity > 0.4 ? 'auto' : 'none',
+            opacity: 0,
+            transform: 'translate3d(0, 35px, 0)',
+            pointerEvents: 'none',
           }}
         >
           {/* Main Content Area: Left Typography & Right Glass Stat Cards */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end mb-10 md:mb-14">
-            
             {/* LEFT COLUMN: Social Proof Capsule, Headline, Subtitle, CTA */}
             <div className="lg:col-span-7 xl:col-span-8 space-y-6">
-              
               {/* Social Proof Pill / Verified Trust Badge */}
               <div className="inline-flex items-center gap-2.5 sm:gap-3 bg-black/45 backdrop-blur-md border border-white/20 rounded-full py-1 px-2 sm:px-3 shadow-xl">
                 <div className="flex items-center text-amber-400">
@@ -559,7 +697,7 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
                 Solar Technologies delivers complete solar solutions across residential, commercial, industrial and institutional applications — from engineering and installation to long-term support.
               </p>
 
-              {/* Primary Action Button (Neon Lime Pill with Lightning Bolt) */}
+              {/* Primary Action Button */}
               <div className="pt-2 flex flex-wrap items-center gap-3">
                 <button
                   onClick={onExploreInnovation}
@@ -580,7 +718,6 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
             {/* RIGHT COLUMN: Two Glassmorphism Stat Cards */}
             <div className="lg:col-span-5 xl:col-span-4 flex flex-col items-start lg:items-end justify-end">
               <div className="grid grid-cols-2 gap-3 sm:gap-4 w-full max-w-md">
-                
                 {/* Stat Card 1: 25+ Years of Commitment */}
                 <div className="glass-panel rounded-2xl p-5 md:p-6 text-white shadow-2xl flex flex-col justify-between transition-all duration-300 hover:border-white/40 hover:-translate-y-1">
                   <span className="font-telemetry text-4xl sm:text-5xl font-bold tracking-tight text-white leading-none">
@@ -610,7 +747,6 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
                     </p>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
@@ -618,7 +754,6 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
           {/* BOTTOM ROW: Verified Company Credentials */}
           <div className="pt-6 mt-4 border-t border-white/10">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 max-w-3xl ml-auto">
-              
               {/* Credential 1 */}
               <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
                 <span className="font-telemetry text-2xl sm:text-3xl font-bold text-white tracking-tight leading-none mb-1">
@@ -657,12 +792,9 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
                   Concept, design, commissioning & O&M
                 </span>
               </div>
-
             </div>
           </div>
-
         </div>
-
       </div>
     </div>
   );
