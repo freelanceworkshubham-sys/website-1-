@@ -661,11 +661,20 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-10 xl:gap-12 items-start lg:items-end w-full lg:my-auto">
             
             {/* LEFT COLUMN: Eyebrow, Main Headline, Subtitle, CTAs, Mobile Trust Cards */}
-            <div className="lg:col-span-7 xl:col-span-8 space-y-2.5 sm:space-y-4 md:space-y-5 w-full">
+            <div className="relative lg:col-span-7 xl:col-span-8 space-y-2.5 sm:space-y-4 md:space-y-5 w-full">
               
+              {/* Subtle Localized Mobile Readability Backdrop (Mobile only: protects text against bright sun flare without darkening image or covering house) */}
+              <div
+                className="absolute -inset-x-3 -top-3 -bottom-3 pointer-events-none md:hidden rounded-2xl -z-10"
+                style={{
+                  background:
+                    'radial-gradient(ellipse 95% 85% at 20% 35%, rgba(7, 13, 9, 0.52) 0%, rgba(7, 13, 9, 0.28) 55%, transparent 100%)',
+                }}
+              />
+
               {/* Trust Badge & Eyebrow (Compact on mobile, clear of navbar) */}
               <div className="flex flex-wrap items-center gap-2">
-                <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-black/45 backdrop-blur-md border border-white/20 rounded-full py-0.5 sm:py-1 px-2 sm:px-2.5 shadow-md">
+                <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-black/55 backdrop-blur-md border border-white/20 rounded-full py-0.5 sm:py-1 px-2 sm:px-2.5 shadow-md">
                   <div className="flex items-center text-amber-400">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-amber-400 text-amber-400" />
@@ -677,21 +686,21 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
                   </span>
                 </div>
 
-                <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-bold tracking-widest uppercase text-[#C6F500]">
+                <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-bold tracking-widest uppercase text-[#C6F500] [text-shadow:_0_1px_4px_rgba(0,0,0,0.9)] md:[text-shadow:none]">
                   <span>Solar Technologies</span>
                   <span>•</span>
                   <span className="truncate">Ichalkaranji EPC</span>
                 </div>
               </div>
 
-              {/* Main Headline (Always 100% visible on mobile, clear of navbar, zero clipping) */}
-              <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[4rem] font-bold tracking-tight text-white leading-[1.12] sm:leading-[1.10] text-balance max-w-[92vw] sm:max-w-xl lg:max-w-none">
+              {/* Main Headline (Always 100% visible on mobile, clear of navbar, crisp contrast against sun flare) */}
+              <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[4rem] font-bold tracking-tight text-white leading-[1.12] sm:leading-[1.10] text-balance max-w-[92vw] sm:max-w-xl lg:max-w-none [text-shadow:_0_2px_12px_rgba(0,0,0,0.7),_0_1px_3px_rgba(0,0,0,0.9)] md:[text-shadow:none]">
                 Powering Businesses, <br className="hidden sm:inline" />
                 Homes & Industries <span className="font-editorial-italic font-normal text-white">with Solar.</span>
               </h1>
 
-              {/* Subtitle Body Text (Visible and readable on mobile) */}
-              <p className="text-white/85 text-xs sm:text-sm md:text-base lg:text-lg max-w-[92vw] sm:max-w-xl font-normal leading-relaxed text-balance">
+              {/* Subtitle Body Text (Crisp and readable against sunlight on mobile) */}
+              <p className="text-white/95 text-xs sm:text-sm md:text-base lg:text-lg max-w-[92vw] sm:max-w-xl font-normal leading-relaxed text-balance [text-shadow:_0_1px_6px_rgba(0,0,0,0.85),_0_1px_2px_rgba(0,0,0,0.95)] md:[text-shadow:none]">
                 Solar Technologies delivers complete solar solutions across residential, commercial, industrial and institutional applications — from engineering and installation to long-term support.
               </p>
 

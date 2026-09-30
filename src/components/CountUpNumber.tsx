@@ -92,7 +92,7 @@ export function formatMetricNumber(
 
 export interface CountUpNumberProps {
   value: string | number;
-  duration?: number; // In seconds, defaults to 4.5s
+  duration?: number; // In seconds, defaults to 2.5s
   className?: string;
   style?: React.CSSProperties;
   as?: keyof React.JSX.IntrinsicElements;
@@ -101,7 +101,7 @@ export interface CountUpNumberProps {
 
 export const CountUpNumber: React.FC<CountUpNumberProps> = ({
   value,
-  duration = 4.5,
+  duration = 2.5,
   className = '',
   style,
   as: Component = 'span',
@@ -182,7 +182,7 @@ export const CountUpNumber: React.FC<CountUpNumberProps> = ({
             const animateEntry = (now: number) => {
               const elapsed = now - startTime;
               const progress = Math.min(1, elapsed / totalDurationMs);
-              // Calm, technical easeOutQuart curve (4-5s smooth deceleration)
+              // Calm, technical easeOutQuart curve (2.5s smooth deceleration)
               const ease = 1 - Math.pow(1 - progress, 4);
               const current = target * ease;
               currentValRef.current = current;
