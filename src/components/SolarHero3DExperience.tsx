@@ -494,12 +494,21 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
         )}
 
         {/* 3. Subtle Localized Navy Gradient */}
+        {/* 3. Subtle Localized Gradients: Horizontal on desktop, soft top-down on mobile for cinematic readability */}
         <div
-          className="absolute inset-0 pointer-events-none transition-opacity duration-500 z-10"
+          className="absolute inset-0 pointer-events-none transition-opacity duration-500 z-10 hidden lg:block"
           style={{
             opacity: heroOpacity,
             background:
               'linear-gradient(90deg, rgba(10, 18, 36, 0.65) 0%, rgba(10, 18, 36, 0.30) 35%, rgba(10, 18, 36, 0.05) 55%, transparent 75%)',
+          }}
+        />
+        <div
+          className="absolute inset-0 pointer-events-none transition-opacity duration-500 z-10 lg:hidden"
+          style={{
+            opacity: heroOpacity,
+            background:
+              'linear-gradient(180deg, rgba(7, 13, 9, 0.78) 0%, rgba(7, 13, 9, 0.55) 35%, rgba(7, 13, 9, 0.28) 60%, transparent 84%)',
           }}
         />
 
@@ -650,7 +659,7 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
         {/* 5. ORIGINAL HERO SECTION: Mobile-first safe area below navbar, visible headline, compact trust cards, full desktop preservation */}
         <div
           id="hero"
-          className="relative z-20 w-full max-w-7xl mx-auto flex-1 h-full flex flex-col justify-start lg:justify-between pt-20 sm:pt-20 lg:pt-28 pb-4 sm:pb-6 lg:pb-10 px-4 sm:px-6 md:px-12 lg:px-16 transition-all duration-300 overflow-y-auto lg:overflow-visible transform-none lg:[transform:translateY(var(--hero-y))]"
+          className="relative z-20 w-full max-w-7xl mx-auto flex-1 h-full flex flex-col justify-start lg:justify-between pt-24 sm:pt-24 lg:pt-28 pb-4 sm:pb-6 lg:pb-10 px-4 sm:px-6 md:px-12 lg:px-16 transition-all duration-300 lg:overflow-visible transform-none lg:[transform:translateY(var(--hero-y))]"
           style={{
             opacity: heroOpacity,
             pointerEvents: heroOpacity > 0.4 ? 'auto' : 'none',
@@ -658,106 +667,97 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
           } as React.CSSProperties}
         >
           {/* Main Content Area: Left Typography & Desktop Right Glass Stat Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-10 xl:gap-12 items-start lg:items-end w-full lg:my-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-10 xl:gap-12 items-start lg:items-end w-full lg:my-auto">
             
             {/* LEFT COLUMN: Eyebrow, Main Headline, Subtitle, CTAs, Mobile Trust Cards */}
-            <div className="relative lg:col-span-7 xl:col-span-8 space-y-2.5 sm:space-y-4 md:space-y-5 w-full">
-              
-              {/* Subtle Localized Mobile Readability Backdrop (Soft natural blend, no dark rectangular panel or opaque overlay) */}
-              <div
-                className="absolute -inset-6 pointer-events-none md:hidden -z-10 blur-2xl opacity-70"
-                style={{
-                  background:
-                    'radial-gradient(circle at 25% 30%, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.08) 45%, transparent 75%)',
-                }}
-              />
+            <div className="relative lg:col-span-7 xl:col-span-8 space-y-3.5 sm:space-y-4 md:space-y-5 w-full">
 
-              {/* Trust Badge & Eyebrow (Compact on mobile, clear of navbar) */}
-              <div className="flex flex-wrap items-center gap-2">
-                <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-black/55 backdrop-blur-md border border-white/20 rounded-full py-0.5 sm:py-1 px-2 sm:px-2.5 shadow-md">
+              {/* Trust Badge & Eyebrow (Generous breathing room, clear of navbar) */}
+              <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+                <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-black/60 backdrop-blur-md border border-white/20 rounded-full py-1 px-2.5 sm:px-3 shadow-md">
                   <div className="flex items-center text-amber-400">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-amber-400 text-amber-400" />
+                      <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
                     ))}
                   </div>
                   <div className="h-2.5 w-px bg-white/30" />
-                  <span className="text-white font-semibold text-[9px] sm:text-xs tracking-wide uppercase">
+                  <span className="text-white font-semibold text-[10px] sm:text-xs tracking-wide uppercase">
                     25+ YEARS OF SOLAR EXPERIENCE
                   </span>
                 </div>
 
-                <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-bold tracking-widest uppercase text-[#C6F500] [text-shadow:_0_1px_4px_rgba(0,0,0,0.9)] md:[text-shadow:none]">
+                <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-bold tracking-widest uppercase text-[#C6F500]">
                   <span>Solar Technologies</span>
                   <span>•</span>
                   <span className="truncate">Ichalkaranji EPC</span>
                 </div>
               </div>
 
-              {/* Main Headline (Always 100% visible on mobile, clear of navbar, crisp contrast against sun flare) */}
-              <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[4rem] font-bold tracking-tight text-white leading-[1.12] sm:leading-[1.10] text-balance max-w-[92vw] sm:max-w-xl lg:max-w-none [text-shadow:_0_2px_12px_rgba(0,0,0,0.7),_0_1px_3px_rgba(0,0,0,0.9)] md:[text-shadow:none]">
+              {/* Main Headline (Prominent, bold, commanding scale on mobile, identical desktop preservation) */}
+              <h1 className="text-[32px] sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[4rem] font-bold tracking-tight text-white leading-[1.12] sm:leading-[1.10] text-balance max-w-[92vw] sm:max-w-xl lg:max-w-none">
                 Powering Businesses, <br className="hidden sm:inline" />
                 Homes & Industries <span className="font-editorial-italic font-normal text-white">with Solar.</span>
               </h1>
 
-              {/* Subtitle Body Text (Crisp and readable against sunlight on mobile) */}
-              <p className="text-white/95 text-xs sm:text-sm md:text-base lg:text-lg max-w-[92vw] sm:max-w-xl font-normal leading-relaxed text-balance [text-shadow:_0_1px_6px_rgba(0,0,0,0.85),_0_1px_2px_rgba(0,0,0,0.95)] md:[text-shadow:none]">
+              {/* Subtitle Body Text (Increased readability scale, crisp contrast) */}
+              <p className="text-white/90 text-sm sm:text-sm md:text-base lg:text-lg max-w-[92vw] sm:max-w-xl font-normal leading-relaxed text-balance">
                 Solar Technologies delivers complete solar solutions across residential, commercial, industrial and institutional applications — from engineering and installation to long-term support.
               </p>
 
-              {/* Primary Action Buttons (Fit mobile viewport, no horizontal overflow) */}
-              <div className="pt-0.5 sm:pt-2 flex flex-row flex-wrap items-center gap-2 sm:gap-3">
+              {/* Primary Action Buttons (Well-proportioned touch targets) */}
+              <div className="pt-1 sm:pt-2 flex flex-row flex-wrap items-center gap-2.5 sm:gap-3">
                 <button
                   onClick={onExploreInnovation}
-                  className="group inline-flex items-center gap-1.5 sm:gap-2 bg-[#C6F500] hover:bg-[#b8e500] active:scale-95 text-black font-bold text-xs sm:text-sm md:text-base px-4 sm:px-7 py-2.5 sm:py-3.5 rounded-full shadow-[0_8px_30px_rgba(198,245,0,0.35)] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(198,245,0,0.5)] cursor-pointer whitespace-nowrap"
+                  className="group inline-flex items-center gap-1.5 sm:gap-2 bg-[#C6F500] hover:bg-[#b8e500] active:scale-95 text-black font-bold text-xs sm:text-sm md:text-base px-5 sm:px-7 py-3 sm:py-3.5 rounded-full shadow-[0_8px_30px_rgba(198,245,0,0.35)] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(198,245,0,0.5)] cursor-pointer whitespace-nowrap"
                 >
                   <span>Explore Solutions</span>
                   <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-black text-black group-hover:rotate-12 transition-transform" />
                 </button>
                 <button
                   onClick={onOpenCalculator}
-                  className="inline-flex items-center gap-1.5 sm:gap-2 bg-white/10 hover:bg-white/20 active:scale-95 text-white font-semibold text-xs sm:text-sm md:text-base px-3.5 sm:px-6 py-2.5 sm:py-3.5 rounded-full border border-white/20 transition-all duration-200 cursor-pointer whitespace-nowrap"
+                  className="inline-flex items-center gap-1.5 sm:gap-2 bg-white/10 hover:bg-white/20 active:scale-95 text-white font-semibold text-xs sm:text-sm md:text-base px-4 sm:px-6 py-3 sm:py-3.5 rounded-full border border-white/20 transition-all duration-200 cursor-pointer whitespace-nowrap"
                 >
                   <span>Solar Calculator</span>
                 </button>
               </div>
 
-              {/* Mobile Compact 3-Card Trust Row (Section 7: 25+ | EPC | MSEDCL - under CTAs, auto-height, no clipping) */}
-              <div className="grid grid-cols-3 gap-2 w-full pt-2 lg:hidden">
+              {/* Mobile Compact 3-Card Trust Row (Polished glass cards, larger metrics, balanced spacing) */}
+              <div className="grid grid-cols-3 gap-2.5 w-full pt-3 lg:hidden">
                 {/* Card 1: 25+ */}
-                <div className="glass-panel rounded-xl p-2 text-center flex flex-col justify-center min-w-0">
-                  <span className="font-telemetry text-base sm:text-lg font-bold text-white leading-none">
+                <div className="glass-panel rounded-2xl p-2.5 text-center flex flex-col justify-center min-w-0 border border-white/20 bg-black/35 backdrop-blur-md shadow-xl">
+                  <span className="font-telemetry text-lg sm:text-xl font-bold text-white leading-none">
                     25+
                   </span>
-                  <span className="text-[9px] sm:text-[10px] text-white/90 font-semibold uppercase tracking-wider leading-tight mt-1 truncate">
+                  <span className="text-[10px] sm:text-[11px] text-white/95 font-semibold uppercase tracking-wider leading-tight mt-1.5 truncate">
                     Years Exp
                   </span>
-                  <span className="text-[8px] text-white/60 leading-tight mt-0.5 truncate hidden xs:block">
+                  <span className="text-[8px] sm:text-[9px] text-white/60 leading-tight mt-0.5 truncate">
                     Solar EPC
                   </span>
                 </div>
 
                 {/* Card 2: EPC */}
-                <div className="glass-panel rounded-xl p-2 text-center flex flex-col justify-center min-w-0">
-                  <span className="font-telemetry text-base sm:text-lg font-bold text-[#C6F500] leading-none">
+                <div className="glass-panel rounded-2xl p-2.5 text-center flex flex-col justify-center min-w-0 border border-white/20 bg-black/35 backdrop-blur-md shadow-xl">
+                  <span className="font-telemetry text-lg sm:text-xl font-bold text-[#C6F500] leading-none">
                     EPC
                   </span>
-                  <span className="text-[9px] sm:text-[10px] text-[#C6F500] font-semibold uppercase tracking-wider leading-tight mt-1 truncate">
+                  <span className="text-[10px] sm:text-[11px] text-[#C6F500] font-semibold uppercase tracking-wider leading-tight mt-1.5 truncate">
                     Turnkey
                   </span>
-                  <span className="text-[8px] text-white/60 leading-tight mt-0.5 truncate hidden xs:block">
+                  <span className="text-[8px] sm:text-[9px] text-white/60 leading-tight mt-0.5 truncate">
                     End-to-End
                   </span>
                 </div>
 
                 {/* Card 3: MSEDCL */}
-                <div className="glass-panel rounded-xl p-2 text-center flex flex-col justify-center min-w-0">
-                  <span className="font-telemetry text-base sm:text-lg font-bold text-white leading-none">
+                <div className="glass-panel rounded-2xl p-2.5 text-center flex flex-col justify-center min-w-0 border border-white/20 bg-black/35 backdrop-blur-md shadow-xl">
+                  <span className="font-telemetry text-lg sm:text-xl font-bold text-white leading-none">
                     MSEDCL
                   </span>
-                  <span className="text-[9px] sm:text-[10px] text-white/90 font-semibold uppercase tracking-wider leading-tight mt-1 truncate">
+                  <span className="text-[10px] sm:text-[11px] text-white/95 font-semibold uppercase tracking-wider leading-tight mt-1.5 truncate">
                     Supervision
                   </span>
-                  <span className="text-[8px] text-white/60 leading-tight mt-0.5 truncate hidden xs:block">
+                  <span className="text-[8px] sm:text-[9px] text-white/60 leading-tight mt-0.5 truncate">
                     Govt. Lic.
                   </span>
                 </div>
