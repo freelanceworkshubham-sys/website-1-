@@ -34,7 +34,7 @@ export const AboutSolarTechnologies: React.FC<AboutSolarTechnologiesProps> = ({ 
               Experience. Engineering. Solar.
             </h2>
 
-            <p className="text-slate-600 text-xs sm:text-base leading-relaxed max-w-2xl">
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl">
               Solar Technologies is an established solar solutions provider based in Ichalkaranji, Maharashtra. The company provides integrated solar solutions across residential, commercial, industrial and institutional applications, with capabilities spanning EPC, rooftop solar and long-term operation &amp; maintenance.
             </p>
 
@@ -54,41 +54,41 @@ export const AboutSolarTechnologies: React.FC<AboutSolarTechnologiesProps> = ({ 
           <div className="lg:col-span-5 grid grid-cols-3 gap-2 sm:gap-4">
             
             {/* Stat 1: 25+ YEARS */}
-            <div className="bg-slate-50 border border-slate-200/80 hover:border-emerald-300 rounded-xl sm:rounded-2xl p-2.5 sm:p-5 text-center flex flex-col justify-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group cursor-default">
+            <div className="bg-slate-50 border border-slate-200/80 hover:border-emerald-300 rounded-xl sm:rounded-2xl p-2 sm:p-5 text-center flex flex-col justify-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group cursor-default">
               <CountUpNumber
                 value="25+"
-                className="text-lg sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight block group-hover:text-emerald-900 transition-colors truncate"
+                className="text-base sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight block group-hover:text-emerald-900 transition-colors"
               />
               <span className="text-[10px] sm:text-xs font-semibold uppercase text-emerald-800 tracking-wider mt-0.5 sm:mt-1 block">
                 Years
               </span>
-              <span className="text-[9px] sm:text-xs text-slate-500 mt-0.5 block truncate">
+              <span className="text-[9px] sm:text-xs text-slate-500 mt-0.5 block leading-tight">
                 Solar Experience
               </span>
             </div>
 
             {/* Stat 2: EPC */}
-            <div className="bg-slate-50 border border-slate-200/80 hover:border-emerald-300 rounded-xl sm:rounded-2xl p-2.5 sm:p-5 text-center flex flex-col justify-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group cursor-default">
-              <span className="text-lg sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight block group-hover:text-emerald-900 transition-colors truncate">
+            <div className="bg-slate-50 border border-slate-200/80 hover:border-emerald-300 rounded-xl sm:rounded-2xl p-2 sm:p-5 text-center flex flex-col justify-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group cursor-default">
+              <span className="text-base sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight block group-hover:text-emerald-900 transition-colors">
                 EPC
               </span>
               <span className="text-[10px] sm:text-xs font-semibold uppercase text-emerald-800 tracking-wider mt-0.5 sm:mt-1 block">
                 Turnkey
               </span>
-              <span className="text-[9px] sm:text-xs text-slate-500 mt-0.5 block truncate">
-                End-to-End Solutions
+              <span className="text-[9px] sm:text-xs text-slate-500 mt-0.5 block leading-tight">
+                End-to-End
               </span>
             </div>
 
             {/* Stat 3: MSEDCL */}
-            <div className="bg-slate-50 border border-slate-200/80 hover:border-emerald-300 rounded-xl sm:rounded-2xl p-2.5 sm:p-5 text-center flex flex-col justify-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group cursor-default">
-              <span className="text-lg sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight block group-hover:text-emerald-900 transition-colors truncate">
+            <div className="bg-slate-50 border border-slate-200/80 hover:border-emerald-300 rounded-xl sm:rounded-2xl p-2 sm:p-5 text-center flex flex-col justify-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group cursor-default">
+              <span className="text-base sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight block group-hover:text-emerald-900 transition-colors">
                 MSEDCL
               </span>
               <span className="text-[10px] sm:text-xs font-semibold uppercase text-emerald-800 tracking-wider mt-0.5 sm:mt-1 block">
                 Contracting
               </span>
-              <span className="text-[9px] sm:text-xs text-slate-500 mt-0.5 block truncate">
+              <span className="text-[9px] sm:text-xs text-slate-500 mt-0.5 block leading-tight">
                 Supervision
               </span>
             </div>
