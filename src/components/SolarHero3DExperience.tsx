@@ -54,14 +54,14 @@ interface SolarHero3DExperienceProps {
 const TOTAL_FRAMES = 302;
 const FRAME_1_COUNT = 150; // frames in public/frames/1 (001 to 150)
 
-function getFramePath(index: number): string {
+function getFramePath(index: number, format: 'webp' | 'jpg' = 'webp'): string {
   const clamped = Math.max(0, Math.min(TOTAL_FRAMES - 1, Math.floor(index)));
   if (clamped < FRAME_1_COUNT) {
     const num = String(clamped + 1).padStart(3, '0');
-    return `/frames/1/ezgif-frame-${num}.jpg`;
+    return `/frames/1/ezgif-frame-${num}.${format}`;
   } else {
     const num = String(clamped - FRAME_1_COUNT + 1).padStart(3, '0');
-    return `/frames/2/ezgif-frame-${num}.jpg`;
+    return `/frames/2/ezgif-frame-${num}.${format}`;
   }
 }
 
@@ -98,6 +98,7 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const currentFrameRef = useRef<number>(0);
   const lastDrawnFrameRef = useRef<number>(-1);
+  const lastProgressRef = useRef<number>(0);
 
   // Detect user preference for reduced motion
   const [prefersReducedMotion, setPrefersReducedMotion] = useState<boolean>(false);
@@ -110,37 +111,6 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
       mediaQuery.addEventListener('change', listener);
       return () => mediaQuery.removeEventListener('change', listener);
     }
-  }, []);
-
-  // Helper to load a specific frame with priority
-  const loadFrame = useCallback((index: number) => {
-    const clamped = Math.max(0, Math.min(TOTAL_FRAMES - 1, Math.round(index)));
-    if (imagesRef.current[clamped]) return;
-
-    const img = new Image();
-    img.src = getFramePath(clamped);
-    img.onload = () => {
-      imagesRef.current[clamped] = img;
-      // If user is currently parked on or near this frame, re-render immediately
-      if (Math.abs(currentFrameRef.current - clamped) <= 2) {
-        drawFrame(currentFrameRef.current, true);
-      }
-    };
-    img.onerror = () => {
-      setTimeout(() => {
-        if (!imagesRef.current[clamped]) {
-          const retry = new Image();
-          retry.src = getFramePath(clamped);
-          retry.onload = () => {
-            imagesRef.current[clamped] = retry;
-            if (Math.abs(currentFrameRef.current - clamped) <= 2) {
-              drawFrame(currentFrameRef.current, true);
-            }
-          };
-        }
-      }, 400);
-    };
-    imagesRef.current[clamped] = img;
   }, []);
 
   // Draw a specific frame onto the canvas (with fallback redrawing and no stale cache lock)
@@ -159,9 +129,9 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
     // Fallback: if requested frame is not yet fully loaded, find nearest loaded frame
     if (!isExact) {
       // Prioritize loading requested frame and surrounding frames immediately
-      loadFrame(clampedIndex);
-      loadFrame(clampedIndex - 1);
-      loadFrame(clampedIndex + 1);
+      loadFrame(clampedIndex, 'high');
+      loadFrame(clampedIndex - 1, 'high');
+      loadFrame(clampedIndex + 1, 'high');
 
       for (let i = clampedIndex - 1; i >= 0; i--) {
         const candidate = imagesRef.current[i];
@@ -224,7 +194,50 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
     } else {
       lastDrawnFrameRef.current = -1; // Keep open to redraw as soon as real frame arrives
     }
-  }, [loadFrame]);
+  }, []);
+
+  // Helper to load a specific frame with priority, async GPU decoding, and automatic fallback
+  const loadFrame = useCallback((index: number, priority: 'high' | 'auto' = 'auto') => {
+    const clamped = Math.max(0, Math.min(TOTAL_FRAMES - 1, Math.round(index)));
+    if (imagesRef.current[clamped]) return;
+
+    const img = new Image();
+    img.decoding = 'async';
+    if ('fetchPriority' in img) {
+      (img as any).fetchPriority = priority;
+    }
+
+    const onImageReady = (loadedImg: HTMLImageElement) => {
+      imagesRef.current[clamped] = loadedImg;
+      if (Math.abs(currentFrameRef.current - clamped) <= 2) {
+        drawFrame(currentFrameRef.current, true);
+      }
+    };
+
+    img.onload = () => {
+      if ('decode' in img) {
+        img.decode().then(() => onImageReady(img)).catch(() => onImageReady(img));
+      } else {
+        onImageReady(img);
+      }
+    };
+
+    img.onerror = () => {
+      // Fallback to JPG if WebP fails
+      const fallback = new Image();
+      fallback.decoding = 'async';
+      fallback.src = getFramePath(clamped, 'jpg');
+      fallback.onload = () => {
+        if ('decode' in fallback) {
+          fallback.decode().then(() => onImageReady(fallback)).catch(() => onImageReady(fallback));
+        } else {
+          onImageReady(fallback);
+        }
+      };
+    };
+
+    img.src = getFramePath(clamped, 'webp');
+  }, [drawFrame]);
 
   // Resize canvas according to viewport and DPR
   const handleResize = useCallback(() => {
@@ -244,19 +257,27 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
     }
   }, [drawFrame]);
 
-  // Wave-based smart preloading on mount
+  // Wave-based smart preloading on mount (Priority WebP with async GPU decoding)
   useEffect(() => {
     let isCancelled = false;
 
-    // 1. Immediately load frame 0
+    // 1. Immediately load frame 0 with high priority
     const firstImg = new Image();
-    firstImg.src = getFramePath(0);
+    firstImg.decoding = 'async';
+    if ('fetchPriority' in firstImg) {
+      (firstImg as any).fetchPriority = 'high';
+    }
+    firstImg.src = getFramePath(0, 'webp');
     firstImg.onload = () => {
       if (isCancelled) return;
       imagesRef.current[0] = firstImg;
       setIsFirstFrameLoaded(true);
       handleResize();
       drawFrame(0, true);
+    };
+    firstImg.onerror = () => {
+      // Fallback to jpg if webp fails
+      firstImg.src = getFramePath(0, 'jpg');
     };
 
     // 2. Load keyframes across entire timeline (every 4th frame: 0, 4, 8, ... 300)
@@ -269,50 +290,34 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
 
     keyframes.forEach((frameIdx) => {
       if (isCancelled || imagesRef.current[frameIdx]) return;
-      const img = new Image();
-      img.src = getFramePath(frameIdx);
-      img.onload = () => {
-        if (isCancelled) return;
-        imagesRef.current[frameIdx] = img;
-        if (Math.abs(currentFrameRef.current - frameIdx) <= 4) {
-          drawFrame(currentFrameRef.current, true);
-        }
-      };
+      loadFrame(frameIdx, 'high');
     });
 
-    // 3. Incrementally preload all remaining intermediate frames in small batches
+    // 3. Incrementally preload all remaining intermediate frames in fast batches
     let batchIndex = 1;
     let batchTimer: NodeJS.Timeout;
 
     const loadNextBatch = () => {
       if (isCancelled || batchIndex >= TOTAL_FRAMES) return;
-      const endBatch = Math.min(batchIndex + 12, TOTAL_FRAMES);
+      const endBatch = Math.min(batchIndex + 16, TOTAL_FRAMES);
       for (let i = batchIndex; i < endBatch; i++) {
         if (!imagesRef.current[i]) {
-          const img = new Image();
-          img.src = getFramePath(i);
-          img.onload = () => {
-            if (isCancelled) return;
-            imagesRef.current[i] = img;
-            if (Math.abs(currentFrameRef.current - i) <= 2) {
-              drawFrame(currentFrameRef.current, true);
-            }
-          };
+          loadFrame(i, 'auto');
         }
       }
       batchIndex = endBatch;
       if (batchIndex < TOTAL_FRAMES) {
-        batchTimer = setTimeout(loadNextBatch, 80);
+        batchTimer = setTimeout(loadNextBatch, 50);
       }
     };
 
-    batchTimer = setTimeout(loadNextBatch, 150);
+    batchTimer = setTimeout(loadNextBatch, 100);
 
     return () => {
       isCancelled = true;
       clearTimeout(batchTimer);
     };
-  }, [drawFrame, handleResize]);
+  }, [drawFrame, handleResize, loadFrame]);
 
   // Window resize listener
   useEffect(() => {
@@ -321,7 +326,7 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
     return () => window.removeEventListener('resize', handleResize);
   }, [handleResize]);
 
-  // Continuous Master Scroll Scrubbing (Connects scroll position directly to animation frame)
+  // Continuous Master Scroll Scrubbing with Predictive Lookahead Preloading
   useEffect(() => {
     let scrollRafId: number | null = null;
 
@@ -346,6 +351,17 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
       const animProgress = Math.min(1, progress / ANIMATION_END);
       const targetFrame = Math.round(animProgress * (TOTAL_FRAMES - 1));
       currentFrameRef.current = targetFrame;
+
+      // Direction-aware lookahead: prefetch upcoming frames ahead in the user's scroll direction
+      const delta = progress - lastProgressRef.current;
+      lastProgressRef.current = progress;
+      const step = delta >= 0 ? 1 : -1;
+      for (let i = 1; i <= 6; i++) {
+        const ahead = targetFrame + i * step;
+        if (ahead >= 0 && ahead < TOTAL_FRAMES && !imagesRef.current[ahead]) {
+          loadFrame(ahead, 'high');
+        }
+      }
 
       if (scrollRafId === null) {
         scrollRafId = requestAnimationFrame(() => {
@@ -475,8 +491,9 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
           ref={canvasRef}
           className="absolute inset-0 w-full h-full block z-0 pointer-events-none"
           style={{
-            imageRendering: '-webkit-optimize-contrast',
-            transform: 'translateZ(0)',
+            imageRendering: 'auto',
+            transform: 'translate3d(0, 0, 0)',
+            willChange: 'transform',
           }}
         />
 
