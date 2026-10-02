@@ -19,7 +19,7 @@ export const CoreInnovations: React.FC = () => {
               Engineered for Extreme Yield &amp; <span className="font-editorial-italic font-normal text-emerald-800">Zero Degradation</span>
             </h2>
             <p className="text-slate-600 text-base">
-              Every Solar Technologies installation combines premium Tier-1 N-type silicon, smart conversion technology, and sub-second grid telemetry.
+              Every Green Infra solar installation combines quality panels from 1kW and above, smart conversion technology, and reliable grid integration.
             </p>
           </div>
 
@@ -121,7 +121,7 @@ export const CoreInnovations: React.FC = () => {
             </div>
           </div>
 
-          {/* Bento Card 3: Solar Technologies Smart Inverter & Arc-Fault Protection (Col span 5) */}
+          {/* Bento Card 3: Green Infra Smart Inverter & Arc-Fault Protection (Col span 5) */}
           <div className="md:col-span-5 bg-white rounded-3xl p-8 border border-slate-200 shadow-sm relative overflow-hidden flex flex-col justify-between group hover:border-emerald-500/50 hover:shadow-md transition-all duration-300">
             <div className="space-y-6 relative z-10">
               <div className="flex items-center justify-between">
@@ -138,7 +138,7 @@ export const CoreInnovations: React.FC = () => {
                   Per-Panel Distributed MPPT Inverters
                 </h3>
                 <p className="text-slate-600 text-sm mt-3 leading-relaxed">
-                  Traditional string inverters drag down the entire array if even one panel is shadowed by a chimney or tree. Solar Technologies deploys distributed micro-converters and multi-MPPT inverters that optimize module strings independently for maximum harvesting.
+                  Traditional string inverters reduce output if panels are shaded. Green Infra installs smart multi-MPPT inverters that optimise each string independently for maximum harvest.
                 </p>
               </div>
 

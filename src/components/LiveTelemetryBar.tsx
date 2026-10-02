@@ -20,12 +20,12 @@ const STEPS: StepData[] = [
   {
     id: 'step-consult',
     stepNum: '01',
-    shortTitle: 'CONSULT',
-    title: 'Consultation & Consumption Review',
-    description: 'Understand electricity consumption, property requirements and project goals.',
-    actionText: 'SCHEDULE CONSULTATION',
-    actionHref: '#calculator',
-    accentColor: '#2563EB', // Electric Blue
+    shortTitle: 'ENQUIRY',
+    title: 'Customer Enquiry & Requirement',
+    description: 'Customer visits or contacts Green Infra with solar panel or EV requirement. We understand electricity usage, budget and goals.',
+    actionText: 'CONTACT US TODAY',
+    actionHref: '#contact',
+    accentColor: '#2563EB',
     accentBorder: 'border-[#2563EB]',
     accentBg: 'bg-blue-50',
     accentText: 'text-blue-600',
@@ -34,12 +34,12 @@ const STEPS: StepData[] = [
   {
     id: 'step-survey',
     stepNum: '02',
-    shortTitle: 'SURVEY',
-    title: 'Site & Structural Survey',
-    description: 'Assess the site, roof, electrical infrastructure and installation requirements.',
-    actionText: 'REQUEST SITE SURVEY',
+    shortTitle: 'SITE VISIT',
+    title: 'Site Assessment & Survey',
+    description: 'Our team visits your site, assesses rooftop space, shadow analysis, electrical infrastructure and feasibility for your system.',
+    actionText: 'SCHEDULE SITE VISIT',
     actionHref: '#contact',
-    accentColor: '#EA580C', // Warm Orange
+    accentColor: '#EA580C',
     accentBorder: 'border-[#EA580C]',
     accentBg: 'bg-orange-50',
     accentText: 'text-orange-600',
@@ -48,12 +48,12 @@ const STEPS: StepData[] = [
   {
     id: 'step-design',
     stepNum: '03',
-    shortTitle: 'DESIGN',
-    title: 'Engineering & System Proposal',
-    description: 'Develop the appropriate solar system design, engineering and project proposal.',
-    actionText: 'VIEW SYSTEM DESIGN',
+    shortTitle: 'SOLUTION',
+    title: 'Custom Solar or EV Solution Design',
+    description: 'We design the right solar panel system (from 1kW) or recommend the best EV option. Proposal with pricing, ROI and specifications shared.',
+    actionText: 'VIEW OUR SOLUTIONS',
     actionHref: '#services',
-    accentColor: '#059669', // Solar Green
+    accentColor: '#059669',
     accentBorder: 'border-[#059669]',
     accentBg: 'bg-emerald-50',
     accentText: 'text-emerald-600',
@@ -62,12 +62,12 @@ const STEPS: StepData[] = [
   {
     id: 'step-install',
     stepNum: '04',
-    shortTitle: 'INSTALL & COMMISSION',
-    title: 'Installation & Commissioning',
-    description: 'Execute installation, electrical work, commissioning and required project coordination.',
-    actionText: 'EXECUTE INSTALLATION',
+    shortTitle: 'INSTALL & DELIVER',
+    title: 'Solar Installation or EV Delivery',
+    description: 'Our certified team installs your solar system with full electrical work and commissioning, or we deliver and hand over your EV with documentation.',
+    actionText: 'EXPLORE OUR WORK',
     actionHref: '#projects',
-    accentColor: '#0284C7', // Sky Blue / Cyan
+    accentColor: '#0284C7',
     accentBorder: 'border-[#0284C7]',
     accentBg: 'bg-cyan-50',
     accentText: 'text-cyan-600',
@@ -76,12 +76,12 @@ const STEPS: StepData[] = [
   {
     id: 'step-support',
     stepNum: '05',
-    shortTitle: 'SUPPORT & O&M',
-    title: 'Long-Term Operation & Maintenance',
-    description: 'Provide ongoing operation, maintenance and service support to ensure peak output.',
-    actionText: 'EXPLORE O&M SUPPORT',
-    actionHref: '#services',
-    accentColor: '#7C3AED', // Violet / Purple
+    shortTitle: 'SUPPORT',
+    title: 'After-Sales Service & Support',
+    description: 'Green Infra provides ongoing solar system maintenance, EV service support and guidance so your green energy investment keeps performing.',
+    actionText: 'CONTACT FOR SUPPORT',
+    actionHref: '#contact',
+    accentColor: '#7C3AED',
     accentBorder: 'border-[#7C3AED]',
     accentBg: 'bg-purple-50',
     accentText: 'text-purple-600',
@@ -350,13 +350,13 @@ export const LiveTelemetryBar: React.FC = () => {
         {/* Section Header */}
         <div className="text-center max-w-xl mx-auto mb-6 sm:mb-10 space-y-2 sm:space-y-2.5">
           <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-emerald-200/80 inline-block">
-            SOLAR JOURNEY
+            HOW IT WORKS
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-slate-900 leading-tight">
-            How Solar Technologies Works
+            How Green Infra Works
           </h2>
           <p className="text-slate-600 text-xs sm:text-sm leading-relaxed max-w-md mx-auto">
-            A seamless 5-stage lifecycle from initial consultation to long-term performance and maintenance.
+            From your first enquiry to solar installation or EV delivery — a seamless 5-step green energy journey.
           </p>
         </div>
 
@@ -418,17 +418,17 @@ export const LiveTelemetryBar: React.FC = () => {
                 top: `${center - centerSize / 2}px`,
               }}
             >
-              <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/10 flex items-center justify-center mb-0.5 sm:mb-1 text-[#FFC94D]">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/10 flex items-center justify-center mb-0.5 sm:mb-1 text-[#C6F500]">
                 <Sun className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-pulse" />
               </div>
-              <span className="text-[8px] sm:text-[10px] font-bold tracking-widest text-[#7FD4F0] uppercase">
-                YOUR
+              <span className="text-[8px] sm:text-[10px] font-bold tracking-widest text-[#C6F500] uppercase">
+                GREEN
               </span>
               <span className="text-xs sm:text-base font-extrabold tracking-wider text-white uppercase leading-tight">
-                SOLAR
+                INFRA
               </span>
               <span className="text-[8px] sm:text-[10px] font-bold tracking-widest text-slate-300 uppercase">
-                JOURNEY
+                SOLAR & EV
               </span>
             </div>
 

@@ -77,25 +77,22 @@ export const Navbar: React.FC<NavbarProps> = ({
     >
       {/* 30% Slimmer Floating Glassmorphism Pill Navbar */}
       <nav className="glass-nav rounded-full px-3 sm:px-4 md:px-5 py-1.5 flex items-center justify-between gap-2 sm:gap-4 md:gap-7 max-w-3xl w-full md:w-auto text-white">
-        {/* Brand Lockup: Logo + Company Name */}
+        {/* Brand Lockup: Green Infra Logo + Company Name */}
         <a href="#" className="flex items-center gap-1.5 sm:gap-2 group shrink-0 min-w-0">
-          {brand.logoUrl ? (
-            <img
-              src={brand.logoUrl}
-              alt={brand.name}
-              className="w-5 h-5 object-contain rounded-full shrink-0"
-            />
-          ) : (
-            <div className="w-5 h-5 rounded-full bg-[#C6F500] flex items-center justify-center p-0.5 shadow-xs group-hover:scale-105 transition-transform shrink-0">
-              <svg viewBox="0 0 24 24" fill="none" className="w-3.5 h-3.5 text-black stroke-current stroke-2">
-                <circle cx="12" cy="12" r="9" strokeWidth="2.5" />
-                <polygon points="12,5 17,8 19,13 16,18 10,19 6,15 6,9" strokeWidth="1.5" />
-                <circle cx="12" cy="12" r="3" fill="currentColor" />
-              </svg>
-            </div>
-          )}
-          <span className="font-bold tracking-tight text-xs sm:text-sm md:text-[15px] text-white truncate">
-            {brand.name}
+          <div className="w-6 h-6 rounded-full bg-[#C6F500] flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform shrink-0">
+            {/* Green Infra: Leaf + Sun mark */}
+            <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4">
+              {/* Sun rays */}
+              <circle cx="12" cy="10" r="3.5" fill="#1a3a1a" />
+              <line x1="12" y1="4" x2="12" y2="2" stroke="#1a3a1a" strokeWidth="1.8" strokeLinecap="round"/>
+              <line x1="17.5" y1="5.5" x2="19" y2="4" stroke="#1a3a1a" strokeWidth="1.5" strokeLinecap="round"/>
+              <line x1="20" y1="10" x2="22" y2="10" stroke="#1a3a1a" strokeWidth="1.5" strokeLinecap="round"/>
+              {/* EV bolt */}
+              <path d="M10 16 L8 21 L14 15 L12 15 L14 10 L8 17 Z" fill="#1a3a1a"/>
+            </svg>
+          </div>
+          <span className="font-bold tracking-tight text-xs sm:text-sm md:text-[14px] text-white truncate leading-tight">
+            Green Infra Solar & EV
           </span>
         </a>
 
@@ -161,7 +158,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             }}
             className="w-full bg-[#C6F500] text-black font-bold py-2 rounded-xl text-center text-xs shadow-sm mt-2 cursor-pointer flex items-center justify-center gap-1.5"
           >
-            <span>Request Instant Estimate</span>
+            <span>Contact Green Infra</span>
             <Zap className="w-3.5 h-3.5 fill-black" />
           </button>
         </div>

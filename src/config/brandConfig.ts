@@ -1,14 +1,14 @@
 /**
- * Brand Configuration for Solar Technologies
- * 
- * Location: Ichalkaranji, Kolhapur, Maharashtra
- * Official Reference: https://solartechnologies.in/
+ * Brand Configuration for Green Infra Solar & Electrical Vehicle
+ *
+ * Location: Sangli-Kolhapur Bypass, Miraj-Jaysingpur Railway Station, Jaysingpur
+ * Category: Automobile (Dealerships) / Solar / EV
  */
 
 export interface BrandConfig {
   /** The official company / brand name displayed in the navigation bar */
   name: string;
-  /** Optional custom uploaded logo image URL (e.g., '/solar-tech-logo.png') */
+  /** Optional custom uploaded logo image URL (e.g., '/logo.png') */
   logoUrl?: string;
   /** Optional secondary subtitle */
   tagline?: string;
@@ -23,24 +23,21 @@ export interface NavItemConfig {
 
 /**
  * Default Brand Settings:
- * Official Solar Technologies branding (Ichalkaranji / Kolhapur).
+ * Green Infra Solar & Electrical Vehicle (Jaysingpur, Sangli, Maharashtra)
  */
 export const DEFAULT_BRAND_CONFIG: BrandConfig = {
-  name: 'Solar Technologies',
-  logoUrl: '/solar-tech-logo.png',
-  tagline: '25+ Years of Solar Experience',
+  name: 'Green Infra Solar & EV',
+  tagline: 'Solar Panels from 1kW | EV Vehicles',
 };
 
 /**
- * Default Navigation Links:
- * Connected directly to existing sections on the page.
+ * Default Navigation Links
  */
 export const DEFAULT_NAV_LINKS: NavItemConfig[] = [
   { id: 'about', label: 'About', href: '#about', action: 'link' },
   { id: 'services', label: 'Services', href: '#services', action: 'link' },
-  { id: 'solar-journey', label: 'Solar Journey', href: '#solar-journey', action: 'link' },
+  { id: 'how-it-works', label: 'How It Works', href: '#how-it-works', action: 'link' },
   { id: 'projects', label: 'Projects', href: '#projects', action: 'link' },
   { id: 'calculator', label: 'Calculator', href: '#calculator', action: 'calculator' },
   { id: 'contact', label: 'Contact', href: '#contact', action: 'link' },
 ];
-

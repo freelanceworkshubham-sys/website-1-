@@ -7,56 +7,56 @@ export const HowItWorks: React.FC = () => {
   const steps = [
     {
       step: '01',
-      title: 'Site Survey & Solar Design',
+      title: 'Enquiry & Site Assessment',
       description:
-        'We assess your roof, electricity usage and site conditions to design the right solar system for you.',
-      detailLabel: 'SITE SURVEY & SOLAR DESIGN',
-      detailHeading: 'Designed for Your Site',
+        'Contact Green Infra with your solar or EV requirement. Our team will visit your site and assess feasibility.',
+      detailLabel: 'ENQUIRY & SITE ASSESSMENT',
+      detailHeading: 'We Come to You',
       detailDescription:
-        'We assess your roof, electricity usage and site conditions to design the right solar system for your property.',
+        'Share your solar panel requirement (1kW and above) or EV interest with Green Infra. Our team will assess your site, rooftop, electricity usage and conditions to recommend the right solution.',
       included: [
-        'Roof & site assessment',
-        'Electricity usage analysis',
-        'System capacity planning',
-        'Solar layout & design',
+        'Free enquiry consultation',
+        'Site & rooftop assessment',
+        'Electricity usage review',
+        'Solar / EV recommendation',
       ],
-      bottom: 'Ready for the next step.',
-      buttonText: 'EXPLORE OUR PROJECTS',
+      bottom: 'No obligation. Free assessment.',
+      buttonText: 'VIEW OUR SERVICES',
     },
     {
       step: '02',
-      title: 'Installation & Commissioning',
+      title: 'Custom Solution & Proposal',
       description:
-        'Our team installs the system, completes electrical work and ensures everything is tested and ready.',
-      detailLabel: 'INSTALLATION & COMMISSIONING',
-      detailHeading: 'Built for Reliable Performance',
+        'We design the right solar system or EV solution for your needs with a clear proposal and pricing.',
+      detailLabel: 'CUSTOM SOLUTION & PROPOSAL',
+      detailHeading: 'Designed for Your Need',
       detailDescription:
-        'Our installation team handles the complete system setup, electrical connections and commissioning with attention to safety and quality.',
+        'Green Infra prepares a customised solar system design (from 1kW) or EV proposal with complete specifications, investment details and expected savings or benefits.',
       included: [
-        'Solar panel installation',
-        'Inverter & electrical installation',
-        'Protection & cabling',
-        'Testing & commissioning',
+        'Solar system capacity planning',
+        'EV model recommendation',
+        'Investment & savings estimate',
+        'Transparent pricing proposal',
       ],
-      bottom: 'Installed, tested and ready.',
-      buttonText: 'EXPLORE OUR PROJECTS',
+      bottom: 'Clear proposal. Honest pricing.',
+      buttonText: 'CALCULATE SAVINGS',
     },
     {
       step: '03',
-      title: 'Approvals & Net Metering',
+      title: 'Installation, Delivery & Support',
       description:
-        'We handle the required approvals, net-metering process and final system commissioning.',
-      detailLabel: 'APPROVALS & NET METERING',
-      detailHeading: 'Connected. Approved. Ready.',
+        'Our team installs your solar system or delivers your EV with complete support and documentation.',
+      detailLabel: 'INSTALLATION, DELIVERY & SUPPORT',
+      detailHeading: 'Ready to Power Your Tomorrow',
       detailDescription:
-        'We coordinate the required approvals, net-metering process and final commissioning so your solar system is ready to operate.',
+        'Green Infra executes complete solar installation including panels, mounting, inverter, wiring and net metering — or delivers your EV with full documentation. We provide ongoing after-sales service and support.',
       included: [
-        'Documentation & approvals',
-        'Net-metering process',
-        'Final inspection',
-        'System commissioning',
+        'Complete solar installation',
+        'EV delivery & documentation',
+        'Net metering & commissioning',
+        'After-sales service support',
       ],
-      bottom: 'Your solar system is ready to go.',
+      bottom: 'Installed, delivered and supported.',
       buttonText: 'EXPLORE OUR PROJECTS',
     },
   ];
@@ -83,23 +83,23 @@ export const HowItWorks: React.FC = () => {
       `}</style>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        
+
         {/* Section Header */}
         <div className="max-w-2xl mb-14 space-y-3">
           <span className="text-xs font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 inline-block">
             HOW IT WORKS
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 leading-tight">
-            From Solar Plan to Power
+            From Enquiry to Green Energy
           </h2>
           <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
-            Three simple steps. One complete solar journey.
+            Three steps to solar power or your electric vehicle. Simple, transparent and complete.
           </p>
         </div>
 
         {/* 2-Column Structure: LEFT = 3 Stacked Step Cards, RIGHT = Large Detail Card */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          
+
           {/* LEFT: 3 Stacked Step Cards */}
           <div className="lg:col-span-5 space-y-4 flex flex-col justify-between">
             {steps.map((item, idx) => {
@@ -136,11 +136,11 @@ export const HowItWorks: React.FC = () => {
                       </span>
                     )}
                   </div>
-                  
+
                   <h3 className="text-base sm:text-lg font-semibold text-slate-900 tracking-tight">
                     {item.title}
                   </h3>
-                  
+
                   <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
                     {item.description}
                   </p>
@@ -151,22 +151,22 @@ export const HowItWorks: React.FC = () => {
 
           {/* RIGHT: Large Detail / Information Card (Dynamic to activeStep) */}
           <div className="lg:col-span-7 bg-slate-50 rounded-3xl p-8 sm:p-10 border border-slate-200/90 shadow-xs flex flex-col justify-between relative overflow-hidden min-h-[440px]">
-            
+
             {/* Transitioning Content Wrapper */}
             <div key={activeStep} className="step-transition flex flex-col justify-between h-full space-y-6">
-              
+
               <div className="space-y-6">
                 {/* Small Label */}
                 <div>
                   <span className="text-xs font-mono font-semibold uppercase tracking-wider text-emerald-800">
                     {currentStep.detailLabel}
                   </span>
-                  
+
                   {/* Heading */}
                   <h3 className="text-2xl sm:text-3xl font-semibold text-slate-900 tracking-tight mt-2 leading-snug">
                     {currentStep.detailHeading}
                   </h3>
-                  
+
                   {/* Description */}
                   <p className="text-sm sm:text-base text-slate-600 mt-3 leading-relaxed">
                     {currentStep.detailDescription}
@@ -176,7 +176,7 @@ export const HowItWorks: React.FC = () => {
                 {/* Included Checklist */}
                 <div className="space-y-3 pt-2">
                   <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider block">
-                    Included:
+                    What's included:
                   </span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {currentStep.included.map((item, i) => (
@@ -197,7 +197,7 @@ export const HowItWorks: React.FC = () => {
                 <span className="text-xs sm:text-sm font-medium text-slate-600">
                   {currentStep.bottom}
                 </span>
-                
+
                 <a
                   href="#projects"
                   className="inline-flex items-center justify-center gap-2 text-xs sm:text-sm font-bold text-black bg-[#C6F500] hover:bg-[#b8e500] active:scale-[0.99] px-5 py-2.5 rounded-xl transition-all shadow-xs cursor-pointer shrink-0"

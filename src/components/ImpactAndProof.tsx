@@ -15,69 +15,69 @@ interface ProjectCardData {
 const PROJECTS: ProjectCardData[] = [
   {
     id: 'proj-1',
-    projectName: 'Textile & Sizing Unit Solar Plant',
-    location: 'Ichalkaranji, Maharashtra',
-    system: 'Turnkey Industrial Solar EPC',
-    projectType: 'Textile / Sizing Industry',
-    performance: 'High-Yield Online Monitored',
+    projectName: 'Residential Home Solar System',
+    location: 'Jaysingpur, Sangli, Maharashtra',
+    system: 'Rooftop Solar from 1kW',
+    projectType: 'Residential',
+    performance: 'Net-Metered Clean Power',
     description:
-      'Engineered solar power plant customized for continuous factory shifts, heavy motor loads, and peak daytime tariff offset.',
-    statusNote: 'Verified Regional Installation',
+      'Complete rooftop solar installation for a residential home in Jaysingpur — panel supply, mounting structure, inverter, wiring and commissioning.',
+    statusNote: 'Green Infra Installation',
   },
   {
     id: 'proj-2',
-    projectName: 'Shraddha Surgical Hospital',
-    location: 'Ichalkaranji, Maharashtra',
-    system: 'Healthcare Rooftop Solar',
-    projectType: 'Hospitals & Healthcare',
-    performance: 'Continuous Reliable Output',
+    projectName: 'Commercial Shop Solar Setup',
+    location: 'Jaysingpur, Maharashtra',
+    system: 'Commercial Rooftop Solar',
+    projectType: 'Commercial',
+    performance: 'Reliable Daytime Power',
     description:
-      'Critical infrastructure solar installation designed for uninterrupted operation, sensitive medical equipment, and daytime cooling.',
-    statusNote: 'Official Client Reference',
+      'Solar power system for a commercial establishment, reducing grid dependence and electricity costs through clean rooftop solar generation.',
+    statusNote: 'Green Infra Installation',
   },
   {
     id: 'proj-3',
-    projectName: 'Balaji CBSE School Campus',
-    location: 'Ichalkaranji / Kolhapur, Maharashtra',
-    system: 'Institutional Rooftop Solar',
-    projectType: 'Educational Institutes',
-    performance: 'Clean Campus Energy',
+    projectName: 'Industrial Unit Solar Plant',
+    location: 'Sangli–Kolhapur Region, Maharashtra',
+    system: 'Industrial Solar EPC',
+    projectType: 'Industrial',
+    performance: 'High-Yield Solar Generation',
     description:
-      'Turnkey institutional solar installation providing substantial operating cost reductions and hands-on green education for students.',
-    statusNote: 'Official Client Reference',
+      'Solar power plant for an industrial facility, engineered for heavy load offset and daytime production with monitoring support.',
+    statusNote: 'Green Infra Installation',
   },
   {
     id: 'proj-4',
-    projectName: 'Retail Petroleum Outlets (BPCL / IOCL)',
-    location: 'Kolhapur District, Maharashtra',
-    system: 'Commercial Solar Setup',
-    projectType: 'Petrol Pumps',
-    performance: 'Reliable Daytime Power',
+    projectName: 'School Campus Solar System',
+    location: 'Jaysingpur Area, Maharashtra',
+    system: 'Institutional Rooftop Solar',
+    projectType: 'Educational Institute',
+    performance: 'Clean Campus Energy',
     description:
-      'Robust solar system for fueling stations with automated daytime load synchronization, minimizing grid dependence.',
-    statusNote: 'Official Client Reference',
+      'Rooftop solar system for a school campus providing clean electricity for classrooms, lighting and administrative areas.',
+    statusNote: 'Green Infra Installation',
   },
   {
     id: 'proj-5',
-    projectName: 'Sky Industries Manufacturing Unit',
-    location: 'Kolhapur Region, Maharashtra',
-    system: 'Industrial Rooftop Array',
-    projectType: 'Engineering & Manufacturing',
-    performance: 'Optimized Energy Yield',
+    projectName: 'EV Vehicle Delivery',
+    location: 'Jaysingpur, Sangli, Maharashtra',
+    system: 'Electric Vehicle Supply',
+    projectType: 'EV Dealership',
+    performance: 'Zero-Emission Mobility',
     description:
-      'High-capacity factory shed rooftop solar plant engineered for high ambient temperatures and harsh industrial conditions.',
-    statusNote: 'Official Client Reference',
+      'Authorised EV vehicle delivery to customers across Jaysingpur and Sangli region with complete documentation and handover support.',
+    statusNote: 'Green Infra EV Dealer',
   },
   {
     id: 'proj-6',
-    projectName: 'Residential Bungalow Solar System',
-    location: 'Kolhapur, Maharashtra',
-    system: 'Customized Rooftop Solar',
-    projectType: 'Residential Villa',
-    performance: 'Net-Metered Clean Power',
+    projectName: 'Agricultural Solar Pump',
+    location: 'Sangli District, Maharashtra',
+    system: 'Agricultural Solar System',
+    projectType: 'Agriculture',
+    performance: 'Daytime Pump Power',
     description:
-      'Architectural rooftop solar solution with in-house engineered non-penetrating mounting structure and seamless MSEDCL net metering.',
-    statusNote: 'Verified Regional Installation',
+      'Solar water pump system for agricultural use, reducing diesel and electricity cost for irrigation through clean solar power.',
+    statusNote: 'Green Infra Installation',
   },
 ];
 
@@ -85,39 +85,33 @@ export const ImpactAndProof: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const offsetRef = useRef<number>(0);
-  const speedRef = useRef<number>(0.75); // Current pixels per frame
-  const targetSpeedRef = useRef<number>(0.75); // Normal cruising speed
+  const speedRef = useRef<number>(0.75);
+  const targetSpeedRef = useRef<number>(0.75);
   const isPausedRef = useRef<boolean>(false);
   const isVisibleRef = useRef<boolean>(true);
   const rafIdRef = useRef<number | null>(null);
 
-  // Touch drag tracking
   const touchStartXRef = useRef<number>(0);
   const touchStartOffsetRef = useRef<number>(0);
   const isTouchingRef = useRef<boolean>(false);
 
-  // Duplicated list for seamless infinite loop (A + B)
   const loopCards = [...PROJECTS, ...PROJECTS];
 
-  // Official verified clients
   const verifiedClients = [
-    'BPCL (Bharat Petroleum)',
-    'IOCL (Indian Oil)',
-    'Balaji CBSE School',
-    'SPMSPM',
-    'San Electricals',
-    'Shraddha Surgical Hospital',
-    'Sky Industries',
+    'Residential Homes',
+    'Commercial Shops',
+    'Industrial Units',
+    'Schools & Institutes',
+    'Agricultural Setups',
+    'EV Vehicle Customers',
   ];
 
   useEffect(() => {
-    // Check if user prefers reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
       return;
     }
 
-    // IntersectionObserver to pause when section is out of viewport
     const observer = new IntersectionObserver(
       ([entry]) => {
         isVisibleRef.current = entry.isIntersecting;
@@ -129,16 +123,13 @@ export const ImpactAndProof: React.FC = () => {
       observer.observe(sectionRef.current);
     }
 
-    // Animation Loop (moves left-to-right)
     const animate = () => {
       if (trackRef.current && isVisibleRef.current && !isTouchingRef.current) {
-        // Smoothly accelerate / decelerate towards target speed
         speedRef.current += (targetSpeedRef.current - speedRef.current) * 0.08;
 
         if (speedRef.current > 0.001) {
           const halfWidth = trackRef.current.scrollWidth / 2;
           if (halfWidth > 0) {
-            // Decrement offset to move cards from left to right
             offsetRef.current -= speedRef.current;
             if (offsetRef.current <= 0) {
               offsetRef.current += halfWidth;
@@ -162,7 +153,6 @@ export const ImpactAndProof: React.FC = () => {
     };
   }, []);
 
-  // Desktop Hover Handlers
   const handleMouseEnter = () => {
     isPausedRef.current = true;
     targetSpeedRef.current = 0;
@@ -170,10 +160,9 @@ export const ImpactAndProof: React.FC = () => {
 
   const handleMouseLeave = () => {
     isPausedRef.current = false;
-    targetSpeedRef.current = 0.75; // Resumes smoothly with ease-in
+    targetSpeedRef.current = 0.75;
   };
 
-  // Mobile Touch Handlers
   const handleTouchStart = (e: React.TouchEvent) => {
     isTouchingRef.current = true;
     touchStartXRef.current = e.touches[0].clientX;
@@ -209,17 +198,17 @@ export const ImpactAndProof: React.FC = () => {
       className="relative py-16 sm:py-20 bg-white text-slate-900 border-t border-slate-200/80 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-16 mb-6 sm:mb-10">
-        
+
         {/* Section Header */}
         <div className="max-w-3xl space-y-2 sm:space-y-3">
           <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 inline-block">
-            SOLAR TECHNOLOGIES PROJECTS
+            GREEN INFRA PROJECTS
           </span>
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 leading-tight">
-            Real Systems. Real Sites. Real Solar.
+            Real Solar. Real EVs. Real Results.
           </h2>
           <p className="text-slate-600 text-sm sm:text-base lg:text-lg leading-relaxed">
-            Explore turnkey solar EPC and rooftop installations delivered by Solar Technologies across Ichalkaranji, Kolhapur and Maharashtra.
+            Solar installations and EV deliveries by Green Infra across Jaysingpur, Sangli and Maharashtra.
           </p>
         </div>
 
@@ -245,7 +234,7 @@ export const ImpactAndProof: React.FC = () => {
               className="w-[280px] sm:w-[350px] md:w-[390px] shrink-0 bg-slate-50/90 hover:bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-slate-200/80 hover:border-emerald-300/90 shadow-2xs flex flex-col justify-between transition-all duration-250 hover:-translate-y-1.5 hover:shadow-lg group cursor-pointer"
             >
               <div className="space-y-3 sm:space-y-4">
-                
+
                 {/* Top Row: Location & Project Type */}
                 <div className="flex items-center justify-between gap-2 border-b border-slate-200/80 pb-2.5 sm:pb-3">
                   <div className="flex items-center gap-1.5 text-xs text-slate-600 font-medium truncate">
@@ -272,7 +261,7 @@ export const ImpactAndProof: React.FC = () => {
 
                 {/* Performance Pill Box */}
                 <div className="bg-white p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border border-slate-200/80 group-hover:border-slate-300/80 flex items-center justify-between transition-colors">
-                  <span className="text-[11px] sm:text-xs text-slate-500 font-medium">System Performance</span>
+                  <span className="text-[11px] sm:text-xs text-slate-500 font-medium">System Output</span>
                   <span className="font-telemetry text-xs sm:text-sm font-bold text-emerald-700">
                     {proj.performance}
                   </span>
@@ -288,14 +277,14 @@ export const ImpactAndProof: React.FC = () => {
               {/* Bottom CTA */}
               <div className="pt-3.5 mt-3.5 sm:pt-5 sm:mt-5 border-t border-slate-200/80 flex items-center justify-between">
                 <a
-                  href="#calculator"
+                  href="#contact"
                   className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-emerald-800 hover:text-emerald-950 transition-colors"
                 >
-                  <span>GET AN ESTIMATE</span>
+                  <span>GET A QUOTE</span>
                   <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-700 transition-transform duration-200 group-hover:translate-x-1.5" />
                 </a>
                 <span className="text-[10px] sm:text-[11px] text-slate-400 font-mono">
-                  Solar Technologies
+                  Green Infra
                 </span>
               </div>
 
@@ -304,18 +293,18 @@ export const ImpactAndProof: React.FC = () => {
         </div>
       </div>
 
-      {/* SECTION 14: TRUSTED SOLAR SOLUTIONS CLIENT RIBBON (No fake testimonials) */}
+      {/* CUSTOMERS SERVED RIBBON */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-16 mt-12 pt-10 border-t border-slate-200">
         <div className="text-center space-y-2 mb-6">
           <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">
-            TRUSTED PARTNER IN SOLAR POWER
+            WHO WE SERVE
           </span>
           <h3 className="text-lg sm:text-xl font-bold text-slate-900">
-            Trusted Solar Solutions for Homes, Businesses &amp; Industries
+            Green Infra Solar & EV — Serving All Segments
           </h3>
         </div>
 
-        {/* Clean client badge marquee / row */}
+        {/* Customer segment badges */}
         <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 max-w-4xl mx-auto">
           {verifiedClients.map((client, i) => (
             <div

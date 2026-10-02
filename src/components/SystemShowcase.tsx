@@ -9,14 +9,13 @@ import {
   Home,
   Zap,
   Wrench,
-  Fuel,
+  Tractor,
   GraduationCap,
   HeartPulse,
   Hotel,
-  Landmark,
-  Film,
-  Scissors,
-  Cpu,
+  Car,
+  Leaf,
+  Store,
 } from 'lucide-react';
 
 interface SystemShowcaseProps {
@@ -44,99 +43,99 @@ interface ServiceItem {
 }
 
 export const SystemShowcase: React.FC<SystemShowcaseProps> = ({ onSelectSystem }) => {
-  const [selectedService, setSelectedService] = useState<string>('epc');
+  const [selectedService, setSelectedService] = useState<string>('solar');
 
   const services: ServiceItem[] = [
     {
-      id: 'epc',
-      name: '01 — Complete EPC Solutions',
-      shortName: 'EPC Solutions',
-      icon: <Zap className="w-3.5 h-3.5" />,
-      tagline:
-        'Complete solar EPC solutions from concept and engineering through supply, installation and commissioning for small, medium and large-scale facilities.',
-      idealFor: 'Turnkey Solar Power Plants • Residential, Commercial & Industrial',
-      specs: {
-        label1: 'Execution Scope',
-        val1: 'Concept to Commissioning',
-        label2: 'Engineering',
-        val2: 'In-House Electrical & Structural',
-        label3: 'Contracting',
-        val3: 'MSEDCL Supervision (M.C. 11716)',
-        label4: 'Commitment',
-        val4: '25+ Years of Solar Experience',
-      },
-      features: [
-        'Detailed engineering, layout planning & structural load analysis',
-        'Direct procurement of robust Tier-1 panels and smart inverters',
-        'End-to-end MSEDCL documentation, net metering & CEI approvals',
-        'System synchronization, grid integration and plant commissioning',
-      ],
-    },
-    {
-      id: 'rooftop',
-      name: '02 — Customized Rooftop Solar',
-      shortName: 'Rooftop Solar',
+      id: 'solar',
+      name: '01 — Solar Panel Supply & Installation',
+      shortName: 'Solar Panels',
       icon: <Sun className="w-3.5 h-3.5" />,
       tagline:
-        'Customized rooftop solar systems designed for bungalows, apartments, commercial establishments, hospitals and industrial sheds.',
-      idealFor: 'Homes, Showrooms, Hospitals & Manufacturing Rooftops',
+        'Green Infra supplies and installs solar panels from 1kW and above for homes, shops, industries, schools and more — complete with mounting, inverter, wiring and commissioning.',
+      idealFor: 'Homes • Shops • Industries • Schools • Agriculture',
       specs: {
-        label1: 'Design Type',
-        val1: 'Customized Rooftop Solutions',
-        label2: 'Structure Engineering',
-        val2: 'In-House Robust Structure Design',
-        label3: 'Liaisoning',
-        val3: 'Complete MSEDCL Approvals',
-        label4: 'Performance',
-        val4: 'High-Yield Online Monitored Plants',
+        label1: 'Panel Range',
+        val1: 'From 1kW & Above',
+        label2: 'Applications',
+        val2: 'Residential, Commercial & Industrial',
+        label3: 'Location',
+        val3: 'Jaysingpur, Sangli, Maharashtra',
+        label4: 'Service',
+        val4: 'Supply, Installation & Commissioning',
       },
       features: [
-        'Precise shadow-free layout modeling for maximum daily harvest',
-        'Robust, wind-rated custom mounting structures engineered in-house',
-        'Seamless interconnection with your property’s existing LT/HT distribution',
-        'Intelligent online monitoring for real-time generation tracking',
+        'Solar panels from 1kW and above for all property types',
+        'Complete installation including mounting structure, inverter and wiring',
+        'Net metering documentation and MSEDCL coordination',
+        'Online monitoring and after-sales service support',
       ],
     },
     {
-      id: 'om',
-      name: '03 — Operation & Maintenance (O&M)',
-      shortName: 'Operation & Maint.',
-      icon: <Wrench className="w-3.5 h-3.5" />,
+      id: 'ev',
+      name: '02 — Electric Vehicle Dealership',
+      shortName: 'EV Vehicles',
+      icon: <Car className="w-3.5 h-3.5" />,
       tagline:
-        'Long-term O&M support to maintain solar system performance, minimize downtime and protect your multi-decade investment.',
-      idealFor: 'Residential, Commercial & Industrial Solar Power Plants',
+        'Green Infra is an authorised electric vehicle dealer in Jaysingpur. We provide a range of EVs for personal and commercial use, with complete documentation and handover.',
+      idealFor: 'Personal • Commercial • Agricultural EV Use',
       specs: {
-        label1: 'Team',
-        val1: 'Dedicated In-House O&M Crew',
-        label2: 'Monitoring',
-        val2: 'Intelligent Online Telemetry',
-        label3: 'Focus',
-        val3: 'Maximizing Generation & Uptime',
-        label4: 'Coverage',
-        val4: 'Ichalkaranji, Kolhapur & Maharashtra',
+        label1: 'Vehicle Type',
+        val1: 'Electric Vehicles (EV)',
+        label2: 'Dealer Status',
+        val2: 'Authorised EV Dealer — Jaysingpur',
+        label3: 'Coverage',
+        val3: 'Sangli, Kolhapur & Maharashtra Region',
+        label4: 'Documentation',
+        val4: 'Complete RTO & Registration Support',
       },
       features: [
-        'Scheduled module cleaning and preventive electrical inspections',
-        'String diagnostics, terminal torque audits and inverter health checks',
-        'Prompt on-ground service response to minimize generation downtime',
-        'Performance auditing and generation report verification',
+        'Authorised electric vehicle dealer for the Jaysingpur region',
+        'Range of EV models for personal, commercial and agricultural use',
+        'Complete RTO registration and documentation assistance',
+        'After-sales EV service and support guidance',
+      ],
+    },
+    {
+      id: 'maintenance',
+      name: '03 — After-Sales Service & Support',
+      shortName: 'Service & Support',
+      icon: <Wrench className="w-3.5 h-3.5" />,
+      tagline:
+        'Green Infra provides ongoing service and maintenance support for solar systems and EV customers, ensuring reliable long-term performance for every installation.',
+      idealFor: 'Solar System Owners • EV Owners • All Customers',
+      specs: {
+        label1: 'Service Type',
+        val1: 'Solar & EV After-Sales Support',
+        label2: 'Solar Maintenance',
+        val2: 'Panel Cleaning, Inverter Checks & Repairs',
+        label3: 'EV Support',
+        val3: 'Service Guidance & Assistance',
+        label4: 'Coverage',
+        val4: 'Jaysingpur & Sangli–Kolhapur Region',
+      },
+      features: [
+        'Scheduled solar panel cleaning and system health checks',
+        'Inverter diagnostics and electrical inspection',
+        'EV service coordination and owner guidance',
+        'Performance monitoring and generation report support',
       ],
     },
   ];
 
-  // Verified 11 sectors served by Solar Technologies (Section 11)
+  // Sectors served by Green Infra
   const industries = [
-    { name: 'Bungalows & Apartments', icon: <Home className="w-4 h-4 text-emerald-600" /> },
-    { name: 'Commercial Complexes', icon: <Building2 className="w-4 h-4 text-blue-600" /> },
-    { name: 'Engineering & Mfg.', icon: <Cpu className="w-4 h-4 text-amber-600" /> },
-    { name: 'Hospitals & Healthcare', icon: <HeartPulse className="w-4 h-4 text-rose-600" /> },
-    { name: 'Educational Institutes', icon: <GraduationCap className="w-4 h-4 text-indigo-600" /> },
-    { name: 'Petrol Pumps', icon: <Fuel className="w-4 h-4 text-orange-600" /> },
-    { name: 'Hotels & Resorts', icon: <Hotel className="w-4 h-4 text-teal-600" /> },
-    { name: 'Banks & Financial', icon: <Landmark className="w-4 h-4 text-sky-600" /> },
-    { name: 'Textile / Sizing Units', icon: <Scissors className="w-4 h-4 text-purple-600" /> },
-    { name: 'Theatres / Multiplex', icon: <Film className="w-4 h-4 text-fuchsia-600" /> },
+    { name: 'Residential Homes', icon: <Home className="w-4 h-4 text-emerald-600" /> },
+    { name: 'Commercial Shops', icon: <Store className="w-4 h-4 text-blue-600" /> },
     { name: 'Industrial Plants', icon: <Factory className="w-4 h-4 text-slate-700" /> },
+    { name: 'Schools & Institutes', icon: <GraduationCap className="w-4 h-4 text-indigo-600" /> },
+    { name: 'Hospitals', icon: <HeartPulse className="w-4 h-4 text-rose-600" /> },
+    { name: 'Hotels & Resorts', icon: <Hotel className="w-4 h-4 text-teal-600" /> },
+    { name: 'Agricultural Use', icon: <Tractor className="w-4 h-4 text-amber-600" /> },
+    { name: 'Electric Vehicles', icon: <Car className="w-4 h-4 text-cyan-600" /> },
+    { name: 'Commercial Complexes', icon: <Building2 className="w-4 h-4 text-orange-600" /> },
+    { name: 'Green Energy Users', icon: <Leaf className="w-4 h-4 text-green-600" /> },
+    { name: 'EV Charging', icon: <Zap className="w-4 h-4 text-yellow-600" /> },
   ];
 
   const currentService = services.find((s) => s.id === selectedService) || services[0];
@@ -158,22 +157,22 @@ export const SystemShowcase: React.FC<SystemShowcaseProps> = ({ onSelectSystem }
     <section id="services" className="relative py-12 sm:py-20 px-4 sm:px-6 md:px-12 lg:px-16 bg-slate-50 text-slate-900 border-t border-slate-200">
       <div id="systems" className="relative -top-24 pointer-events-none" />
       <div className="max-w-6xl mx-auto relative z-10 space-y-12 sm:space-y-16">
-        
+
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-5 sm:gap-6">
           <div className="max-w-xl space-y-2.5 sm:space-y-3">
             <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200/80 inline-block">
-              OUR SOLAR SERVICES
+              OUR SERVICES
             </span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-slate-900 leading-tight">
-              Solar Technologies Core Solutions
+              Green Infra Core Offerings
             </h2>
             <p className="text-slate-600 text-xs sm:text-base leading-relaxed">
-              Complete solar EPC solutions from concept and engineering through supply, installation, commissioning and long-term O&amp;M support.
+              Solar panels from 1kW, EV vehicles and complete after-sales service — all at one place in Jaysingpur.
             </p>
           </div>
 
-          {/* Segmented Service Selector Tabs (3 Core Services) */}
+          {/* Segmented Service Selector Tabs */}
           <div className="flex flex-wrap items-center gap-1.5 p-1.5 bg-white rounded-2xl border border-slate-200 shadow-2xs self-start md:self-end">
             {services.map((service) => (
               <button
@@ -196,7 +195,7 @@ export const SystemShowcase: React.FC<SystemShowcaseProps> = ({ onSelectSystem }
         {/* Selected Service Detail Presentation */}
         <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 md:p-10 border border-slate-200 shadow-sm relative overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
-            
+
             {/* Left Col: Specs and Description */}
             <div className="lg:col-span-7 space-y-4 sm:space-y-6">
               <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-800 border border-emerald-200/80 px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold">
@@ -238,17 +237,17 @@ export const SystemShowcase: React.FC<SystemShowcaseProps> = ({ onSelectSystem }
                   onClick={handleConsultService}
                   className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#C6F500] hover:bg-[#b8e500] text-black font-bold text-xs sm:text-sm px-5 py-3 rounded-xl transition-all shadow-xs hover:shadow-sm cursor-pointer active:scale-[0.98] min-h-[44px]"
                 >
-                  <span>Enquire For This Solution</span>
+                  <span>Enquire About This Service</span>
                   <ArrowRight className="w-4 h-4 text-black group-hover:translate-x-1.5 transition-transform shrink-0" />
                 </button>
               </div>
             </div>
 
-            {/* Right Col: Scope of Work / Features */}
+            {/* Right Col: Features */}
             <div className="lg:col-span-5 bg-slate-900 text-white rounded-2xl p-4 sm:p-7 md:p-8 shadow-md space-y-4 sm:space-y-5">
               <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                <span className="text-xs font-mono uppercase text-slate-400">Execution Standards</span>
-                <span className="text-xs text-[#C6F500] font-bold">Solar Technologies Quality</span>
+                <span className="text-xs font-mono uppercase text-slate-400">What's Included</span>
+                <span className="text-xs text-[#C6F500] font-bold">Green Infra Quality</span>
               </div>
 
               <div className="space-y-2.5 sm:space-y-3">
@@ -261,25 +260,25 @@ export const SystemShowcase: React.FC<SystemShowcaseProps> = ({ onSelectSystem }
               </div>
 
               <div className="pt-3 border-t border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
-                <span>Govt. Licensed Electrical Contractor</span>
-                <span className="text-white font-medium">M.C. NO-11716</span>
+                <span>Jaysingpur, Sangli–Kolhapur Bypass</span>
+                <span className="text-white font-medium">Maharashtra</span>
               </div>
             </div>
 
           </div>
         </div>
 
-        {/* SECTION 11: COMPACT INDUSTRIES & APPLICATIONS SERVED */}
+        {/* SECTORS & APPLICATIONS */}
         <div className="pt-4 border-t border-slate-200">
           <div className="text-center max-w-xl mx-auto mb-6 space-y-2">
             <span className="text-[10px] font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200/80 inline-block">
-              SECTORS &amp; APPLICATIONS
+              WHO WE SERVE
             </span>
             <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
-              Solar Solutions Across Key Industries
+              Green Energy for Every Segment
             </h3>
             <p className="text-slate-600 text-xs sm:text-sm">
-              Tailored engineering and installation expertise for diverse residential, commercial, and industrial segments.
+              Solar panels and EV vehicles for homes, businesses, industries and everyone going green in Maharashtra.
             </p>
           </div>
 
@@ -300,10 +299,10 @@ export const SystemShowcase: React.FC<SystemShowcaseProps> = ({ onSelectSystem }
             {/* Trust badge card */}
             <div className="bg-emerald-900 text-white rounded-xl p-3 text-center flex flex-col items-center justify-center gap-1 shadow-2xs col-span-2 sm:col-span-1">
               <span className="text-[10px] font-bold uppercase tracking-wider text-[#C6F500]">
-                25+ Years
+                Green Infra
               </span>
               <span className="text-[10px] font-medium text-emerald-100 leading-tight">
-                Proven Track Record
+                Jaysingpur, MH
               </span>
             </div>
           </div>

@@ -1,46 +1,50 @@
 import React, { useState } from 'react';
-import { ChevronDown, HelpCircle } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 export const FAQSection: React.FC = () => {
   const [openIdx, setOpenIdx] = useState<number | null>(0);
 
   const faqs = [
     {
-      q: 'How does Solar Technologies solar installation perform on cloudy or monsoon days?',
-      a: 'Even in heavy cloud cover, daylight contains high amounts of diffuse irradiance. Solar Technologies deploys high-efficiency N-type TOPCon & Mono PERC modules specifically engineered with wide-spectrum absorption that captures ambient diffuse light. System generation balances over annual solar cycles, delivering dependable year-round savings.',
+      q: 'What is the minimum solar panel size available at Green Infra?',
+      a: 'Green Infra supplies solar panels from 1kW and above. Whether you need a small 1kW system for a home or a larger system for an industrial unit, we have the right solution. We provide complete installation including panels, mounting structure, inverter, wiring and commissioning.',
     },
     {
-      q: 'What happens to my power supply during a municipal grid blackout?',
-      a: 'Standard grid-tied solar systems automatically disconnect during utility outages in compliance with MSEDCL safety regulations to protect line workers. For uninterrupted continuous power, Solar Technologies designs hybrid energy storage systems that switch seamlessly to backup power for essential lighting, medical equipment and home appliances.',
+      q: 'Do solar panels work on cloudy or monsoon days in Maharashtra?',
+      a: 'Yes, solar panels continue to generate power even on cloudy and monsoon days. While output is reduced compared to direct sunlight, diffuse daylight still produces usable electricity. Systems are designed to balance annual production so you benefit all year round across Maharashtra\'s varied climate.',
     },
     {
-      q: 'How does the PM Surya Ghar Muft Bijli Yojana subsidy work?',
-      a: 'Under the Government of India\'s PM Surya Ghar scheme, residential households installing rooftop solar panels receive a direct subsidy: ₹30,000 per kW for systems up to 2 kW and ₹18,000 per kW for the next 1 kW (3 kW total). For a 3 kW system costing approximately ₹1,65,000, you receive a subsidy of ₹78,000 — reducing your net investment to around ₹87,000. The subsidy is credited directly to your bank account after installation and DISCOM inspection.',
+      q: 'What is the PM Surya Ghar Muft Bijli Yojana subsidy?',
+      a: 'Under the Government of India\'s PM Surya Ghar scheme, residential households installing rooftop solar panels receive a direct subsidy: ₹30,000 per kW for systems up to 2kW and ₹18,000 per kW for the next 1kW (3kW total). For a 3kW system, you can receive up to ₹78,000 subsidy credited directly to your bank account after installation and DISCOM inspection. Green Infra can guide you through the process.',
     },
     {
-      q: 'Will solar panel installation cause roof leaks or void my existing roof warranty?',
-      a: 'No. Solar Technologies engineers custom non-penetrating and anchor-sealed mounting hardware with certified structural load designs. Every installation conforms to high wind-load ratings and Maharashtra building standards, ensuring 100% structural integrity and watertight roof sealing.',
+      q: 'What electric vehicles does Green Infra offer?',
+      a: 'Green Infra is an authorised electric vehicle dealer in Jaysingpur, offering a range of EVs for personal, commercial and agricultural use. Visit our showroom on the Sangli–Kolhapur Bypass, near Miraj–Jaysingpur Railway Station, to see available models and discuss your requirements.',
     },
     {
-      q: 'How does net energy metering (NEM) compensate me for excess power?',
-      a: 'During peak daytime sun hours, your system will often produce more kilowatt-hours than your building consumes. This excess clean energy is fed backward into the municipal electric grid, spinning your electric meter backward and generating utility credits. At night, you draw power against those earned credits.',
+      q: 'Does Green Infra provide after-sales service and maintenance?',
+      a: 'Yes. Green Infra provides after-sales support for both solar systems and EV customers. This includes solar panel cleaning, inverter health checks, electrical inspections, and EV service guidance. We are committed to ensuring your green energy investment performs reliably for the long term.',
+    },
+    {
+      q: 'How does net metering work and can Green Infra help?',
+      a: 'Net metering allows you to export excess solar electricity back to the grid and earn utility credits, which offset your electricity bill. During daytime your system produces more than you use, sending excess power to the grid. At night you draw against those credits. Green Infra assists with net metering documentation and MSEDCL coordination as part of the installation process.',
     },
   ];
 
   return (
-    <section className="relative py-24 px-6 md:px-12 lg:px-16 bg-slate-50 text-slate-900 border-t border-slate-200">
+    <section id="faq" className="relative py-24 px-6 md:px-12 lg:px-16 bg-slate-50 text-slate-900 border-t border-slate-200">
       <div className="max-w-4xl mx-auto relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center mb-16 space-y-4">
           <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100/60 px-3 py-1 rounded-full border border-emerald-200 inline-block">
-            Common Inquiries
+            Common Questions
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 leading-tight">
             Frequently Asked <span className="font-editorial-italic font-normal text-emerald-800">Questions</span>
           </h2>
           <p className="text-slate-600 text-base max-w-xl mx-auto">
-            Clear, transparent technical answers to guide your clean energy transition.
+            Answers to common questions about Green Infra Solar & Electrical Vehicle.
           </p>
         </div>
 

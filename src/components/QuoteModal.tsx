@@ -89,7 +89,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
             </div>
 
             <p className="text-xs text-slate-500">
-              A certified Solar Technologies engineer will contact you with your complete solar engineering blueprint and MSEDCL net metering feasibility report.
+              A Green Infra representative will contact you to discuss your solar or EV requirement and provide a complete solution proposal.
             </p>
 
             <button
@@ -110,7 +110,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
                 Request Your Site Assessment &amp; Solar Quote
               </h3>
               <p className="text-slate-600 text-xs sm:text-sm">
-                Get a customized solar design proposal, roof area assessment, and verified MSEDCL net-metering estimate from Solar Technologies.
+                Get a customised solar panel solution (from 1kW) or EV enquiry response from Green Infra Solar & Electrical Vehicle, Jaysingpur.
               </p>
             </div>
 
