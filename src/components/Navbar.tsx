@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Zap } from 'lucide-react';
+import { Menu, X, Zap, Phone, Sun } from 'lucide-react';
 import {
   BrandConfig,
   NavItemConfig,
@@ -41,12 +41,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       // Progress within 3D Hero track:
       // 0.0 to 0.80 = 3D solar model animation slides
-      // 0.80 to 1.0 = End frame Hero Section ("Next-Generation Solar Energy Solutions")
-      // > 1.0 = Subsequent sections (About, Solar Journey, Projects, Services, etc.)
+      // 0.80 to 1.0 = End frame Hero Section
+      // > 1.0 = Subsequent sections
       const progress = -rect.top / totalScrollable;
 
-      // Hide during 3D animation; reveal at End Frame Hero section and beyond
-      setIsVisible(progress >= 0.80);
+      // Hide during 3D intro animation; reveal at End Frame Hero section and beyond
+      setIsVisible(progress >= 0.78);
     };
 
     checkVisibility();
@@ -75,25 +75,24 @@ export const Navbar: React.FC<NavbarProps> = ({
         isVisible ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
       }`}
     >
-      {/* 30% Slimmer Floating Glassmorphism Pill Navbar */}
-      <nav className="glass-nav rounded-full px-3 sm:px-4 md:px-5 py-1.5 flex items-center justify-between gap-2 sm:gap-4 md:gap-7 max-w-3xl w-full md:w-auto text-white">
-        {/* Brand Lockup: Green Infra Logo + Company Name */}
-        <a href="#" className="flex items-center gap-1.5 sm:gap-2 group shrink-0 min-w-0">
-          <div className="w-6 h-6 rounded-full bg-[#C6F500] flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform shrink-0">
-            {/* Green Infra: Leaf + Sun mark */}
-            <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4">
-              {/* Sun rays */}
-              <circle cx="12" cy="10" r="3.5" fill="#1a3a1a" />
-              <line x1="12" y1="4" x2="12" y2="2" stroke="#1a3a1a" strokeWidth="1.8" strokeLinecap="round"/>
-              <line x1="17.5" y1="5.5" x2="19" y2="4" stroke="#1a3a1a" strokeWidth="1.5" strokeLinecap="round"/>
-              <line x1="20" y1="10" x2="22" y2="10" stroke="#1a3a1a" strokeWidth="1.5" strokeLinecap="round"/>
-              {/* EV bolt */}
-              <path d="M10 16 L8 21 L14 15 L12 15 L14 10 L8 17 Z" fill="#1a3a1a"/>
-            </svg>
+      {/* Floating Glassmorphism Pill Navbar */}
+      <nav className="glass-nav rounded-full px-3 sm:px-4 md:px-5 py-2 flex items-center justify-between gap-2 sm:gap-4 md:gap-6 max-w-4xl w-full md:w-auto text-white shadow-xl border border-white/20 bg-slate-950/70 backdrop-blur-xl">
+        {/* Brand Lockup: Invisible Energy Logo + Company Name */}
+        <a href="#" className="flex items-center gap-2 group shrink-0 min-w-0">
+          <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-400 via-[#C6F500] to-emerald-400 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform shrink-0">
+            <Sun className="w-4 h-4 text-slate-950" />
           </div>
-          <span className="font-bold tracking-tight text-xs sm:text-sm md:text-[14px] text-white truncate leading-tight">
-            Green Infra Solar & EV
-          </span>
+          <div className="flex flex-col text-left">
+            <span className="font-extrabold tracking-tight text-xs sm:text-sm md:text-[14px] text-white truncate leading-tight flex items-center gap-1">
+              {brand.name}
+              <span className="hidden sm:inline-block text-[10px] font-semibold text-[#C6F500] bg-white/10 px-1.5 py-0.2 rounded">
+                Sangli
+              </span>
+            </span>
+            <span className="text-[9px] text-slate-300 hidden md:block leading-none">
+              Solar Energy Solutions • Est. 2017
+            </span>
+          </div>
         </a>
 
         {/* Desktop Navigation Links */}
@@ -110,13 +109,22 @@ export const Navbar: React.FC<NavbarProps> = ({
           ))}
         </div>
 
-        {/* Primary Action Button: Compact Neon Lime Pill */}
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        {/* Primary Action Button & Phone Link */}
+        <div className="flex items-center gap-2 shrink-0">
+          <a
+            href="tel:+918888208099"
+            className="hidden sm:flex items-center gap-1.5 text-xs font-semibold text-white/90 hover:text-[#C6F500] transition-colors px-2 py-1.5"
+            title="Call Invisible Energy Sangli"
+          >
+            <Phone className="w-3.5 h-3.5 text-[#C6F500]" />
+            <span className="hidden lg:inline">+91 8888208099</span>
+          </a>
+
           <button
             onClick={onOpenQuote}
-            className="group flex items-center gap-1 sm:gap-1.5 bg-[#C6F500] hover:bg-[#b8e500] text-black text-[11px] sm:text-xs font-bold px-2.5 sm:px-3.5 py-1.5 rounded-full transition-all duration-200 shadow-xs hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer min-h-[32px]"
+            className="group flex items-center gap-1 sm:gap-1.5 bg-[#C6F500] hover:bg-[#b8e500] text-black text-[11px] sm:text-xs font-bold px-3 sm:px-4 py-1.5 rounded-full transition-all duration-200 shadow-xs hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer min-h-[32px]"
           >
-            <span>Get Quote</span>
+            <span>Get Free Quote</span>
             <Zap className="w-3 h-3 fill-black text-black group-hover:rotate-12 transition-transform" />
           </button>
 
@@ -133,7 +141,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden mt-2 w-full max-w-sm rounded-2xl p-4 bg-[#0A1610]/80 backdrop-blur-2xl border border-white/20 shadow-2xl text-white space-y-1.5 animate-in fade-in slide-in-from-top-2 duration-150">
+        <div className="md:hidden mt-2 w-full max-w-sm rounded-2xl p-4 bg-[#0A1610]/95 backdrop-blur-2xl border border-white/20 shadow-2xl text-white space-y-1.5 animate-in fade-in slide-in-from-top-2 duration-150">
+          <div className="pb-2 mb-2 border-b border-white/10 flex items-center justify-between">
+            <span className="text-xs font-bold text-[#C6F500]">Invisible Energy</span>
+            <span className="text-[10px] text-slate-400">Sangliwadi, Sangli</span>
+          </div>
+
           {navLinks.map((item) => (
             <a
               key={item.id}
@@ -151,14 +164,23 @@ export const Navbar: React.FC<NavbarProps> = ({
               {item.label}
             </a>
           ))}
+
+          <a
+            href="tel:+918888208099"
+            className="flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-white/10 text-white text-xs font-medium hover:bg-white/15 transition-colors mt-2"
+          >
+            <Phone className="w-3.5 h-3.5 text-[#C6F500]" />
+            <span>Call +91 8888208099</span>
+          </a>
+
           <button
             onClick={() => {
               setMobileMenuOpen(false);
               onOpenQuote();
             }}
-            className="w-full bg-[#C6F500] text-black font-bold py-2 rounded-xl text-center text-xs shadow-sm mt-2 cursor-pointer flex items-center justify-center gap-1.5"
+            className="w-full bg-[#C6F500] text-black font-bold py-2 rounded-xl text-center text-xs shadow-sm mt-1 cursor-pointer flex items-center justify-center gap-1.5"
           >
-            <span>Contact Green Infra</span>
+            <span>Get Free Quote</span>
             <Zap className="w-3.5 h-3.5 fill-black" />
           </button>
         </div>

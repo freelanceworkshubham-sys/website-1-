@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, MapPin, Zap, CheckCircle2, Leaf } from 'lucide-react';
+import { ArrowRight, MapPin, Zap, CheckCircle2, ShieldCheck, Sun, Award, Users } from 'lucide-react';
 import { CountUpNumber } from './CountUpNumber';
 
 interface AboutSolarTechnologiesProps {
@@ -7,8 +7,8 @@ interface AboutSolarTechnologiesProps {
 }
 
 export const AboutSolarTechnologies: React.FC<AboutSolarTechnologiesProps> = ({ onOpenQuote }) => {
-  const handleScrollToProjects = () => {
-    const el = document.getElementById('projects');
+  const handleScrollToServices = () => {
+    const el = document.getElementById('services');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     } else if (onOpenQuote) {
@@ -19,84 +19,99 @@ export const AboutSolarTechnologies: React.FC<AboutSolarTechnologiesProps> = ({ 
   return (
     <section
       id="about"
-      className="relative py-10 sm:py-16 px-4 sm:px-6 md:px-12 lg:px-16 bg-white text-slate-900 border-t border-slate-200/80"
+      className="relative py-12 sm:py-20 px-4 sm:px-6 md:px-12 lg:px-16 bg-white text-slate-900 border-t border-slate-200/80"
     >
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
           {/* Left Column: Heading & Description */}
-          <div className="lg:col-span-7 space-y-3 sm:space-y-4">
-            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200/80 inline-block">
-              ABOUT GREEN INFRA
+          <div className="lg:col-span-7 space-y-3.5 sm:space-y-4">
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200/80 inline-flex items-center gap-1.5">
+              <Sun className="w-3 h-3 text-emerald-600" />
+              ABOUT INVISIBLE ENERGY
             </span>
 
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-slate-900 leading-tight">
-              Solar Energy & Electric Vehicles — <span className="text-emerald-700">One Destination.</span>
+              Maharashtra's Trusted <span className="text-emerald-700">Solar Energy Partner</span> Since 2017
             </h2>
 
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl">
-              Green Infra Solar & Electrical Vehicle is Jaysingpur's trusted green energy partner,
-              located on the Sangli–Kolhapur Bypass near Miraj–Jaysingpur Railway Station.
-              We supply and install solar panels from 1kW and above for homes, shops, industries,
-              schools and more — and are an authorised dealer for electric vehicles in the region.
+              Established in 2017, Invisible Energy has grown to become a leading wholesaler, dealer,
+              and EPC provider of comprehensive Solar Power Energy Systems across Maharashtra and India.
+              We specialize in complete solar installations from consultation to commissioning, helping
+              homes, commercial enterprises, and manufacturing facilities harness clean energy while reducing
+              electricity costs by up to 80%.
             </p>
 
-            <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-600">
-              <MapPin className="w-4 h-4 text-emerald-600 shrink-0" />
+            <div className="flex items-start sm:items-center gap-2 text-xs sm:text-sm text-slate-600">
+              <MapPin className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5 sm:mt-0" />
               <span>
-                Sangli–Kolhapur Bypass, Near Miraj–Jaysingpur Railway Station, Jaysingpur, Maharashtra
+                138/1/A/9, Magdum Park, Sangliwadi Toll Naka, Sangli - 416416, Maharashtra
               </span>
             </div>
 
-            <div className="pt-1 sm:pt-2">
+            <div className="pt-2 flex flex-wrap items-center gap-3">
               <button
                 type="button"
-                onClick={handleScrollToProjects}
+                onClick={handleScrollToServices}
                 className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-900 hover:text-emerald-700 transition-colors group cursor-pointer py-1.5 min-h-[44px]"
               >
-                <span>EXPLORE OUR WORK</span>
+                <span>EXPLORE ALL 11 SOLAR SERVICES</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform text-emerald-600" />
               </button>
+
+              {onOpenQuote && (
+                <button
+                  type="button"
+                  onClick={onOpenQuote}
+                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200/70 px-4 py-2 rounded-full transition-colors cursor-pointer"
+                >
+                  <span>Free Site Assessment</span>
+                  <Zap className="w-3.5 h-3.5 text-emerald-600" />
+                </button>
+              )}
             </div>
           </div>
 
-          {/* Right Column: 3 Compact Proof Points */}
+          {/* Right Column: 3 Real Metric Proof Cards */}
           <div className="lg:col-span-5 grid grid-cols-3 gap-2 sm:gap-4">
 
-            {/* Stat 1: Solar from 1kW */}
-            <div className="bg-slate-50 border border-slate-200/80 hover:border-emerald-300 rounded-xl sm:rounded-2xl p-2 sm:p-5 text-center flex flex-col justify-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group cursor-default">
-              <span className="text-base sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight block group-hover:text-emerald-900 transition-colors">
-                1kW+
+            {/* Stat 1: 500+ Projects Done */}
+            <div className="bg-slate-50 border border-slate-200/80 hover:border-emerald-300 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center flex flex-col justify-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group cursor-default">
+              <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight block group-hover:text-emerald-900 transition-colors">
+                500+
               </span>
               <span className="text-[10px] sm:text-xs font-semibold uppercase text-emerald-800 tracking-wider mt-0.5 sm:mt-1 block">
-                Solar
+                Projects
               </span>
               <span className="text-[9px] sm:text-xs text-slate-500 mt-0.5 block leading-tight">
-                Panels Available
+                Installed
               </span>
             </div>
 
-            {/* Stat 2: EV Vehicles */}
-            <div className="bg-slate-50 border border-slate-200/80 hover:border-emerald-300 rounded-xl sm:rounded-2xl p-2 sm:p-5 text-center flex flex-col justify-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group cursor-default">
-              <span className="text-base sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight block group-hover:text-emerald-900 transition-colors">
-                EV
+            {/* Stat 2: 7+ Years Experience */}
+            <div className="bg-slate-50 border border-slate-200/80 hover:border-emerald-300 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center flex flex-col justify-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group cursor-default">
+              <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight block group-hover:text-emerald-900 transition-colors">
+                7+
               </span>
               <span className="text-[10px] sm:text-xs font-semibold uppercase text-emerald-800 tracking-wider mt-0.5 sm:mt-1 block">
-                Vehicles
+                Years
               </span>
               <span className="text-[9px] sm:text-xs text-slate-500 mt-0.5 block leading-tight">
-                Authorised Dealer
+                Since 2017
               </span>
             </div>
 
-            {/* Stat 3: Location */}
-            <div className="bg-slate-50 border border-slate-200/80 hover:border-emerald-300 rounded-xl sm:rounded-2xl p-2 sm:p-5 text-center flex flex-col justify-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group cursor-default">
-              <Leaf className="w-6 h-6 text-emerald-600 mx-auto mb-1" />
+            {/* Stat 3: 400+ Clients */}
+            <div className="bg-slate-50 border border-slate-200/80 hover:border-emerald-300 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center flex flex-col justify-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group cursor-default">
+              <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight block group-hover:text-emerald-900 transition-colors">
+                400+
+              </span>
               <span className="text-[10px] sm:text-xs font-semibold uppercase text-emerald-800 tracking-wider mt-0.5 sm:mt-1 block">
-                Green
+                Clients
               </span>
               <span className="text-[9px] sm:text-xs text-slate-500 mt-0.5 block leading-tight">
-                Energy Partner
+                Satisfied
               </span>
             </div>
 
@@ -104,18 +119,34 @@ export const AboutSolarTechnologies: React.FC<AboutSolarTechnologiesProps> = ({ 
 
         </div>
 
-        {/* Feature highlights strip */}
-        <div className="mt-8 sm:mt-10 pt-6 border-t border-slate-200/80 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+        {/* Feature highlights strip matching invisibleenergy.in */}
+        <div className="mt-8 sm:mt-12 pt-6 border-t border-slate-200/80 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
           {[
-            { label: 'Solar Panels from 1kW & above', desc: 'Residential, Commercial & Industrial' },
-            { label: 'Electric Vehicle Dealership', desc: 'Authorised EV dealer in Jaysingpur' },
-            { label: 'Complete Solar Solutions', desc: 'Supply, installation & support' },
-            { label: 'Jaysingpur, Maharashtra', desc: 'Sangli–Kolhapur Bypass location' },
+            {
+              title: 'Professional Installation',
+              desc: 'Expert engineers with 1000+ completed installations',
+              icon: <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+            },
+            {
+              title: 'Tier-1 Components',
+              desc: 'High-efficiency panels with 25+ year performance warranty',
+              icon: <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+            },
+            {
+              title: 'Best Pricing & Subsidies',
+              desc: 'PM Surya Ghar subsidy aid saving up to 40% on setup',
+              icon: <Award className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+            },
+            {
+              title: 'Lifetime Local Support',
+              desc: 'Dedicated maintenance, net-metering & rapid repairs',
+              icon: <Users className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+            },
           ].map((item, i) => (
-            <div key={i} className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+            <div key={i} className="flex items-start gap-2.5">
+              {item.icon}
               <div>
-                <p className="text-xs sm:text-sm font-semibold text-slate-900 leading-snug">{item.label}</p>
+                <p className="text-xs sm:text-sm font-semibold text-slate-900 leading-snug">{item.title}</p>
                 <p className="text-[10px] sm:text-xs text-slate-500 mt-0.5 leading-tight">{item.desc}</p>
               </div>
             </div>

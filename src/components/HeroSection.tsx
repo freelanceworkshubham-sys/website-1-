@@ -67,7 +67,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreInnovation, o
 
             {/* Subtitle Body Text */}
             <p className="text-white/85 text-base sm:text-lg max-w-xl font-normal leading-relaxed text-balance">
-              Green Infra Solar & Electrical Vehicle — Jaysingpur's trusted destination for solar panels from 1kW and above, EV vehicles, and complete green energy solutions across Maharashtra.
+              Invisible Energy — Maharashtra's trusted partner for solar panel installation, rooftop systems, and turnkey clean energy solutions across Sangli and Maharashtra since 2017.
             </p>
 
             {/* Primary Action Button */}

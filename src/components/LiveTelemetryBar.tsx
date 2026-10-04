@@ -20,10 +20,10 @@ const STEPS: StepData[] = [
   {
     id: 'step-consult',
     stepNum: '01',
-    shortTitle: 'ENQUIRY',
-    title: 'Customer Enquiry & Requirement',
-    description: 'Customer visits or contacts Green Infra with solar panel or EV requirement. We understand electricity usage, budget and goals.',
-    actionText: 'CONTACT US TODAY',
+    shortTitle: 'CONSULTATION',
+    title: 'Free Solar Consultation & Bill Audit',
+    description: 'We analyze your current MSEDCL electricity bills, understand your daytime power load, and calculate potential savings of up to 80%.',
+    actionText: 'GET FREE CONSULTATION',
     actionHref: '#contact',
     accentColor: '#2563EB',
     accentBorder: 'border-[#2563EB]',
@@ -34,10 +34,10 @@ const STEPS: StepData[] = [
   {
     id: 'step-survey',
     stepNum: '02',
-    shortTitle: 'SITE VISIT',
-    title: 'Site Assessment & Survey',
-    description: 'Our team visits your site, assesses rooftop space, shadow analysis, electrical infrastructure and feasibility for your system.',
-    actionText: 'SCHEDULE SITE VISIT',
+    shortTitle: 'SITE SURVEY',
+    title: '3D Rooftop Survey & Shadow Analysis',
+    description: 'Our certified engineers conduct a physical rooftop inspection, shadow simulation, and structure assessment across Sangli and Maharashtra.',
+    actionText: 'BOOK SITE SURVEY',
     actionHref: '#contact',
     accentColor: '#EA580C',
     accentBorder: 'border-[#EA580C]',
@@ -48,10 +48,10 @@ const STEPS: StepData[] = [
   {
     id: 'step-design',
     stepNum: '03',
-    shortTitle: 'SOLUTION',
-    title: 'Custom Solar or EV Solution Design',
-    description: 'We design the right solar panel system (from 1kW) or recommend the best EV option. Proposal with pricing, ROI and specifications shared.',
-    actionText: 'VIEW OUR SOLUTIONS',
+    shortTitle: 'SUBSIDY & DESIGN',
+    title: 'Custom Engineering & Subsidy Filing',
+    description: 'Precision system engineering and complete assistance with PM Surya Ghar Muft Bijli Yojana subsidies (up to 40%) and DISCOM net metering.',
+    actionText: 'VIEW SOLAR SOLUTIONS',
     actionHref: '#services',
     accentColor: '#059669',
     accentBorder: 'border-[#059669]',
@@ -62,11 +62,11 @@ const STEPS: StepData[] = [
   {
     id: 'step-install',
     stepNum: '04',
-    shortTitle: 'INSTALL & DELIVER',
-    title: 'Solar Installation or EV Delivery',
-    description: 'Our certified team installs your solar system with full electrical work and commissioning, or we deliver and hand over your EV with documentation.',
-    actionText: 'EXPLORE OUR WORK',
-    actionHref: '#projects',
+    shortTitle: 'INSTALLATION',
+    title: 'Tier-1 Solar Installation & Wiring',
+    description: 'Completed in 2-4 days by certified technicians: Tier-1 panels, inverters, earthing, lightning arresters, and quality wiring.',
+    actionText: 'VIEW COMPLETED PROJECTS',
+    actionHref: '#portfolio',
     accentColor: '#0284C7',
     accentBorder: 'border-[#0284C7]',
     accentBg: 'bg-cyan-50',
@@ -76,9 +76,9 @@ const STEPS: StepData[] = [
   {
     id: 'step-support',
     stepNum: '05',
-    shortTitle: 'SUPPORT',
-    title: 'After-Sales Service & Support',
-    description: 'Green Infra provides ongoing solar system maintenance, EV service support and guidance so your green energy investment keeps performing.',
+    shortTitle: 'LIFETIME CARE',
+    title: 'Net-Metering & Lifetime Maintenance',
+    description: 'Bi-directional meter installation with MSEDCL, smart mobile monitoring setup, and lifetime maintenance support from Invisible Energy.',
     actionText: 'CONTACT FOR SUPPORT',
     actionHref: '#contact',
     accentColor: '#7C3AED',
@@ -329,6 +329,7 @@ export const LiveTelemetryBar: React.FC = () => {
       className="relative py-10 sm:py-16 px-3 sm:px-6 md:px-12 lg:px-16 bg-white text-slate-900 border-y border-slate-200/80 overflow-hidden"
     >
       <div id="how-it-works" className="relative -top-24 pointer-events-none" />
+      <div id="workflow" className="relative -top-24 pointer-events-none" />
       <style>{`
         @keyframes infoCardContentFade {
           0% {
@@ -350,13 +351,13 @@ export const LiveTelemetryBar: React.FC = () => {
         {/* Section Header */}
         <div className="text-center max-w-xl mx-auto mb-6 sm:mb-10 space-y-2 sm:space-y-2.5">
           <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-emerald-200/80 inline-block">
-            HOW IT WORKS
+            WORK STAGES &amp; PROCESS
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-slate-900 leading-tight">
-            How Green Infra Works
+            How Invisible Energy Delivers
           </h2>
           <p className="text-slate-600 text-xs sm:text-sm leading-relaxed max-w-md mx-auto">
-            From your first enquiry to solar installation or EV delivery — a seamless 5-step green energy journey.
+            From initial site consultation and subsidy paperwork to commissioning and lifetime maintenance across Maharashtra.
           </p>
         </div>
 

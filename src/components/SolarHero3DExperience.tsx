@@ -18,29 +18,29 @@ const SLIDES_DATA: TextSlideData[] = [
     id: 1,
     start: 0.0,
     end: 0.20,
-    mainLines: ["The sun rises", "over Jaysingpur."],
-    subLines: ["Your rooftop is ready.", "We make it work."],
+    mainLines: ["Clean solar power", "for Maharashtra."],
+    subLines: ["Sangli's trusted solar partner.", "Harness clean energy."],
   },
   {
     id: 2,
     start: 0.20,
     end: 0.40,
-    mainLines: ["Solar panels", "from 1kW."],
-    subLines: ["Homes. Shops.", "Industries. Schools."],
+    mainLines: ["Save up to 80%", "on electricity."],
+    subLines: ["PM Surya Ghar subsidy.", "Up to 40% government aid."],
   },
   {
     id: 3,
     start: 0.40,
     end: 0.60,
-    mainLines: ["Electric vehicles", "are here."],
-    subLines: ["Clean mobility,", "charged by the sun."],
+    mainLines: ["On-grid, off-grid", "& rooftop solar."],
+    subLines: ["Tier-1 solar panels.", "25+ year performance warranty."],
   },
   {
     id: 4,
     start: 0.60,
     end: 0.80,
-    mainLines: ["Green Infra", "powers your", "tomorrow."],
-    subLines: ["Solar + EV,", "all in one place."],
+    mainLines: ["Invisible Energy", "powers your", "future."],
+    subLines: ["Trusted since 2017.", "Over 1,000+ installations."],
   },
 ];
 
@@ -700,36 +700,36 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
                   </div>
                   <div className="h-2.5 w-px bg-white/30" />
                   <span className="text-white font-semibold text-[10px] sm:text-xs tracking-wide uppercase">
-                    SOLAR PANELS FROM 1kW | EV VEHICLES
+                    500+ PROJECTS DONE • PM SURYA GHAR APPROVED
                   </span>
                 </div>
 
                 <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-bold tracking-widest uppercase text-[#C6F500]">
-                  <span>Green Infra</span>
+                  <span>Invisible Energy</span>
                   <span>•</span>
-                  <span className="truncate">Jaysingpur, Maharashtra</span>
+                  <span className="truncate">Sangli, Maharashtra</span>
                 </div>
               </div>
 
               {/* Main Headline (Prominent, bold, commanding scale on mobile, identical desktop preservation) */}
               <h1 className="text-[clamp(32px,8.5vw,39px)] sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[4rem] font-bold tracking-tight text-white leading-[1.12] sm:leading-[1.10] text-balance max-w-[94vw] sm:max-w-xl lg:max-w-none">
-                Solar Panels & <br />
-                Electrical Vehicles <br className="sm:hidden" />
-                <span className="font-editorial-italic font-normal text-white">for Every Need.</span>
+                Maharashtra's Trusted <br />
+                Solar Energy Partner <br className="sm:hidden" />
+                <span className="font-editorial-italic font-normal text-white">Since 2017.</span>
               </h1>
 
               {/* Subtitle Body Text */}
               <p className="text-white/90 text-sm sm:text-base lg:text-lg max-w-[92vw] sm:max-w-xl font-normal leading-relaxed text-balance">
-                Green Infra Solar & Electrical Vehicle — Jaysingpur's trusted dealer for solar panels from 1kW and above, EV vehicles, and complete green energy solutions across Maharashtra.
+                Invisible Energy in Sangli offers expert solar panel installation, maintenance, on-grid &amp; off-grid systems, solar water heaters, and street lights across Maharashtra. Save up to 80% on electricity bills with government subsidies.
               </p>
 
               {/* Primary Action Buttons (Well-proportioned touch targets) */}
               <div className="pt-1 sm:pt-2 flex flex-row flex-wrap items-center gap-2.5 sm:gap-3">
                 <button
-                  onClick={onExploreInnovation}
+                  onClick={onOpenQuote}
                   className="group inline-flex items-center gap-1.5 sm:gap-2 bg-[#C6F500] hover:bg-[#b8e500] active:scale-95 text-black font-bold text-xs sm:text-sm md:text-base px-5 sm:px-7 py-3 sm:py-3.5 rounded-full shadow-[0_8px_30px_rgba(198,245,0,0.35)] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(198,245,0,0.5)] cursor-pointer whitespace-nowrap"
                 >
-                  <span>Explore Solar & EV</span>
+                  <span>Get Free Quote</span>
                   <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-black text-black group-hover:rotate-12 transition-transform" />
                 </button>
                 <button
@@ -742,32 +742,32 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
 
               {/* MOBILE 2 GLASS CARDS */}
               <div className="pt-2 sm:pt-3 grid grid-cols-2 gap-2.5 sm:gap-3 w-full max-w-sm lg:hidden">
-                {/* Stat Card 1: Solar Panels from 1kW */}
+                {/* Stat Card 1: 500+ Projects Done */}
                 <div className="glass-panel rounded-2xl p-2.5 sm:p-3.5 text-white flex flex-col justify-between transition-all border border-white/20 bg-white/10 backdrop-blur-md shadow-xs min-h-[96px] sm:min-h-[110px]">
                   <span className="font-telemetry text-2xl sm:text-3xl font-bold tracking-tight text-white leading-none">
-                    1kW+
+                    500+
                   </span>
                   <div className="mt-2">
                     <p className="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider leading-snug">
-                      Solar Panels
+                      Projects Done
                     </p>
                     <p className="text-[9px] sm:text-[10px] text-white/70 mt-0.5 leading-tight">
-                      Residential & Commercial
+                      Across Maharashtra
                     </p>
                   </div>
                 </div>
 
-                {/* Stat Card 2: EV Vehicles */}
+                {/* Stat Card 2: 80% Savings */}
                 <div className="glass-panel rounded-2xl p-2.5 sm:p-3.5 text-white flex flex-col justify-between transition-all border border-white/20 bg-white/10 backdrop-blur-md shadow-xs min-h-[96px] sm:min-h-[110px]">
                   <span className="font-telemetry text-2xl sm:text-3xl font-bold tracking-tight text-[#C6F500] leading-none">
-                    EV
+                    80%
                   </span>
                   <div className="mt-2">
                     <p className="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider leading-snug">
-                      Electric Vehicles
+                      Bill Savings
                     </p>
                     <p className="text-[9px] sm:text-[10px] text-white/70 mt-0.5 leading-tight">
-                      Jaysingpur Dealer
+                      Subsidies &amp; Net Metering
                     </p>
                   </div>
                 </div>
@@ -779,32 +779,32 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
             <div className="hidden lg:flex lg:col-span-5 xl:col-span-4 flex-col items-end justify-center">
               <div className="grid grid-cols-2 gap-3 sm:gap-4 w-full max-w-sm sm:max-w-md lg:max-w-xs xl:max-w-sm">
                 
-                {/* Stat Card 1: Solar Panels from 1kW */}
+                {/* Stat Card 1: 500+ Projects Done */}
                 <div className="glass-panel rounded-2xl p-3.5 sm:p-4 md:p-5 text-white shadow-2xl flex flex-col justify-between transition-all duration-300 hover:border-white/40 hover:-translate-y-1">
                   <span className="font-telemetry text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold tracking-tight text-white leading-none">
-                    1kW+
+                    500+
                   </span>
                   <div className="mt-2.5 sm:mt-3">
                     <p className="text-[11px] sm:text-xs md:text-sm font-bold text-white uppercase tracking-wider leading-snug">
-                      Solar Panels
+                      Projects Done
                     </p>
                     <p className="text-[10px] sm:text-[11px] text-white/70 mt-0.5 sm:mt-1 leading-tight">
-                      Homes • Shops • Industries
+                      Rooftop • Commercial • Industrial
                     </p>
                   </div>
                 </div>
 
-                {/* Stat Card 2: EV Vehicles */}
+                {/* Stat Card 2: 400+ Clients */}
                 <div className="glass-panel rounded-2xl p-3.5 sm:p-4 md:p-5 text-white shadow-2xl flex flex-col justify-between transition-all duration-300 hover:border-white/40 hover:-translate-y-1">
                   <span className="font-telemetry text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold tracking-tight text-[#C6F500] leading-none">
-                    EV
+                    400+
                   </span>
                   <div className="mt-2.5 sm:mt-3">
                     <p className="text-[11px] sm:text-xs md:text-sm font-bold text-white uppercase tracking-wider leading-snug">
-                      Electric Vehicles
+                      Total Clients
                     </p>
                     <p className="text-[10px] sm:text-[11px] text-white/70 mt-0.5 sm:mt-1 leading-tight">
-                      Authorised Dealer • Jaysingpur
+                      Sangli • Pune • Kolhapur • Mumbai
                     </p>
                   </div>
                 </div>
@@ -817,42 +817,42 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
           <div className="pt-2 sm:pt-4 border-t border-white/10 w-full mt-auto [transform:translateY(-32px)] lg:[transform:none]">
             <div className="grid grid-cols-3 gap-2.5 sm:gap-6 md:gap-8 max-w-3xl lg:ml-auto w-full">
               
-              {/* Credential 1: Solar Panels */}
+              {/* Credential 1: 7+ Years Experience */}
               <div className="flex flex-col items-start text-left min-w-0">
                 <span className="font-telemetry text-base sm:text-xl md:text-2xl lg:text-3xl font-bold text-white tracking-tight leading-none mb-0.5 sm:mb-1">
-                  Solar
+                  7+
                 </span>
                 <span className="text-[9px] sm:text-xs text-[#C6F500] font-semibold uppercase tracking-wider leading-[1.25] sm:leading-normal">
-                  Panels from 1kW
+                  Years of Experience
                 </span>
                 <span className="text-[8px] sm:text-[11px] text-white/70 font-normal leading-tight mt-0.5 hidden sm:block">
-                  Homes, shops, industries & institutions
+                  Established in 2017 in Maharashtra
                 </span>
               </div>
 
-              {/* Credential 2: EV Vehicles */}
+              {/* Credential 2: Tier-1 Solar Panels */}
               <div className="flex flex-col items-start text-left min-w-0">
                 <span className="font-telemetry text-base sm:text-xl md:text-2xl lg:text-3xl font-bold text-white tracking-tight leading-none mb-0.5 sm:mb-1">
-                  EV
+                  25+ Yr
                 </span>
                 <span className="text-[9px] sm:text-xs text-[#C6F500] font-semibold uppercase tracking-wider leading-[1.25] sm:leading-normal">
-                  Electric Vehicles
+                  Panel Warranty
                 </span>
                 <span className="text-[8px] sm:text-[11px] text-white/70 font-normal leading-tight mt-0.5 hidden sm:block">
-                  Authorised dealer • Jaysingpur
+                  Tier-1 high efficiency components
                 </span>
               </div>
 
               {/* Credential 3: Location */}
               <div className="flex flex-col items-start text-left min-w-0">
                 <span className="font-telemetry text-base sm:text-xl md:text-2xl lg:text-3xl font-bold text-white tracking-tight leading-none mb-0.5 sm:mb-1">
-                  MH
+                  Sangli
                 </span>
                 <span className="text-[9px] sm:text-xs text-[#C6F500] font-semibold uppercase tracking-wider leading-[1.25] sm:leading-normal">
-                  Jaysingpur, Sangli
+                  Maharashtra, India
                 </span>
                 <span className="text-[8px] sm:text-[11px] text-white/70 font-normal leading-tight mt-0.5 hidden sm:block">
-                  Sangli–Kolhapur Bypass, near Railway Station
+                  138/1/A/9, Magdum Park, Sangliwadi
                 </span>
               </div>
 

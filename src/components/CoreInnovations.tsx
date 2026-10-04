@@ -19,7 +19,7 @@ export const CoreInnovations: React.FC = () => {
               Engineered for Extreme Yield &amp; <span className="font-editorial-italic font-normal text-emerald-800">Zero Degradation</span>
             </h2>
             <p className="text-slate-600 text-base">
-              Every Green Infra solar installation combines quality panels from 1kW and above, smart conversion technology, and reliable grid integration.
+              Every Invisible Energy solar installation combines certified Tier-1 panels, smart conversion technology, and reliable MSEDCL grid integration.
             </p>
           </div>
 
@@ -121,7 +121,7 @@ export const CoreInnovations: React.FC = () => {
             </div>
           </div>
 
-          {/* Bento Card 3: Green Infra Smart Inverter & Arc-Fault Protection (Col span 5) */}
+          {/* Bento Card 3: Invisible Energy Smart Inverter & Arc-Fault Protection (Col span 5) */}
           <div className="md:col-span-5 bg-white rounded-3xl p-8 border border-slate-200 shadow-sm relative overflow-hidden flex flex-col justify-between group hover:border-emerald-500/50 hover:shadow-md transition-all duration-300">
             <div className="space-y-6 relative z-10">
               <div className="flex items-center justify-between">
@@ -138,7 +138,7 @@ export const CoreInnovations: React.FC = () => {
                   Per-Panel Distributed MPPT Inverters
                 </h3>
                 <p className="text-slate-600 text-sm mt-3 leading-relaxed">
-                  Traditional string inverters reduce output if panels are shaded. Green Infra installs smart multi-MPPT inverters that optimise each string independently for maximum harvest.
+                  Traditional string inverters reduce output if panels are shaded. Invisible Energy installs smart multi-MPPT inverters that optimize each string independently for maximum harvest.
                 </p>
               </div>
 

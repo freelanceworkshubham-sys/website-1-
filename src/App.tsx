@@ -9,6 +9,7 @@ import { ImpactAndProof } from './components/ImpactAndProof';
 import { SystemShowcase } from './components/SystemShowcase';
 import { FinalCTA } from './components/FinalCTA';
 import { FAQSection } from './components/FAQSection';
+import { WhyChooseUs } from './components/WhyChooseUs';
 import { Footer } from './components/Footer';
 import { QuoteModal } from './components/QuoteModal';
 import { SystemTier } from './types/solar';
@@ -80,19 +81,22 @@ export default function App() {
           }}
         />
 
-        {/* 02 — ABOUT GREEN INFRA SOLAR & EV (Solar Panels 1kW+, EV Dealership, Jaysingpur) */}
+        {/* 02 — ABOUT INVISIBLE ENERGY (Solar Panels, Sangli, Maharashtra) */}
         <AboutSolarTechnologies onOpenQuote={() => handleOpenQuote()} />
 
-        {/* 03 — HOW IT WORKS / SOLAR JOURNEY (Circular Interactive Process: Enquiry → Survey → Solution → Install → Support) */}
+        {/* 03 — HOW IT WORKS / WORK STAGES (Turnkey 5-Stage Solar Process) */}
         <LiveTelemetryBar />
 
         {/* 04 — SMALL SOLAR BENEFITS RIBBON (PM Surya Ghar, Savings, ROI, Projects) */}
         <SolarBenefitsRibbon />
 
+        {/* 04b — WHY CHOOSE INVISIBLE ENERGY & VIDEO SHOWCASE */}
+        <WhyChooseUs onOpenQuote={() => handleOpenQuote()} />
+
         {/* 05 — PROJECTS (Turnkey Installations Across Maharashtra) */}
         <ImpactAndProof />
 
-        {/* 06 — SERVICES & INDUSTRIES (Green Infra Solar Panels 1kW+, EV Dealership & After-Sales Support) */}
+        {/* 06 — ALL 11 SOLAR SERVICES & EQUIPMENT (On-Grid, Off-Grid, Street Lights, Geysers) */}
         <SystemShowcase onSelectSystem={handleSelectSystem} />
 
         {/* 07 — SOLAR CALCULATOR (Shifted Down: Interactive Solar Yield & Financial Estimate) */}

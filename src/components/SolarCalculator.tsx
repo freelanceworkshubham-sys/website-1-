@@ -595,7 +595,7 @@ export const SolarCalculator: React.FC<SolarCalculatorProps> = ({ onScheduleAudi
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white border border-slate-200 rounded-xl p-4 sm:p-5">
               <div>
                 <h4 className="text-sm font-bold text-slate-900">Verify with a site audit?</h4>
-                <p className="text-[11px] text-slate-500">On-site assessment & official solar proposal by Green Infra Solar & EV, Jaysingpur.</p>
+                <p className="text-[11px] text-slate-500">On-site assessment &amp; official solar proposal by Invisible Energy, Sangli.</p>
               </div>
               <div className="flex items-center gap-2 w-full sm:w-auto">
                 <button type="button" onClick={handleEditBill}

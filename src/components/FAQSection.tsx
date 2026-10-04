@@ -1,55 +1,56 @@
 import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, HelpCircle, Phone, ArrowRight } from 'lucide-react';
 
 export const FAQSection: React.FC = () => {
   const [openIdx, setOpenIdx] = useState<number | null>(0);
 
   const faqs = [
     {
-      q: 'What is the minimum solar panel size available at Green Infra?',
-      a: 'Green Infra supplies solar panels from 1kW and above. Whether you need a small 1kW system for a home or a larger system for an industrial unit, we have the right solution. We provide complete installation including panels, mounting structure, inverter, wiring and commissioning.',
+      q: 'How long does solar panel installation take in Maharashtra?',
+      a: 'The installation time depends on the system size. For residential installations (1–10 kW), it typically takes 2–4 days. For commercial installations (10–100 kW), it takes 1–2 weeks. This includes mounting structures, installing Tier-1 panels, inverters, wiring, and safety earthing. Invisible Energy handles the entire timeline swiftly.',
     },
     {
-      q: 'Do solar panels work on cloudy or monsoon days in Maharashtra?',
-      a: 'Yes, solar panels continue to generate power even on cloudy and monsoon days. While output is reduced compared to direct sunlight, diffuse daylight still produces usable electricity. Systems are designed to balance annual production so you benefit all year round across Maharashtra\'s varied climate.',
+      q: 'What government subsidies are available in Maharashtra under PM Surya Ghar?',
+      a: 'Under the PM Surya Ghar Muft Bijli Yojana, residential households receive direct subsidy: ₹30,000 per kW for up to 2kW, and ₹18,000 for the 3rd kW—giving up to ₹78,000 in direct bank transfers (DBT). Commercial and industrial users benefit from accelerated depreciation (40%) and GST input tax credits. Invisible Energy assists with all documentation and DISCOM portal filings.',
     },
     {
-      q: 'What is the PM Surya Ghar Muft Bijli Yojana subsidy?',
-      a: 'Under the Government of India\'s PM Surya Ghar scheme, residential households installing rooftop solar panels receive a direct subsidy: ₹30,000 per kW for systems up to 2kW and ₹18,000 per kW for the next 1kW (3kW total). For a 3kW system, you can receive up to ₹78,000 subsidy credited directly to your bank account after installation and DISCOM inspection. Green Infra can guide you through the process.',
+      q: 'What is the cost of solar panel installation in Maharashtra?',
+      a: 'On average, a residential rooftop solar system costs ₹50,000–₹60,000 per kW before subsidies. A typical 3kW home system costs around ₹1.5–1.8 lakhs, which comes down to ₹90,000–1.1 lakhs after PM Surya Ghar subsidies. Commercial systems benefit from economies of scale. We offer customized quotes with clear ROI calculations.',
     },
     {
-      q: 'What electric vehicles does Green Infra offer?',
-      a: 'Green Infra is an authorised electric vehicle dealer in Jaysingpur, offering a range of EVs for personal, commercial and agricultural use. Visit our showroom on the Sangli–Kolhapur Bypass, near Miraj–Jaysingpur Railway Station, to see available models and discuss your requirements.',
+      q: 'What is the payback period for solar panels in Maharashtra?',
+      a: "With Maharashtra's high solar irradiation (averaging 5–6 peak sunlight hours daily) and prevailing MSEDCL electricity tariffs, the typical payback period is 4–6 years for residential homes and 3–5 years for commercial establishments. After subsidy, payback can be as short as 3–4 years. With a 25+ year lifespan, you enjoy 20+ years of virtually free electricity.",
     },
     {
-      q: 'Does Green Infra provide after-sales service and maintenance?',
-      a: 'Yes. Green Infra provides after-sales support for both solar systems and EV customers. This includes solar panel cleaning, inverter health checks, electrical inspections, and EV service guidance. We are committed to ensuring your green energy investment performs reliably for the long term.',
+      q: 'Do solar panels work during cloudy or monsoon days?',
+      a: 'Yes! Modern Tier-1 Mono PERC and TOPCon solar panels operate on light radiation rather than heat. On cloudy or rainy days, panels continue producing 25% to 40% of their standard capacity from diffuse sunlight. Across the full 12 months, Maharashtra provides more than 300 days of strong sun, easily balancing your annual net metering credits.',
     },
     {
-      q: 'How does net metering work and can Green Infra help?',
-      a: 'Net metering allows you to export excess solar electricity back to the grid and earn utility credits, which offset your electricity bill. During daytime your system produces more than you use, sending excess power to the grid. At night you draw against those credits. Green Infra assists with net metering documentation and MSEDCL coordination as part of the installation process.',
+      q: 'How does net metering work with MSEDCL (Mahavitaran)?',
+      a: 'Net metering replaces your single-direction electric meter with a bi-directional meter. During bright daytime hours, excess electricity generated by your solar system flows into the MSEDCL grid, earning kilowatt-hour credits. At night, your home draws power from the grid against these credits. Your monthly bill is only for the net difference, reducing costs by up to 80%.',
     },
   ];
 
   return (
-    <section id="faq" className="relative py-24 px-6 md:px-12 lg:px-16 bg-slate-50 text-slate-900 border-t border-slate-200">
-      <div className="max-w-4xl mx-auto relative z-10">
+    <section id="faq" className="relative py-16 sm:py-24 px-4 sm:px-6 md:px-12 lg:px-16 bg-slate-50 text-slate-900 border-t border-slate-200">
+      <div className="max-w-4xl mx-auto relative z-10 space-y-12">
 
         {/* Section Header */}
-        <div className="text-center mb-16 space-y-4">
-          <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100/60 px-3 py-1 rounded-full border border-emerald-200 inline-block">
-            Common Questions
+        <div className="text-center space-y-3 sm:space-y-4">
+          <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100/70 px-3.5 py-1 rounded-full border border-emerald-200 inline-flex items-center gap-1.5">
+            <HelpCircle className="w-3.5 h-3.5 text-emerald-700" />
+            FREQUENTLY ASKED QUESTIONS
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 leading-tight">
-            Frequently Asked <span className="font-editorial-italic font-normal text-emerald-800">Questions</span>
+            Solar Installation <span className="font-editorial-italic font-normal text-emerald-800">FAQs</span>
           </h2>
-          <p className="text-slate-600 text-base max-w-xl mx-auto">
-            Answers to common questions about Green Infra Solar & Electrical Vehicle.
+          <p className="text-slate-600 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+            Everything you need to know about rooftop solar, government subsidies, net metering, and installation in Sangli &amp; Maharashtra.
           </p>
         </div>
 
         {/* Accordion List */}
-        <div className="space-y-4">
+        <div className="space-y-3.5">
           {faqs.map((faq, idx) => {
             const isOpen = openIdx === idx;
             return (
@@ -60,9 +61,9 @@ export const FAQSection: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setOpenIdx(isOpen ? null : idx)}
-                  className="w-full p-6 text-left flex items-center justify-between gap-4 focus:outline-none cursor-pointer"
+                  className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 focus:outline-none cursor-pointer"
                 >
-                  <span className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
+                  <span className="text-base sm:text-lg font-bold text-slate-900 tracking-tight leading-snug">
                     {faq.q}
                   </span>
                   <div
@@ -77,13 +78,41 @@ export const FAQSection: React.FC = () => {
                 </button>
 
                 {isOpen && (
-                  <div className="px-6 pb-6 pt-1 text-sm sm:text-base text-slate-600 leading-relaxed border-t border-slate-100 animate-in fade-in duration-200">
+                  <div className="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-slate-600 leading-relaxed border-t border-slate-100 animate-in fade-in duration-200">
                     {faq.a}
                   </div>
                 )}
               </div>
             );
           })}
+        </div>
+
+        {/* Have More Questions Prompt */}
+        <div className="bg-emerald-50 border border-emerald-200/80 rounded-2xl p-5 sm:p-6 text-center flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="text-center sm:text-left">
+            <h4 className="text-sm sm:text-base font-bold text-slate-900">
+              Have any other questions about going solar?
+            </h4>
+            <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
+              Speak directly with an Invisible Energy solar engineer in Sangli.
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <a
+              href="tel:+918888208099"
+              className="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-slate-900 font-bold text-xs sm:text-sm px-4 py-2.5 rounded-full border border-slate-200 shadow-xs transition-colors"
+            >
+              <Phone className="w-3.5 h-3.5 text-emerald-700" />
+              <span>+91 8888208099</span>
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-1.5 bg-[#C6F500] hover:bg-[#b8e500] text-black font-bold text-xs sm:text-sm px-4 py-2.5 rounded-full shadow-xs transition-colors"
+            >
+              <span>Ask a Question</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
         </div>
 
       </div>
