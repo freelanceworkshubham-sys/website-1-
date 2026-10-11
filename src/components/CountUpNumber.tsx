@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 
 export interface ParsedMetric {
   prefix: string;
@@ -92,47 +92,101 @@ export function formatMetricNumber(
 
 export interface CountUpNumberProps {
   value: string | number;
-  duration?: number; // In seconds, defaults to 2.5s
+  duration?: number; // In seconds, defaults to 1.6s (1-2s range requested)
+  delay?: number; // In seconds, optional start delay
   className?: string;
   style?: React.CSSProperties;
   as?: React.ElementType;
+  trigger?: boolean; // When provided, starts counting when true
   onComplete?: () => void;
 }
 
-export const CountUpNumber: React.FC<CountUpNumberProps> = ({
+export const CountUpNumberComponent: React.FC<CountUpNumberProps> = ({
   value,
-  duration = 2.5,
+  duration = 1.6,
+  delay = 0,
   className = '',
   style,
   as: Component = 'span',
+  trigger,
   onComplete,
 }) => {
   const spanRef = useRef<HTMLElement>(null);
   const hasAnimatedRef = useRef<boolean>(false);
+  const isAnimatingRef = useRef<boolean>(false);
   const currentValRef = useRef<number>(0);
   const targetValRef = useRef<number>(0);
   const animFrameIdRef = useRef<number | null>(null);
+  const timeoutIdRef = useRef<any>(null);
 
   const parsed = parseMetric(value);
   targetValRef.current = parsed.targetNum;
+
+  // Function to run the count-up animation
+  const startCountUp = (target: number, animDurationSec: number) => {
+    const el = spanRef.current;
+    if (!el || !parsed.isValid) return;
+
+    if (isAnimatingRef.current) return;
+    isAnimatingRef.current = true;
+
+    const execute = () => {
+      const startTime = performance.now();
+      const totalDurationMs = animDurationSec * 1000;
+
+      const animate = (now: number) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / totalDurationMs);
+        // Calm, responsive easeOutQuart curve for 1.6s duration
+        const ease = 1 - Math.pow(1 - progress, 4);
+        const current = target * ease;
+        currentValRef.current = current;
+
+        el.textContent = formatMetricNumber(
+          current,
+          parsed.prefix,
+          parsed.suffix,
+          parsed.decimals,
+          parsed.hasIndianComma
+        );
+
+        if (progress < 1) {
+          animFrameIdRef.current = requestAnimationFrame(animate);
+        } else {
+          el.textContent = String(value);
+          currentValRef.current = target;
+          hasAnimatedRef.current = true;
+          isAnimatingRef.current = false;
+          onComplete?.();
+        }
+      };
+
+      animFrameIdRef.current = requestAnimationFrame(animate);
+    };
+
+    if (delay > 0) {
+      timeoutIdRef.current = setTimeout(execute, delay * 1000);
+    } else {
+      execute();
+    }
+  };
 
   useEffect(() => {
     const el = spanRef.current;
     if (!el || !parsed.isValid) return;
 
-    // If it already animated once and value updates dynamically (e.g. calculator change):
+    // Handle interactive dynamic value changes (e.g. calculator slider moving)
     if (hasAnimatedRef.current) {
       const startVal = currentValRef.current;
       const endVal = parsed.targetNum;
       if (Math.abs(startVal - endVal) < 0.001) return;
 
-      const dynamicDuration = 800; // 0.8s responsive transition on live interaction
+      const dynamicDuration = 600; // 0.6s snappy response on live calculation
       const startTime = performance.now();
 
       const animateUpdate = (now: number) => {
         const elapsed = now - startTime;
         const progress = Math.min(1, elapsed / dynamicDuration);
-        // Smooth ease-out cubic
         const ease = 1 - Math.pow(1 - progress, 3);
         const current = startVal + (endVal - startVal) * ease;
         currentValRef.current = current;
@@ -158,60 +212,38 @@ export const CountUpNumber: React.FC<CountUpNumberProps> = ({
       return;
     }
 
-    // Initial Viewport Entry Setup: Start from 0 with matching format
-    const initialText = formatMetricNumber(
-      0,
-      parsed.prefix,
-      parsed.suffix,
-      parsed.decimals,
-      parsed.hasIndianComma
-    );
-    el.textContent = initialText;
+    // Set initial 0 text before animating
+    if (!hasAnimatedRef.current && !isAnimatingRef.current) {
+      el.textContent = formatMetricNumber(
+        0,
+        parsed.prefix,
+        parsed.suffix,
+        parsed.decimals,
+        parsed.hasIndianComma
+      );
+    }
 
+    // MODE 1: Explicit trigger passed (e.g., hero scroll visibility)
+    if (trigger !== undefined) {
+      if (trigger && !hasAnimatedRef.current && !isAnimatingRef.current) {
+        startCountUp(parsed.targetNum, duration);
+      }
+      return;
+    }
+
+    // MODE 2: Standard Viewport Intersection Observer
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasAnimatedRef.current) {
-            hasAnimatedRef.current = true;
+          if (entry.isIntersecting && !hasAnimatedRef.current && !isAnimatingRef.current) {
             observer.disconnect();
-
-            const startTime = performance.now();
-            const totalDurationMs = duration * 1000;
-            const target = parsed.targetNum;
-
-            const animateEntry = (now: number) => {
-              const elapsed = now - startTime;
-              const progress = Math.min(1, elapsed / totalDurationMs);
-              // Calm, technical easeOutQuart curve (2.5s smooth deceleration)
-              const ease = 1 - Math.pow(1 - progress, 4);
-              const current = target * ease;
-              currentValRef.current = current;
-
-              el.textContent = formatMetricNumber(
-                current,
-                parsed.prefix,
-                parsed.suffix,
-                parsed.decimals,
-                parsed.hasIndianComma
-              );
-
-              if (progress < 1) {
-                animFrameIdRef.current = requestAnimationFrame(animateEntry);
-              } else {
-                // Settle on exact raw value
-                el.textContent = String(value);
-                currentValRef.current = target;
-                onComplete?.();
-              }
-            };
-
-            animFrameIdRef.current = requestAnimationFrame(animateEntry);
+            startCountUp(parsed.targetNum, duration);
           }
         });
       },
       {
-        threshold: 0.1,
-        rootMargin: '0px 0px -40px 0px',
+        threshold: 0.15,
+        rootMargin: '0px 0px -20px 0px',
       }
     );
 
@@ -220,8 +252,20 @@ export const CountUpNumber: React.FC<CountUpNumberProps> = ({
     return () => {
       observer.disconnect();
       if (animFrameIdRef.current) cancelAnimationFrame(animFrameIdRef.current);
+      if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
     };
-  }, [value, duration, parsed.isValid, parsed.prefix, parsed.suffix, parsed.decimals, parsed.hasIndianComma]);
+  }, [
+    trigger,
+    value,
+    duration,
+    delay,
+    parsed.isValid,
+    parsed.targetNum,
+    parsed.prefix,
+    parsed.suffix,
+    parsed.decimals,
+    parsed.hasIndianComma,
+  ]);
 
   return (
     <Component
@@ -230,7 +274,15 @@ export const CountUpNumber: React.FC<CountUpNumberProps> = ({
       style={style}
       data-countup-applied="true"
     >
-      {String(value)}
+      {formatMetricNumber(
+        0,
+        parsed.prefix,
+        parsed.suffix,
+        parsed.decimals,
+        parsed.hasIndianComma
+      )}
     </Component>
   );
 };
+
+export const CountUpNumber = memo(CountUpNumberComponent);

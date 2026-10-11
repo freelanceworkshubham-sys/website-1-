@@ -96,4 +96,34 @@ body {
   font-family: "Kalam", "Patrick Hand", "Segoe Script", cursive;
 }
 
+/* Smooth Accordion Expansion */
+.accordion-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.accordion-content.is-expanded {
+  grid-template-rows: 1fr;
+}
+
+.accordion-inner {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion-content {
+    transition: none !important;
+  }
+}
+
+/* Hide scrollbar for clean horizontal swipe on mobile secondary navigation */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 

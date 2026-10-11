@@ -253,7 +253,7 @@ export const SolarCalculator: React.FC<SolarCalculatorProps> = ({ onScheduleAudi
   return (
     <section
       id="calculator"
-      className="relative py-14 sm:py-18 md:py-24 px-3 sm:px-6 md:px-10 lg:px-12 overflow-hidden"
+      className="relative py-14 sm:py-18 md:py-24 px-3 sm:px-6 md:px-10 lg:px-12 overflow-hidden scroll-mt-24 sm:scroll-mt-28"
       style={{ background: 'linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%)' }}
     >
       {/* Subtle ambient shapes */}

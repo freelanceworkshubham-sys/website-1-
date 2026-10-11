@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ShieldCheck, Sparkles, Sun, Zap, IndianRupee, Building2, ArrowRight } from 'lucide-react';
+import { CountUpNumber } from './CountUpNumber';
 
 interface WhyChooseUsProps {
   onOpenQuote?: () => void;
@@ -439,7 +440,7 @@ export const WhyChooseUs: React.FC<WhyChooseUsProps> = ({ onOpenQuote }) => {
               className="bg-slate-50 border border-slate-200/90 rounded-2xl sm:rounded-3xl p-4 sm:p-7 text-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group"
             >
               <span className="font-telemetry text-2xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 group-hover:text-emerald-700 transition-colors block leading-none">
-                {c.count}
+                <CountUpNumber value={c.count} duration={1.6} delay={i * 0.1} />
               </span>
               <h4 className="text-xs sm:text-sm font-bold text-slate-900 mt-2 sm:mt-2.5 uppercase tracking-wider">
                 {c.label}

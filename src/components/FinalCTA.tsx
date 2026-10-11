@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, Phone, ShieldCheck, Sun, Zap, MapPin, MessageCircle } from 'lucide-react';
+import { CountUpNumber } from './CountUpNumber';
 
 interface FinalCTAProps {
   onOpenQuote: () => void;
@@ -60,12 +61,12 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onOpenQuote }) => {
             <div className="pt-4 flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-[11px] text-slate-400 border-t border-white/10 mt-6">
               <span className="flex items-center gap-1.5">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#C6F500]" />
-                7+ Years Experience • Est. 2017
+                <CountUpNumber value="7+" duration={1.6} /> Years Experience • Est. 2017
               </span>
               <span>·</span>
               <span className="flex items-center gap-1.5">
                 <Sun className="w-3.5 h-3.5 text-[#C6F500]" />
-                500+ Projects in Maharashtra
+                <CountUpNumber value="500+" duration={1.6} delay={0.1} /> Projects in Maharashtra
               </span>
               <span>·</span>
               <span className="flex items-center gap-1.5">

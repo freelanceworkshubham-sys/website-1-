@@ -326,7 +326,7 @@ export const LiveTelemetryBar: React.FC = () => {
     <section
       id="solar-journey"
       ref={sectionRef}
-      className="relative py-10 sm:py-16 px-3 sm:px-6 md:px-12 lg:px-16 bg-white text-slate-900 border-y border-slate-200/80 overflow-hidden"
+      className="relative py-10 sm:py-16 px-3 sm:px-6 md:px-12 lg:px-16 bg-white text-slate-900 border-y border-slate-200/80 overflow-hidden scroll-mt-24 sm:scroll-mt-28"
     >
       <div id="how-it-works" className="relative -top-24 pointer-events-none" />
       <div id="workflow" className="relative -top-24 pointer-events-none" />

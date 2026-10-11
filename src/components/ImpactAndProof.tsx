@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { MapPin, ArrowRight, Sun, Zap, CheckCircle2, Star, Quote } from 'lucide-react';
+import { CountUpNumber } from './CountUpNumber';
 
 interface ProjectCardData {
   id: string;
@@ -225,7 +226,7 @@ export const ImpactAndProof: React.FC = () => {
     <section
       id="portfolio"
       ref={sectionRef}
-      className="relative py-16 sm:py-24 bg-white text-slate-900 border-t border-slate-200/80 overflow-hidden"
+      className="relative py-16 sm:py-24 bg-white text-slate-900 border-t border-slate-200/80 overflow-hidden scroll-mt-24 sm:scroll-mt-28"
     >
       <div id="projects" className="relative -top-20 pointer-events-none" />
 
@@ -247,7 +248,7 @@ export const ImpactAndProof: React.FC = () => {
           <div className="flex items-center gap-3">
             <div className="bg-slate-50 border border-slate-200 px-4 py-2 rounded-xl text-left">
               <span className="text-xl sm:text-2xl font-bold text-slate-900 font-telemetry block leading-none">
-                500+
+                <CountUpNumber value="500+" duration={1.6} />
               </span>
               <span className="text-[10px] text-slate-500 uppercase tracking-wider">
                 Installations
@@ -255,7 +256,7 @@ export const ImpactAndProof: React.FC = () => {
             </div>
             <div className="bg-slate-50 border border-slate-200 px-4 py-2 rounded-xl text-left">
               <span className="text-xl sm:text-2xl font-bold text-emerald-700 font-telemetry block leading-none">
-                80%
+                <CountUpNumber value="80%" duration={1.6} delay={0.1} />
               </span>
               <span className="text-[10px] text-slate-500 uppercase tracking-wider">
                 Max Savings

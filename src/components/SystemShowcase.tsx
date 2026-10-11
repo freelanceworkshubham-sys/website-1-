@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   ShieldCheck,
   Check,
@@ -15,6 +15,8 @@ import {
   Radio,
   Layers,
   Sparkles,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 
 interface SystemShowcaseProps {
@@ -358,6 +360,8 @@ const ALL_SERVICES: ServiceDetail[] = [
 export const SystemShowcase: React.FC<SystemShowcaseProps> = ({ onSelectSystem }) => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [selectedServiceId, setSelectedServiceId] = useState<string>('on-grid');
+  const [expandedMobileServiceId, setExpandedMobileServiceId] = useState<string | null>(null);
+  const mobileCardRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   const categories = [
     { id: 'all', label: 'All 11 Services' },
@@ -385,12 +389,41 @@ export const SystemShowcase: React.FC<SystemShowcaseProps> = ({ onSelectSystem }
     }
   };
 
+  const handleMobileCardToggle = (serviceId: string) => {
+    if (expandedMobileServiceId === serviceId) {
+      setExpandedMobileServiceId(null);
+    } else {
+      setExpandedMobileServiceId(serviceId);
+      setSelectedServiceId(serviceId);
+
+      // Keep title and beginning of details visible with sticky header offset
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          const cardEl = mobileCardRefs.current[serviceId];
+          if (cardEl) {
+            const rect = cardEl.getBoundingClientRect();
+            const headerOffset = 76; // Safe clearance for fixed pill header
+            // If card top is hidden under sticky header or pushed down past optimal viewing area
+            if (rect.top < headerOffset || rect.top > window.innerHeight * 0.5) {
+              const targetY = window.pageYOffset + rect.top - headerOffset;
+              const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+              window.scrollTo({
+                top: Math.max(0, targetY),
+                behavior: isReducedMotion ? 'auto' : 'smooth',
+              });
+            }
+          }
+        }, 120);
+      });
+    }
+  };
+
   return (
     <section
       id="services"
-      className="relative py-16 sm:py-24 px-4 sm:px-6 md:px-12 lg:px-16 bg-slate-50 text-slate-900 border-t border-slate-200"
+      className="relative py-16 sm:py-24 px-4 sm:px-6 md:px-12 lg:px-16 bg-slate-50 text-slate-900 border-t border-slate-200 scroll-mt-24 sm:scroll-mt-28"
     >
-      <div className="max-w-7xl mx-auto space-y-10 sm:space-y-12">
+      <div className="max-w-7xl mx-auto space-y-8 sm:space-y-12">
 
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4">
@@ -407,25 +440,221 @@ export const SystemShowcase: React.FC<SystemShowcaseProps> = ({ onSelectSystem }
           </p>
         </div>
 
-        {/* Category Filter Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
-                activeCategory === cat.id
-                  ? 'bg-slate-900 text-white shadow-md'
-                  : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
+        {/* Category Filter Pills (Secondary Navigation: horizontally scrollable on mobile) */}
+        <div className="w-full overflow-x-auto no-scrollbar py-1">
+          <div className="flex items-center justify-start sm:justify-center gap-2 sm:gap-2.5 min-w-max px-1">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => {
+                  setActiveCategory(cat.id);
+                  if (cat.id !== 'all' && expandedMobileServiceId) {
+                    const svc = ALL_SERVICES.find((s) => s.id === expandedMobileServiceId);
+                    if (svc && svc.category !== cat.id) {
+                      setExpandedMobileServiceId(null);
+                    }
+                  }
+                }}
+                className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer whitespace-nowrap shrink-0 ${
+                  activeCategory === cat.id
+                    ? 'bg-slate-900 text-white shadow-md'
+                    : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Two-Column Interactive Service Explorer */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
+        {/* ========================================================================= */}
+        {/* MOBILE VIEW (< lg): Compact Expandable Accordion Service Cards           */}
+        {/* ========================================================================= */}
+        <div className="block lg:hidden space-y-3">
+          {filteredServices.map((svc) => {
+            const isExpanded = expandedMobileServiceId === svc.id;
+
+            return (
+              <div
+                key={svc.id}
+                ref={(el) => {
+                  mobileCardRefs.current[svc.id] = el;
+                }}
+                className={`bg-white rounded-2xl border transition-all duration-300 overflow-hidden ${
+                  isExpanded
+                    ? 'border-emerald-500 shadow-md ring-1 ring-emerald-500/40'
+                    : 'border-slate-200 hover:border-slate-300 shadow-2xs'
+                }`}
+              >
+                {/* Collapsed Header / Compact Card Tap Area */}
+                <button
+                  type="button"
+                  onClick={() => handleMobileCardToggle(svc.id)}
+                  className="w-full p-4 sm:p-5 flex items-center justify-between gap-3 text-left cursor-pointer focus:outline-none select-none transition-colors hover:bg-slate-50/60"
+                  aria-expanded={isExpanded}
+                >
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <span className="font-mono text-xs font-bold text-slate-400 shrink-0">
+                      {svc.count}
+                    </span>
+                    <div className="p-2.5 rounded-xl bg-slate-100 text-slate-800 shrink-0">
+                      {svc.icon}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <h4 className="text-[17px] sm:text-lg font-bold text-slate-900 leading-snug truncate">
+                        {svc.name}
+                      </h4>
+                      <p className="text-xs text-slate-500 truncate mt-0.5">
+                        {svc.idealFor}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Expand/Collapse Indicator */}
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${
+                      isExpanded
+                        ? 'bg-emerald-50 text-emerald-600 rotate-180'
+                        : 'bg-slate-100 text-slate-400 hover:bg-slate-200'
+                    }`}
+                  >
+                    <ChevronDown className="w-4 h-4" />
+                  </div>
+                </button>
+
+                {/* Complete Corresponding Service Information (Accordion Body) */}
+                <div
+                  className={`accordion-content ${
+                    isExpanded ? 'is-expanded' : ''
+                  }`}
+                >
+                  <div className="accordion-inner">
+                    <div className="px-4 pb-5 sm:px-5 sm:pb-6 pt-1 border-t border-slate-100 space-y-4">
+                      
+                      {/* Identity Row: Category & Warranty */}
+                      <div className="flex flex-wrap items-center justify-between gap-2 pt-2">
+                        <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                          {svc.categoryLabel}
+                        </span>
+                        <span className="text-[11px] font-bold text-emerald-800 bg-emerald-100/70 px-2.5 py-0.5 rounded-full border border-emerald-200/60">
+                          {svc.warranty}
+                        </span>
+                      </div>
+
+                      {/* Service Overview & Tagline */}
+                      <div className="space-y-1">
+                        <h5 className="text-[10px] font-bold uppercase tracking-wider text-slate-400 font-mono">
+                          Service Overview
+                        </h5>
+                        <p className="text-slate-700 text-sm leading-relaxed">
+                          {svc.tagline}
+                        </p>
+                      </div>
+
+                      {/* Best Suited For Pill */}
+                      <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3 text-xs text-slate-700 flex flex-col gap-1">
+                        <span className="font-bold text-slate-900">Best Suited For:</span>
+                        <span className="text-slate-600 leading-relaxed">{svc.idealFor}</span>
+                      </div>
+
+                      {/* 4 Technical Specifications (Responsive Grid: 1 col on narrow, 2 col on >= 400px) */}
+                      <div className="space-y-1.5">
+                        <h5 className="text-[10px] font-bold uppercase tracking-wider text-slate-400 font-mono">
+                          Technical Specifications
+                        </h5>
+                        <div className="grid grid-cols-1 min-[400px]:grid-cols-2 gap-2.5">
+                          <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-2.5 sm:p-3">
+                            <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-mono">
+                              {svc.specs.label1}
+                            </span>
+                            <span className="text-xs sm:text-sm font-bold text-slate-900 mt-0.5 block leading-tight">
+                              {svc.specs.val1}
+                            </span>
+                          </div>
+                          <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-2.5 sm:p-3">
+                            <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-mono">
+                              {svc.specs.label2}
+                            </span>
+                            <span className="text-xs sm:text-sm font-bold text-emerald-700 mt-0.5 block leading-tight">
+                              {svc.specs.val2}
+                            </span>
+                          </div>
+                          <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-2.5 sm:p-3">
+                            <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-mono">
+                              {svc.specs.label3}
+                            </span>
+                            <span className="text-xs sm:text-sm font-bold text-slate-900 mt-0.5 block leading-tight">
+                              {svc.specs.val3}
+                            </span>
+                          </div>
+                          <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-2.5 sm:p-3">
+                            <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-mono">
+                              {svc.specs.label4}
+                            </span>
+                            <span className="text-xs sm:text-sm font-bold text-slate-900 mt-0.5 block leading-tight">
+                              {svc.specs.val4}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Key Highlights & Inclusions */}
+                      <div className="space-y-2">
+                        <h5 className="text-[10px] font-bold uppercase tracking-wider text-slate-400 font-mono">
+                          Key Highlights &amp; Inclusions:
+                        </h5>
+                        <div className="space-y-2 text-xs text-slate-700">
+                          {svc.features.map((feat, fIdx) => (
+                            <div key={fIdx} className="flex items-start gap-2">
+                              <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                              <span className="leading-snug">{feat}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Relevant CTA & Collapse Controls */}
+                      <div className="pt-3 border-t border-slate-100 flex flex-col gap-2.5">
+                        <button
+                          type="button"
+                          onClick={() => handleSelect(svc)}
+                          className="w-full inline-flex items-center justify-center gap-2 bg-[#C6F500] hover:bg-[#b8e500] text-black font-bold text-xs sm:text-sm py-3 px-4 rounded-xl transition-all shadow-sm active:scale-98 cursor-pointer"
+                        >
+                          <span>Request Quote for {svc.name}</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+
+                        <div className="flex items-center justify-between pt-1">
+                          <a
+                            href="tel:+918888208099"
+                            className="text-xs font-semibold text-slate-600 hover:text-emerald-700 transition-colors py-1 flex items-center gap-1.5"
+                          >
+                            <span>Call +91 8888208099</span>
+                          </a>
+
+                          <button
+                            type="button"
+                            onClick={() => handleMobileCardToggle(svc.id)}
+                            className="text-xs font-bold text-slate-500 hover:text-slate-800 transition-colors py-1 flex items-center gap-1 cursor-pointer"
+                          >
+                            <span>Show Less</span>
+                            <ChevronUp className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* ========================================================================= */}
+        {/* DESKTOP VIEW (lg:): Preserved Two-Column Interactive Service Explorer     */}
+        {/* ========================================================================= */}
+        <div className="hidden lg:grid lg:grid-cols-12 gap-6 sm:gap-8 items-start">
 
           {/* Left Column: Scrollable Services List (Cards) */}
           <div className="lg:col-span-5 space-y-2.5 sm:space-y-3 max-h-[640px] overflow-y-auto pr-1">

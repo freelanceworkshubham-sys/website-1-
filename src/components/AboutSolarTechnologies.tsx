@@ -19,7 +19,7 @@ export const AboutSolarTechnologies: React.FC<AboutSolarTechnologiesProps> = ({ 
   return (
     <section
       id="about"
-      className="relative py-12 sm:py-20 px-4 sm:px-6 md:px-12 lg:px-16 bg-white text-slate-900 border-t border-slate-200/80"
+      className="relative py-12 sm:py-20 px-4 sm:px-6 md:px-12 lg:px-16 bg-white text-slate-900 border-t border-slate-200/80 scroll-mt-24 sm:scroll-mt-28"
     >
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -79,7 +79,7 @@ export const AboutSolarTechnologies: React.FC<AboutSolarTechnologiesProps> = ({ 
             {/* Stat 1: 500+ Projects Done */}
             <div className="bg-slate-50 border border-slate-200/80 hover:border-emerald-300 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center flex flex-col justify-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group cursor-default">
               <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight block group-hover:text-emerald-900 transition-colors">
-                500+
+                <CountUpNumber value="500+" duration={1.6} />
               </span>
               <span className="text-[10px] sm:text-xs font-semibold uppercase text-emerald-800 tracking-wider mt-0.5 sm:mt-1 block">
                 Projects
@@ -92,7 +92,7 @@ export const AboutSolarTechnologies: React.FC<AboutSolarTechnologiesProps> = ({ 
             {/* Stat 2: 7+ Years Experience */}
             <div className="bg-slate-50 border border-slate-200/80 hover:border-emerald-300 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center flex flex-col justify-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group cursor-default">
               <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight block group-hover:text-emerald-900 transition-colors">
-                7+
+                <CountUpNumber value="7+" duration={1.6} delay={0.1} />
               </span>
               <span className="text-[10px] sm:text-xs font-semibold uppercase text-emerald-800 tracking-wider mt-0.5 sm:mt-1 block">
                 Years
@@ -105,7 +105,7 @@ export const AboutSolarTechnologies: React.FC<AboutSolarTechnologiesProps> = ({ 
             {/* Stat 3: 400+ Clients */}
             <div className="bg-slate-50 border border-slate-200/80 hover:border-emerald-300 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center flex flex-col justify-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group cursor-default">
               <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight block group-hover:text-emerald-900 transition-colors">
-                400+
+                <CountUpNumber value="400+" duration={1.6} delay={0.2} />
               </span>
               <span className="text-[10px] sm:text-xs font-semibold uppercase text-emerald-800 tracking-wider mt-0.5 sm:mt-1 block">
                 Clients

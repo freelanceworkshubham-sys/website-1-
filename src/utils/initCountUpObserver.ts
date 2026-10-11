@@ -23,7 +23,7 @@ export function initGlobalCountUpObserver(): () => void {
         const parsed = parseMetric(rawText);
         if (!parsed.isValid || parsed.targetNum === 0) return;
 
-        const totalDurationMs = 2500; // 2.5 seconds
+        const totalDurationMs = 1600; // 1.6 seconds (1-2s range)
         const startTime = performance.now();
         const target = parsed.targetNum;
 

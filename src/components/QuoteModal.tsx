@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, CheckCircle2, ArrowRight, ShieldCheck, Sun, Zap, Phone, MessageCircle } from 'lucide-react';
 
 interface QuoteModalProps {
@@ -18,6 +18,16 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
     electricBill: initialData?.inputs?.monthlyBill || 3000,
     preferredTimeline: 'Immediate (1-2 weeks)',
   });
+
+  useEffect(() => {
+    if (initialData?.systemName) {
+      setFormData((prev) => ({
+        ...prev,
+        serviceInterest: initialData.systemName,
+        electricBill: initialData?.inputs?.monthlyBill || prev.electricBill,
+      }));
+    }
+  }, [initialData, isOpen]);
 
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);

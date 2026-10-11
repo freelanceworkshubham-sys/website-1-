@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle2, ShieldCheck, Sun, MapPin, Phone, Mail, Clock, Youtube, MessageCircle, Instagram } from 'lucide-react';
+import { CountUpNumber } from './CountUpNumber';
 
 export const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -13,7 +14,7 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer id="contact" className="relative bg-white text-slate-900 border-t border-slate-200 pt-10 sm:pt-16 pb-8 sm:pb-12 px-4 sm:px-6 md:px-12 lg:px-16 overflow-hidden">
+    <footer id="contact" className="relative bg-white text-slate-900 border-t border-slate-200 pt-10 sm:pt-16 pb-8 sm:pb-12 px-4 sm:px-6 md:px-12 lg:px-16 overflow-hidden scroll-mt-24 sm:scroll-mt-28">
       <div className="max-w-6xl mx-auto relative z-10 space-y-8 sm:space-y-12">
 
         {/* Top Tier: Invisible Energy Identity Ribbon */}
@@ -35,7 +36,7 @@ export const Footer: React.FC = () => {
             <div className="grid grid-cols-4 gap-2 sm:gap-6 border-t border-slate-800/80 pt-3 lg:border-t-0 lg:pt-0">
               <div>
                 <span className="font-telemetry text-lg sm:text-2xl font-bold text-[#C6F500] tracking-tight block">
-                  500+
+                  <CountUpNumber value="500+" duration={1.6} />
                 </span>
                 <span className="text-[10px] sm:text-[11px] text-slate-400 block mt-0.5 leading-tight">
                   Projects Done
@@ -44,7 +45,7 @@ export const Footer: React.FC = () => {
 
               <div>
                 <span className="font-telemetry text-lg sm:text-2xl font-bold text-white tracking-tight block">
-                  400+
+                  <CountUpNumber value="400+" duration={1.6} delay={0.1} />
                 </span>
                 <span className="text-[10px] sm:text-[11px] text-slate-400 block mt-0.5 leading-tight">
                   Total Clients
@@ -53,7 +54,7 @@ export const Footer: React.FC = () => {
 
               <div>
                 <span className="font-telemetry text-lg sm:text-2xl font-bold text-emerald-400 tracking-tight block">
-                  7+
+                  <CountUpNumber value="7+" duration={1.6} delay={0.2} />
                 </span>
                 <span className="text-[10px] sm:text-[11px] text-slate-400 block mt-0.5 leading-tight">
                   Years Exp.
@@ -62,7 +63,7 @@ export const Footer: React.FC = () => {
 
               <div>
                 <span className="font-telemetry text-lg sm:text-2xl font-bold text-amber-400 tracking-tight block">
-                  15+
+                  <CountUpNumber value="15+" duration={1.6} delay={0.3} />
                 </span>
                 <span className="text-[10px] sm:text-[11px] text-slate-400 block mt-0.5 leading-tight">
                   Awards Won
