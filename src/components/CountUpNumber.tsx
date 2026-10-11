@@ -92,7 +92,7 @@ export function formatMetricNumber(
 
 export interface CountUpNumberProps {
   value: string | number;
-  duration?: number; // In seconds, defaults to 1.6s (1-2s range requested)
+  duration?: number; // In seconds, minimum 1 to 2 seconds (defaults to 1.8s)
   delay?: number; // In seconds, optional start delay
   className?: string;
   style?: React.CSSProperties;
@@ -103,7 +103,7 @@ export interface CountUpNumberProps {
 
 export const CountUpNumberComponent: React.FC<CountUpNumberProps> = ({
   value,
-  duration = 1.6,
+  duration = 1.8,
   delay = 0,
   className = '',
   style,
@@ -122,6 +122,9 @@ export const CountUpNumberComponent: React.FC<CountUpNumberProps> = ({
   const parsed = parseMetric(value);
   targetValRef.current = parsed.targetNum;
 
+  // Enforce minimum animation duration of 1 to 2 seconds (clamped to 1.5s - 2.0s)
+  const effectiveDuration = Math.max(1.5, Math.min(2.0, duration || 1.8));
+
   // Function to run the count-up animation
   const startCountUp = (target: number, animDurationSec: number) => {
     const el = spanRef.current;
@@ -137,8 +140,15 @@ export const CountUpNumberComponent: React.FC<CountUpNumberProps> = ({
       const animate = (now: number) => {
         const elapsed = now - startTime;
         const progress = Math.min(1, elapsed / totalDurationMs);
-        // Calm, responsive easeOutQuart curve for 1.6s duration
-        const ease = 1 - Math.pow(1 - progress, 4);
+
+        // Smooth pacing curve:
+        // For small numbers (target <= 20 such as 7+, 15+), use power 1.8 so every
+        // integer increment is evenly spaced throughout the full 1.5 - 2.0s duration.
+        // For larger numbers (such as 400+, 500+), use power 2.4 for fluid deceleration.
+        const ease = target <= 20
+          ? 1 - Math.pow(1 - progress, 1.8)
+          : 1 - Math.pow(1 - progress, 2.4);
+
         const current = target * ease;
         currentValRef.current = current;
 
@@ -226,7 +236,7 @@ export const CountUpNumberComponent: React.FC<CountUpNumberProps> = ({
     // MODE 1: Explicit trigger passed (e.g., hero scroll visibility)
     if (trigger !== undefined) {
       if (trigger && !hasAnimatedRef.current && !isAnimatingRef.current) {
-        startCountUp(parsed.targetNum, duration);
+        startCountUp(parsed.targetNum, effectiveDuration);
       }
       return;
     }
@@ -237,13 +247,13 @@ export const CountUpNumberComponent: React.FC<CountUpNumberProps> = ({
         entries.forEach((entry) => {
           if (entry.isIntersecting && !hasAnimatedRef.current && !isAnimatingRef.current) {
             observer.disconnect();
-            startCountUp(parsed.targetNum, duration);
+            startCountUp(parsed.targetNum, effectiveDuration);
           }
         });
       },
       {
-        threshold: 0.15,
-        rootMargin: '0px 0px -20px 0px',
+        threshold: 0.05,
+        rootMargin: '0px 0px -10px 0px',
       }
     );
 

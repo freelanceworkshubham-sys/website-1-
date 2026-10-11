@@ -84,7 +84,7 @@ const SolarRing: React.FC<{ percent: number; capacityKw: number; tier: string }>
       {/* Center readout */}
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span className="text-3xl sm:text-4xl font-extrabold font-telemetry text-slate-900 leading-none tracking-tight">
-          {capacityKw}
+          <CountUpNumber value={capacityKw} duration={1.8} />
         </span>
         <span className="text-sm font-bold text-amber-600 tracking-wide mt-0.5">
           kW
@@ -526,7 +526,7 @@ export const SolarCalculator: React.FC<SolarCalculatorProps> = ({ onScheduleAudi
                       </svg>
                       <div className="absolute inset-0 flex flex-col items-center justify-center">
                         <div className="text-4xl sm:text-5xl font-black font-telemetry text-slate-900 leading-none tracking-tight">
-                          <CountUpNumber value={`${calculation.capacityKw}`} />
+                          <CountUpNumber value={`${calculation.capacityKw}`} duration={1.8} />
                         </div>
                         <span className="text-base font-extrabold text-amber-700 mt-0.5">kW</span>
                         <span className="text-[8px] font-bold text-amber-600/60 uppercase tracking-widest mt-1">Recommended</span>
@@ -545,7 +545,7 @@ export const SolarCalculator: React.FC<SolarCalculatorProps> = ({ onScheduleAudi
                     <div className="flex items-baseline justify-between py-2.5 border-b border-amber-300/40">
                       <span className="text-xs sm:text-sm font-semibold text-slate-700">Annual Generation</span>
                       <span className="text-xl sm:text-2xl font-black font-telemetry text-slate-900 tracking-tight">
-                        <CountUpNumber value={`${formatIndianNumber(calculation.annualGenerationKwh)} kWh/yr`} />
+                        <CountUpNumber value={`${formatIndianNumber(calculation.annualGenerationKwh)} kWh/yr`} duration={1.8} />
                       </span>
                     </div>
 
@@ -553,7 +553,7 @@ export const SolarCalculator: React.FC<SolarCalculatorProps> = ({ onScheduleAudi
                     <div className="flex items-baseline justify-between py-2.5 border-b border-amber-300/40">
                       <span className="text-xs sm:text-sm font-semibold text-slate-700">Annual Saving</span>
                       <span className="text-xl sm:text-2xl font-black font-telemetry text-emerald-700 tracking-tight">
-                        <CountUpNumber value={formatINR(calculation.annualSaving)} />
+                        <CountUpNumber value={formatINR(calculation.annualSaving)} duration={1.8} />
                       </span>
                     </div>
 
@@ -561,7 +561,7 @@ export const SolarCalculator: React.FC<SolarCalculatorProps> = ({ onScheduleAudi
                     <div className="flex items-baseline justify-between py-2.5">
                       <span className="text-xs sm:text-sm font-semibold text-slate-700">Est. Payback</span>
                       <span className="text-xl sm:text-2xl font-black font-telemetry text-amber-700 tracking-tight">
-                        <CountUpNumber value={`${calculation.paybackYears} Years`} />
+                        <CountUpNumber value={`${calculation.paybackYears} Years`} duration={1.8} />
                       </span>
                     </div>
                   </div>
@@ -573,7 +573,7 @@ export const SolarCalculator: React.FC<SolarCalculatorProps> = ({ onScheduleAudi
                 <div className="bg-emerald-700 px-5 sm:px-8 py-3 flex items-center gap-2.5">
                   <ShieldCheck className="w-4 h-4 text-emerald-200 shrink-0" />
                   <span className="text-[11px] sm:text-xs font-semibold text-white">
-                    PM Surya Ghar Muft Bijli Yojana: Up to <strong>{formatINR(calculation.subsidyAmount)}</strong> direct subsidy eligible
+                    PM Surya Ghar Muft Bijli Yojana: Up to <strong><CountUpNumber value={formatINR(calculation.subsidyAmount)} duration={1.8} /></strong> direct subsidy eligible
                   </span>
                 </div>
               )}
@@ -583,11 +583,15 @@ export const SolarCalculator: React.FC<SolarCalculatorProps> = ({ onScheduleAudi
             <div className="grid grid-cols-2 gap-3">
               <div className="bg-white border border-slate-200 rounded-xl p-3.5 text-xs flex items-center justify-between">
                 <span className="text-slate-500">Shadow-Free Roof</span>
-                <strong className="text-slate-800 font-telemetry">~{Math.round(calculation.capacityKw * 60)} sq.ft.</strong>
+                <strong className="text-slate-800 font-telemetry">
+                  ~<CountUpNumber value={`${Math.round(calculation.capacityKw * 60)}`} duration={1.8} /> sq.ft.
+                </strong>
               </div>
               <div className="bg-white border border-slate-200 rounded-xl p-3.5 text-xs flex items-center justify-between">
                 <span className="text-slate-500">CO₂ Offset</span>
-                <strong className="text-emerald-700 font-telemetry">~{((calculation.annualGenerationKwh * 0.82) / 1000).toFixed(1)} Tons/yr</strong>
+                <strong className="text-emerald-700 font-telemetry">
+                  ~<CountUpNumber value={`${((calculation.annualGenerationKwh * 0.82) / 1000).toFixed(1)}`} duration={1.8} /> Tons/yr
+                </strong>
               </div>
             </div>
 

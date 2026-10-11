@@ -55,7 +55,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreInnovation, o
               <div className="flex items-center gap-2 text-xs">
                 <span className="w-2 h-2 rounded-full bg-[#C6F500] animate-pulse" />
                 <span className="text-white/90 font-medium tracking-tight whitespace-nowrap">
-                  <CountUpNumber value="25+" duration={1.6} /> Years of Solar Experience
+                  <CountUpNumber value="25+" duration={1.8} /> Years of Solar Experience
                 </span>
               </div>
             </div>
@@ -90,7 +90,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreInnovation, o
               {/* Stat Card 1: 25+ Years */}
               <div className="glass-panel rounded-2xl p-5 md:p-6 text-white shadow-2xl flex flex-col justify-between transition-all duration-300 hover:border-white/40 hover:-translate-y-1">
                 <span className="font-telemetry text-4xl sm:text-5xl font-bold tracking-tight text-[#C6F500] leading-none">
-                  <CountUpNumber value="25+" duration={1.6} />
+                  <CountUpNumber value="25+" duration={1.8} />
                 </span>
                 <p className="text-xs sm:text-sm text-white/80 font-medium leading-snug mt-4">
                   Years of Solar Commitment
@@ -117,7 +117,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreInnovation, o
             
             <div className="flex flex-col items-center">
               <span className="font-telemetry text-xl sm:text-2xl font-bold text-white tracking-tight leading-none mb-1">
-                <CountUpNumber value="25+" duration={1.6} /> YRS
+                <CountUpNumber value="25+" duration={1.8} /> YRS
               </span>
               <span className="text-[10px] sm:text-xs text-white/70 font-medium leading-tight mt-1">
                 Solar Experience

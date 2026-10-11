@@ -23,7 +23,7 @@ export function initGlobalCountUpObserver(): () => void {
         const parsed = parseMetric(rawText);
         if (!parsed.isValid || parsed.targetNum === 0) return;
 
-        const totalDurationMs = 1600; // 1.6 seconds (1-2s range)
+        const totalDurationMs = 1800; // 1.8 seconds (1-2s range requested)
         const startTime = performance.now();
         const target = parsed.targetNum;
 
@@ -39,8 +39,10 @@ export function initGlobalCountUpObserver(): () => void {
         const animate = (now: number) => {
           const elapsed = now - startTime;
           const progress = Math.min(1, elapsed / totalDurationMs);
-          // Calm, technical easeOutQuart
-          const ease = 1 - Math.pow(1 - progress, 4);
+          // Smooth pacing: power 1.8 for small numbers (target <= 20) and power 2.4 for larger
+          const ease = target <= 20
+            ? 1 - Math.pow(1 - progress, 1.8)
+            : 1 - Math.pow(1 - progress, 2.4);
           const current = target * ease;
 
           el.textContent = formatMetricNumber(
@@ -62,7 +64,7 @@ export function initGlobalCountUpObserver(): () => void {
       });
     },
     {
-      threshold: 0.1,
+      threshold: 0.05,
       rootMargin: '0px 0px -40px 0px',
     }
   );

@@ -79,7 +79,7 @@ export const AboutSolarTechnologies: React.FC<AboutSolarTechnologiesProps> = ({ 
             {/* Stat 1: 500+ Projects Done */}
             <div className="bg-slate-50 border border-slate-200/80 hover:border-emerald-300 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center flex flex-col justify-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group cursor-default">
               <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight block group-hover:text-emerald-900 transition-colors">
-                <CountUpNumber value="500+" duration={1.6} />
+                <CountUpNumber value="500+" duration={1.8} />
               </span>
               <span className="text-[10px] sm:text-xs font-semibold uppercase text-emerald-800 tracking-wider mt-0.5 sm:mt-1 block">
                 Projects
@@ -92,7 +92,7 @@ export const AboutSolarTechnologies: React.FC<AboutSolarTechnologiesProps> = ({ 
             {/* Stat 2: 7+ Years Experience */}
             <div className="bg-slate-50 border border-slate-200/80 hover:border-emerald-300 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center flex flex-col justify-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group cursor-default">
               <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight block group-hover:text-emerald-900 transition-colors">
-                <CountUpNumber value="7+" duration={1.6} delay={0.1} />
+                <CountUpNumber value="7+" duration={1.8} delay={0.15} />
               </span>
               <span className="text-[10px] sm:text-xs font-semibold uppercase text-emerald-800 tracking-wider mt-0.5 sm:mt-1 block">
                 Years
@@ -105,7 +105,7 @@ export const AboutSolarTechnologies: React.FC<AboutSolarTechnologiesProps> = ({ 
             {/* Stat 3: 400+ Clients */}
             <div className="bg-slate-50 border border-slate-200/80 hover:border-emerald-300 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center flex flex-col justify-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group cursor-default">
               <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight block group-hover:text-emerald-900 transition-colors">
-                <CountUpNumber value="400+" duration={1.6} delay={0.2} />
+                <CountUpNumber value="400+" duration={1.8} delay={0.3} />
               </span>
               <span className="text-[10px] sm:text-xs font-semibold uppercase text-emerald-800 tracking-wider mt-0.5 sm:mt-1 block">
                 Clients
@@ -124,17 +124,29 @@ export const AboutSolarTechnologies: React.FC<AboutSolarTechnologiesProps> = ({ 
           {[
             {
               title: 'Professional Installation',
-              desc: 'Expert engineers with 1000+ completed installations',
+              desc: (
+                <>
+                  Expert engineers with <CountUpNumber value="1000+" duration={1.8} /> completed installations
+                </>
+              ),
               icon: <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
             },
             {
               title: 'Tier-1 Components',
-              desc: 'High-efficiency panels with 25+ year performance warranty',
+              desc: (
+                <>
+                  High-efficiency panels with <CountUpNumber value="25+" duration={1.8} /> year performance warranty
+                </>
+              ),
               icon: <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
             },
             {
               title: 'Best Pricing & Subsidies',
-              desc: 'PM Surya Ghar subsidy aid saving up to 40% on setup',
+              desc: (
+                <>
+                  PM Surya Ghar subsidy aid saving up to <CountUpNumber value="40%" duration={1.8} /> on setup
+                </>
+              ),
               icon: <Award className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
             },
             {

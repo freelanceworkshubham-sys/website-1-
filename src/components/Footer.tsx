@@ -36,7 +36,7 @@ export const Footer: React.FC = () => {
             <div className="grid grid-cols-4 gap-2 sm:gap-6 border-t border-slate-800/80 pt-3 lg:border-t-0 lg:pt-0">
               <div>
                 <span className="font-telemetry text-lg sm:text-2xl font-bold text-[#C6F500] tracking-tight block">
-                  <CountUpNumber value="500+" duration={1.6} />
+                  <CountUpNumber value="500+" duration={1.8} />
                 </span>
                 <span className="text-[10px] sm:text-[11px] text-slate-400 block mt-0.5 leading-tight">
                   Projects Done
@@ -45,7 +45,7 @@ export const Footer: React.FC = () => {
 
               <div>
                 <span className="font-telemetry text-lg sm:text-2xl font-bold text-white tracking-tight block">
-                  <CountUpNumber value="400+" duration={1.6} delay={0.1} />
+                  <CountUpNumber value="400+" duration={1.8} delay={0.15} />
                 </span>
                 <span className="text-[10px] sm:text-[11px] text-slate-400 block mt-0.5 leading-tight">
                   Total Clients
@@ -54,7 +54,7 @@ export const Footer: React.FC = () => {
 
               <div>
                 <span className="font-telemetry text-lg sm:text-2xl font-bold text-emerald-400 tracking-tight block">
-                  <CountUpNumber value="7+" duration={1.6} delay={0.2} />
+                  <CountUpNumber value="7+" duration={1.8} delay={0.3} />
                 </span>
                 <span className="text-[10px] sm:text-[11px] text-slate-400 block mt-0.5 leading-tight">
                   Years Exp.
@@ -63,7 +63,7 @@ export const Footer: React.FC = () => {
 
               <div>
                 <span className="font-telemetry text-lg sm:text-2xl font-bold text-amber-400 tracking-tight block">
-                  <CountUpNumber value="15+" duration={1.6} delay={0.3} />
+                  <CountUpNumber value="15+" duration={1.8} delay={0.45} />
                 </span>
                 <span className="text-[10px] sm:text-[11px] text-slate-400 block mt-0.5 leading-tight">
                   Awards Won

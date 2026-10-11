@@ -367,23 +367,39 @@ export const WhyChooseUs: React.FC<WhyChooseUsProps> = ({ onOpenQuote }) => {
     { count: '15+', label: 'Awards Won', sub: 'Industry Recognition' },
   ];
 
-  const pillars = [
+  const pillars: Array<{ count: string; title: string; desc: React.ReactNode; accent: string }> = [
     {
       count: '01',
       title: 'Competitive Pricing & Subsidies',
-      desc: 'We offer competitive prices in Maharashtra with complete end-to-end assistance in PM Surya Ghar Muft Bijli Yojana subsidy applications, saving you up to 40% on setup costs.',
+      desc: (
+        <>
+          We offer competitive prices in Maharashtra with complete end-to-end assistance in PM Surya Ghar Muft Bijli Yojana subsidy applications, saving you up to{' '}
+          <strong className="text-slate-900 font-semibold"><CountUpNumber value="40%" duration={1.8} /></strong> on setup costs.
+        </>
+      ),
       accent: 'border-l-amber-500',
     },
     {
       count: '02',
       title: 'Expert Certified Installation Team',
-      desc: 'Our certified engineers and technicians bring 7+ years of experience and 1000+ successful installations across Sangli, Pune, Kolhapur, and Mumbai.',
+      desc: (
+        <>
+          Our certified engineers and technicians bring{' '}
+          <strong className="text-slate-900 font-semibold"><CountUpNumber value="7+" duration={1.8} /></strong> years of experience and{' '}
+          <strong className="text-slate-900 font-semibold"><CountUpNumber value="1000+" duration={1.8} /></strong> successful installations across Sangli, Pune, Kolhapur, and Mumbai.
+        </>
+      ),
       accent: 'border-l-emerald-500',
     },
     {
       count: '03',
       title: 'Premium Quality Tier-1 Products',
-      desc: 'We use exclusively Tier-1 solar panels (Mono PERC / TOPCon) and high-efficiency smart inverters backed by a 25+ year performance warranty.',
+      desc: (
+        <>
+          We use exclusively Tier-1 solar panels (Mono PERC / TOPCon) and high-efficiency smart inverters backed by a{' '}
+          <strong className="text-slate-900 font-semibold"><CountUpNumber value="25+" duration={1.8} /></strong> year performance warranty.
+        </>
+      ),
       accent: 'border-l-cyan-500',
     },
   ];
@@ -440,7 +456,7 @@ export const WhyChooseUs: React.FC<WhyChooseUsProps> = ({ onOpenQuote }) => {
               className="bg-slate-50 border border-slate-200/90 rounded-2xl sm:rounded-3xl p-4 sm:p-7 text-center shadow-2xs hover:shadow-md hover:-translate-y-1 transition-all duration-200 group"
             >
               <span className="font-telemetry text-2xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 group-hover:text-emerald-700 transition-colors block leading-none">
-                <CountUpNumber value={c.count} duration={1.6} delay={i * 0.1} />
+                <CountUpNumber value={c.count} duration={1.8} delay={i * 0.15} />
               </span>
               <h4 className="text-xs sm:text-sm font-bold text-slate-900 mt-2 sm:mt-2.5 uppercase tracking-wider">
                 {c.label}

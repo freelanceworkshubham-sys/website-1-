@@ -22,11 +22,11 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onOpenQuote }) => {
             </span>
 
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white leading-tight">
-              Ready to Save Up to 80% on Your Electricity Bills?
+              Ready to Save Up to <CountUpNumber value="80%" duration={1.8} /> on Your Electricity Bills?
             </h2>
 
             <p className="text-slate-300 text-xs sm:text-sm sm:leading-relaxed max-w-lg mx-auto">
-              Join 500+ satisfied homeowners, commercial businesses, and factories across Maharashtra who trust Invisible Energy. Get your free site assessment and customized quote today.
+              Join <CountUpNumber value="500+" duration={1.8} /> satisfied homeowners, commercial businesses, and factories across Maharashtra who trust Invisible Energy. Get your free site assessment and customized quote today.
             </p>
 
             <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -61,12 +61,12 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onOpenQuote }) => {
             <div className="pt-4 flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-[11px] text-slate-400 border-t border-white/10 mt-6">
               <span className="flex items-center gap-1.5">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#C6F500]" />
-                <CountUpNumber value="7+" duration={1.6} /> Years Experience • Est. 2017
+                <CountUpNumber value="7+" duration={1.8} /> Years Experience • Est. 2017
               </span>
               <span>·</span>
               <span className="flex items-center gap-1.5">
                 <Sun className="w-3.5 h-3.5 text-[#C6F500]" />
-                <CountUpNumber value="500+" duration={1.6} delay={0.1} /> Projects in Maharashtra
+                <CountUpNumber value="500+" duration={1.8} delay={0.15} /> Projects in Maharashtra
               </span>
               <span>·</span>
               <span className="flex items-center gap-1.5">

@@ -1,11 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { ShieldCheck, TrendingUp, Sun, ArrowRight, Info, CheckCircle2 } from 'lucide-react';
+import { CountUpNumber } from './CountUpNumber';
 
 interface BenefitNode {
   id: string;
   type: 'subsidy' | 'roi' | 'savings' | 'projects';
   tag: string;
-  primary: string;
+  primary: React.ReactNode;
   secondary: string;
   accentColor: string;
   accentBorder: string;
@@ -32,7 +33,11 @@ const BENEFIT_NODES: BenefitNode[] = [
     id: 'b-subsidy',
     type: 'subsidy',
     tag: 'PM SURYA GHAR',
-    primary: 'Up to ₹78,000 Subsidy',
+    primary: (
+      <>
+        Up to <CountUpNumber value="₹78,000" duration={1.8} /> Subsidy
+      </>
+    ),
     secondary: 'Save up to 40% with direct DBT credit',
     accentColor: '#EA580C',
     accentBorder: 'border-orange-400',
@@ -44,7 +49,11 @@ const BENEFIT_NODES: BenefitNode[] = [
     id: 'b-warranty',
     type: 'roi',
     tag: 'TIER-1 PANELS',
-    primary: '25+ Year Warranty',
+    primary: (
+      <>
+        <CountUpNumber value="25+" duration={1.8} /> Year Warranty
+      </>
+    ),
     secondary: 'High-efficiency Tier-1 solar modules',
     accentColor: '#059669',
     accentBorder: 'border-emerald-400',
@@ -56,7 +65,11 @@ const BENEFIT_NODES: BenefitNode[] = [
     id: 'b-savings',
     type: 'savings',
     tag: 'ELECTRICITY BILLS',
-    primary: 'Cut Bills by up to 80%',
+    primary: (
+      <>
+        Cut Bills by up to <CountUpNumber value="80%" duration={1.8} />
+      </>
+    ),
     secondary: 'Net-metering credits & solar generation',
     ctaText: 'CALCULATE →',
     accentColor: '#0284C7',
@@ -69,7 +82,11 @@ const BENEFIT_NODES: BenefitNode[] = [
     id: 'b-projects',
     type: 'projects',
     tag: 'PROVEN EXPERIENCE',
-    primary: '500+ Projects Done',
+    primary: (
+      <>
+        <CountUpNumber value="500+" duration={1.8} /> Projects Done
+      </>
+    ),
     secondary: 'Serving Sangli & Maharashtra since 2017',
     accentColor: '#7C3AED',
     accentBorder: 'border-purple-400',

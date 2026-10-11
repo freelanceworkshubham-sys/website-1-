@@ -18,6 +18,7 @@ import {
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
+import { CountUpNumber } from './CountUpNumber';
 
 interface SystemShowcaseProps {
   onSelectSystem?: (tier: any) => void;
@@ -436,7 +437,7 @@ export const SystemShowcase: React.FC<SystemShowcaseProps> = ({ onSelectSystem }
             <span className="text-emerald-700">for Homes, Businesses &amp; Communities</span>
           </h2>
           <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-            From grid-tied rooftop setups and high-capacity storage to municipal street lights and solar water heaters—explore all 11 turnkey services provided by Invisible Energy across Maharashtra.
+            From grid-tied rooftop setups and high-capacity storage to municipal street lights and solar water heaters—explore all <strong className="text-slate-900 font-bold"><CountUpNumber value="11" duration={1.8} /></strong> turnkey services provided by Invisible Energy across Maharashtra.
           </p>
         </div>
 

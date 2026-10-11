@@ -702,7 +702,7 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
                   </div>
                   <div className="h-2.5 w-px bg-white/30" />
                   <span className="text-white font-semibold text-[10px] sm:text-xs tracking-wide uppercase">
-                    <CountUpNumber value="500+" duration={1.6} trigger={isHeroVisible} /> PROJECTS DONE • PM SURYA GHAR APPROVED
+                    <CountUpNumber value="500+" duration={1.8} trigger={isHeroVisible} /> PROJECTS DONE • PM SURYA GHAR APPROVED
                   </span>
                 </div>
 
@@ -747,7 +747,7 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
                 {/* Stat Card 1: 500+ Projects Done */}
                 <div className="glass-panel rounded-2xl p-2.5 sm:p-3.5 text-white flex flex-col justify-between transition-all border border-white/20 bg-white/10 backdrop-blur-md shadow-xs min-h-[96px] sm:min-h-[110px]">
                   <span className="font-telemetry text-2xl sm:text-3xl font-bold tracking-tight text-white leading-none">
-                    <CountUpNumber value="500+" duration={1.6} trigger={isHeroVisible} />
+                    <CountUpNumber value="500+" duration={1.8} trigger={isHeroVisible} />
                   </span>
                   <div className="mt-2">
                     <p className="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider leading-snug">
@@ -762,7 +762,7 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
                 {/* Stat Card 2: 80% Savings */}
                 <div className="glass-panel rounded-2xl p-2.5 sm:p-3.5 text-white flex flex-col justify-between transition-all border border-white/20 bg-white/10 backdrop-blur-md shadow-xs min-h-[96px] sm:min-h-[110px]">
                   <span className="font-telemetry text-2xl sm:text-3xl font-bold tracking-tight text-[#C6F500] leading-none">
-                    <CountUpNumber value="80%" duration={1.6} delay={0.1} trigger={isHeroVisible} />
+                    <CountUpNumber value="80%" duration={1.8} delay={0.15} trigger={isHeroVisible} />
                   </span>
                   <div className="mt-2">
                     <p className="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider leading-snug">
@@ -784,7 +784,7 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
                 {/* Stat Card 1: 500+ Projects Done */}
                 <div className="glass-panel rounded-2xl p-3.5 sm:p-4 md:p-5 text-white shadow-2xl flex flex-col justify-between transition-all duration-300 hover:border-white/40 hover:-translate-y-1">
                   <span className="font-telemetry text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold tracking-tight text-white leading-none">
-                    <CountUpNumber value="500+" duration={1.6} trigger={isHeroVisible} />
+                    <CountUpNumber value="500+" duration={1.8} trigger={isHeroVisible} />
                   </span>
                   <div className="mt-2.5 sm:mt-3">
                     <p className="text-[11px] sm:text-xs md:text-sm font-bold text-white uppercase tracking-wider leading-snug">
@@ -799,7 +799,7 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
                 {/* Stat Card 2: 400+ Clients */}
                 <div className="glass-panel rounded-2xl p-3.5 sm:p-4 md:p-5 text-white shadow-2xl flex flex-col justify-between transition-all duration-300 hover:border-white/40 hover:-translate-y-1">
                   <span className="font-telemetry text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold tracking-tight text-[#C6F500] leading-none">
-                    <CountUpNumber value="400+" duration={1.6} delay={0.1} trigger={isHeroVisible} />
+                    <CountUpNumber value="400+" duration={1.8} delay={0.15} trigger={isHeroVisible} />
                   </span>
                   <div className="mt-2.5 sm:mt-3">
                     <p className="text-[11px] sm:text-xs md:text-sm font-bold text-white uppercase tracking-wider leading-snug">
@@ -822,7 +822,7 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
               {/* Credential 1: 7+ Years Experience */}
               <div className="flex flex-col items-start text-left min-w-0">
                 <span className="font-telemetry text-base sm:text-xl md:text-2xl lg:text-3xl font-bold text-white tracking-tight leading-none mb-0.5 sm:mb-1">
-                  <CountUpNumber value="7+" duration={1.6} trigger={isHeroVisible} />
+                  <CountUpNumber value="7+" duration={1.8} trigger={isHeroVisible} />
                 </span>
                 <span className="text-[9px] sm:text-xs text-[#C6F500] font-semibold uppercase tracking-wider leading-[1.25] sm:leading-normal">
                   Years of Experience
@@ -835,7 +835,7 @@ export const SolarHero3DExperience: React.FC<SolarHero3DExperienceProps> = ({
               {/* Credential 2: Tier-1 Solar Panels */}
               <div className="flex flex-col items-start text-left min-w-0">
                 <span className="font-telemetry text-base sm:text-xl md:text-2xl lg:text-3xl font-bold text-white tracking-tight leading-none mb-0.5 sm:mb-1">
-                  <CountUpNumber value="25+" duration={1.6} delay={0.1} trigger={isHeroVisible} /> Yr
+                  <CountUpNumber value="25+" duration={1.8} delay={0.15} trigger={isHeroVisible} /> Yr
                 </span>
                 <span className="text-[9px] sm:text-xs text-[#C6F500] font-semibold uppercase tracking-wider leading-[1.25] sm:leading-normal">
                   Panel Warranty
